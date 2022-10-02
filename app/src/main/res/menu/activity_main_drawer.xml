@@ -20,9 +20,9 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Slideshow" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_comprobantes"
+            android:icon="@drawable/ic_comprobantes"
+            android:title="Comprobantes" />
     </group>
 
     <item android:title="Communicate">

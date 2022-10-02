@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AgregarComprobanteFragment">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:padding="10dp">
+
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Rubro">
+
+                   <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                       android:id="@+id/actv_comprobante_rubro"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:imeOptions="actionSearch"
+                       android:inputType="textAutoComplete" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Comprobante">
+
+                   <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                       android:id="@+id/actv_comprobante"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:imeOptions="actionSearch"
+                       android:inputType="textAutoComplete" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="RUC de la empresa emisora"
+                   app:endIconMode="clear_text"
+                   app:startIconDrawable="@drawable/ic_add_business">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/txt_ruc_comprobante"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:inputType="number" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Descripcion"
+                   app:endIconMode="clear_text"
+                   app:startIconDrawable="@drawable/ic_text">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/txt_descripcion_comprobante"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:inputType="textMultiLine"
+                       android:lines="3" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <com.google.android.material.textfield.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight=".5"
+                       android:hint="Serie"
+                       app:endIconMode="clear_text">
+
+                       <com.google.android.material.textfield.TextInputEditText
+                           android:id="@+id/txt_serie_comprobante"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:inputType="number" />
+
+                   </com.google.android.material.textfield.TextInputLayout>
+
+                   <Space
+                       android:layout_width="5dp"
+                       android:layout_height="match_parent" />
+
+                   <com.google.android.material.textfield.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight=".5"
+                       android:hint="Correlativo"
+                       app:endIconMode="clear_text">
+
+                       <com.google.android.material.textfield.TextInputEditText
+                           android:id="@+id/txt_correlativo_comprobante"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:inputType="number" />
+                   </com.google.android.material.textfield.TextInputLayout>
+               </LinearLayout>
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <com.google.android.material.textfield.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight=".5"
+                       app:startIconDrawable="@drawable/ic_fecha"
+                       android:hint="Emision"
+                       app:endIconMode="clear_text">
+                       <com.google.android.material.textfield.TextInputEditText
+                           android:id="@+id/txt_fecha_comprobante"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:cursorVisible="false"
+                           android:focusable="false"
+                           android:focusableInTouchMode="false"
+                           android:inputType="text" />
+                   </com.google.android.material.textfield.TextInputLayout>
+
+                   <Space
+                       android:layout_width="5dp"
+                       android:layout_height="match_parent" />
+
+                   <com.google.android.material.textfield.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       app:startIconDrawable="@drawable/ic_money"
+                       android:layout_weight=".5"
+                       android:hint="Monto total"
+                       app:endIconMode="clear_text">
+                       <com.google.android.material.textfield.TextInputEditText
+                           android:id="@+id/txt_monto_comprobante"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:inputType="numberDecimal" />
+                   </com.google.android.material.textfield.TextInputLayout>
+               </LinearLayout>
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+               <ImageView
+                   android:layout_width="80dp"
+                   android:layout_height="80dp"
+                   android:src="@drawable/ic_photo"
+                   android:id="@+id/img_comprobante"
+                   />
+               <com.google.android.material.button.MaterialButton
+                   android:id="@+id/btn_comprobante_foto"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="Foto"
+                   android:textColor="@android:color/white"
+                   app:icon="@drawable/ic_add_photo" />
+
+               <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="5dp" />
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:gravity="center"
+                   >
+                   <com.google.android.material.button.MaterialButton
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Agregar"
+                       app:icon="@drawable/ic_save"
+                       android:textColor="@android:color/white"
+                       android:id="@+id/btn_comprobante_agregar"
+                       style="@style/Widget.MaterialComponents.Button"
+                       />
+                   <Space
+                       android:layout_width="5dp"
+                       android:layout_height="match_parent" />
+                   <com.google.android.material.button.MaterialButton
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Limpiar"
+                       app:icon="@drawable/ic_clean"
+                       android:id="@+id/btn_comprobante_limpiar"
+                       style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                       />
+               </LinearLayout>
+           </LinearLayout>
+       </ScrollView>
+   </RelativeLayout>
+</FrameLayout>

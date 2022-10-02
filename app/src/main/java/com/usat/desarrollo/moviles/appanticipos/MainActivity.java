@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = new Fragment();
         switch (id) {
-            case R.id.nav_fragment:
-                fragment = new BlankFragment();
+            case R.id.nav_comprobantes:
+                fragment = new ComprobanteFragment();
                 break;
         }
 

@@ -16,9 +16,9 @@
             android:title="Catálogo de productos" />
 
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_anticipo"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Anticipos" />
         <item
             android:id="@+id/nav_comprobantes"
             android:icon="@drawable/ic_comprobantes"

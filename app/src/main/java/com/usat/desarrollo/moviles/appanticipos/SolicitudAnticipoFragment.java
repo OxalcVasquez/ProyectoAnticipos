@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +8,111 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SolicitudAnticipoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SolicitudAnticipoFragment extends Fragment {
+import com.google.android.material.button.MaterialButton;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public SolicitudAnticipoFragment() {
-        // Required empty public constructor
-    }
+public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener{
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SolicitudAnticipoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SolicitudAnticipoFragment newInstance(String param1, String param2) {
-        SolicitudAnticipoFragment fragment = new SolicitudAnticipoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    TextView txtDescripcion,txtFechaInicio,txtFechaFin ;
+    MaterialButton btnAgregar,btnLimpiar;
+    AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
+
+    Calendar calendar1 = Calendar.getInstance();
+    Calendar calendar2 = Calendar.getInstance();
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_solicitud_anticipo, container, false);
+        View view = inflater.inflate(R.layout.fragment_solicitud_anticipo, container, false);
+        getActivity().setTitle("Solicitar Anticipo");
+        txtDescripcion = view.findViewById(R.id.txtDescripcion);
+        txtFechaInicio = view.findViewById(R.id.txtFechaInicio);
+        txtFechaFin = view.findViewById(R.id.txtFechaFin);
+        btnAgregar = view.findViewById(R.id.btnRegistrarS);
+        btnLimpiar = view.findViewById(R.id.btnLimpiarS);
+        actvMotivoAnticipo = view.findViewById(R.id.actvMotivoAnticipo);
+        actvSedeDestino = view.findViewById(R.id.actvSedeDestino);
+
+
+
+        btnAgregar.setOnClickListener(this);
+        btnLimpiar.setOnClickListener(this);
+        txtFechaInicio.setOnClickListener(this);
+        txtFechaFin.setOnClickListener(this);
+        return view;
     }
+
+    DatePickerDialog.OnDateSetListener fecha1 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
+            calendar1.set(Calendar.YEAR,anio);
+            calendar1.set(Calendar.MONTH,mes);
+            calendar1.set(Calendar.DAY_OF_MONTH,dia);
+            actualizarCalendario();
+
+        }
+    };
+    DatePickerDialog.OnDateSetListener fecha2 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
+            calendar2.set(Calendar.YEAR,anio);
+            calendar2.set(Calendar.MONTH,mes);
+            calendar2.set(Calendar.DAY_OF_MONTH,dia);
+            actualizarCalendario();
+
+        }
+    };
+//luego agregar el validar fecha inicio y fin
+    private void actualizarCalendario(){
+        String format = "dd/MM/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+
+        txtFechaInicio.setText(sdf.format(calendar1.getTime()));
+        txtFechaFin.setText(sdf.format(calendar2.getTime()));
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.btn_comprobante_agregar:
+                //TODO AGREGAR
+                break;
+            case R.id.btn_comprobante_limpiar:
+                //TODO LIMPIAR
+                break;
+
+            case R.id.txtFechaInicio:
+                new DatePickerDialog(getActivity(),fecha1,calendar1.get(Calendar.YEAR),calendar1.get(Calendar.MONTH),
+                        calendar1.get(Calendar.DAY_OF_MONTH)
+                ).show();
+                break;
+                case  R.id.txtFechaFin:
+                    new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
+                            calendar2.get(Calendar.DAY_OF_MONTH)
+                    ).show();
+                    break;
+
+
+        }
+    }
+
 }

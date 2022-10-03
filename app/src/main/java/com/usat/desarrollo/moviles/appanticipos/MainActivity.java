@@ -115,6 +115,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_comprobantes:
                 fragment = new ComprobanteFragment();
                 break;
+
+             case R.id.nav_anticipo:
+                fragment= new AnticipoFragment();
+                break;
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

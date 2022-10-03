@@ -58,7 +58,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDescripcion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="3"/>
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="5dp" />
@@ -82,7 +84,10 @@
                         android:id="@+id/txtFechaInicio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="date" />
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <Space
@@ -99,7 +104,10 @@
                         android:id="@+id/txtFechaFin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="date"/>
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:inputType="text"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,12 +150,12 @@
                 android:gravity="center_horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnRegistrar"
+                    android:id="@+id/btnRegistrarS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registrar"
+                    android:textColor="@android:color/white"
                     app:icon="@drawable/ic_save"
-                    android:backgroundTint="@color/cardview_shadow_end_color"
                     style="@style/Widget.MaterialComponents.Button"/>
 
 
@@ -156,7 +164,7 @@
                     android:layout_height="match_parent" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLimpiar"
+                    android:id="@+id/btnLimpiarS"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="123dp"
                     android:layout_height="wrap_content"

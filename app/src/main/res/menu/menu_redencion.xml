@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/opcion_registrar_redencion" android:enabled="true" android:icon="@drawable/ic_registrar_redencion" android:title="@string/registrar"/>
+    <item android:id="@+id/opcion_listar_redencion" android:enabled="true" android:icon="@drawable/ic_list" android:title="@string/opcion_listar"/>
+</menu>

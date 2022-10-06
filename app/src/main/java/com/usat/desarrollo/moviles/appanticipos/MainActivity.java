@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -116,13 +117,18 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ComprobanteFragment();
                 break;
 
-             case R.id.nav_anticipo:
-                fragment= new AnticipoFragment();
+            case R.id.nav_anticipo:
+                fragment = new AnticipoFragment();
                 break;
+
+            case R.id.nav_rendicion_gastos:
+                fragment = new RendicionFragment();
+                break;
+
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.contenedor,fragment).commit();
+        fragmentTransaction.replace(R.id.contenedor, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

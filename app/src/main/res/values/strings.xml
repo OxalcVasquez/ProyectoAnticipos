@@ -10,7 +10,32 @@
 
     <string name="menu_clientes">Clientes</string>
     <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="informe_redencion">Informe N°</string>
+    <string name="fecha_rendicion_listado">Fecha de registro:</string>
+    <string name="total_rendido_listado">Total rendido:</string>
+    <string name="fecha_al_listado">Al:</string>
+    <string name="fecha_del_listado">Del:</string>
+    <string name="docente_rendicion_registro">Docente</string>
+    <string name="anticipo_rendicion_registro">Anticipo a rendir</string>
+    <string name="btn_agregar_comprobante">Agregar comprobante</string>
+    <string name="btn_registro_rendicion">Registrar y finalizar</string>
+    <string name="restante_redencion">DEV. RESTANTE:</string>
+    <string name="devolucion_rendicion_registro">DEVOLUCIÓN REALIZADA:</string>
+    <string name="de_rendicion">DE</string>
+    <string name="movilidad_interna_rendicion">MOVILIDAD INTERNA:</string>
+    <string name="pasajes_terrestres_rendicion">PASAJES TERRESTRES:</string>
+    <string name="alimentacion_rendicion">ALIMENTACIÓN:</string>
+    <string name="hotel_rendicion">HOTEL:</string>
+    <string name="factura_total_listado">FACTURA</string>
+    <string name="comprobante_listado">Comprobante:</string>
+    <string name="fecha_emision_listado">Fecha de emisión:</string>
+    <string name="rubro_listado">Rubro:</string>
+    <string name="anticipo_rendicion">Anticipo a rendir</string>
+    <string name="registrar">Registrar</string>
+    <string name="title_registro_rendicion_gastos">Registrar rendición de gastos</string>
+    <string name="title_rendicion_gastos">Rendición de gastos</string>
+    <!-- TODO: Remove or change this placeholder text -->
 
 
 </resources>

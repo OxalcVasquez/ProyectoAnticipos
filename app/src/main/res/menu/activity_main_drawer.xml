@@ -4,17 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_fragment"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Fragment" />
-
-        <item
-            android:id="@+id/nav_catalogo"
-            android:icon="@drawable/ic_ventas"
-            android:title="Catálogo de productos" />
-
         <item
             android:id="@+id/nav_anticipo"
             android:icon="@drawable/ic_menu_slideshow"
@@ -23,6 +12,11 @@
             android:id="@+id/nav_comprobantes"
             android:icon="@drawable/ic_comprobantes"
             android:title="Comprobantes" />
+
+        <item
+            android:id="@+id/nav_rendicion_gastos"
+            android:icon="@drawable/ic_rendicion_gastos"
+            android:title="Rendición de gastos" />
     </group>
 
     <item android:title="Communicate">

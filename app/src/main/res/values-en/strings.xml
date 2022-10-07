@@ -34,4 +34,5 @@
     <string name="registrar">Registrar</string>
     <string name="title_registro_rendicion_gastos">Registrar rendición de gastos</string>
     <string name="title_rendicion_gastos">Rendición de gastos</string>
+    <string name="dialog_agregar_comprobante">Debes agregar un comprobante</string>
 </resources>

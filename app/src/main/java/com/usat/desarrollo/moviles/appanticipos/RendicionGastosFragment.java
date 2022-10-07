@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.usat.desarrollo.moviles.appanticipos.adapter.ComprobanteAdapter;
+import com.usat.desarrollo.moviles.appanticipos.modelo.Comprobante;
 
 public class RendicionGastosFragment extends Fragment {
 
     TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante;
     AutoCompleteTextView actvAnticipos;
     Button btnAgregarComprobante, btnRegistrarRedencion;
-    RecyclerView recyclerComprobante;
     int pos = 0;
+
+    RecyclerView recyclerComprobante;
+    ComprobanteAdapter comprobanteAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,15 @@ public class RendicionGastosFragment extends Fragment {
         recyclerComprobante.setHasFixedSize(true);
         recyclerComprobante.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        comprobanteAdapter = new ComprobanteAdapter(this.getContext());
+        recyclerComprobante.setAdapter(comprobanteAdapter);
+        listar();
+
         getPos();
+
+        if (recyclerComprobante.getAdapter().getItemCount() == 0) {
+            recyclerComprobante.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -62,7 +75,7 @@ public class RendicionGastosFragment extends Fragment {
     private void registrarRendicion() {
         btnRegistrarRedencion.setOnClickListener(view -> {
             if (validate()) {
-                Toast.makeText(this.getActivity(), "Debes agregar un comprobante", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getActivity(), R.string.dialog_agregar_comprobante, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -80,5 +93,10 @@ public class RendicionGastosFragment extends Fragment {
 
     private boolean validate() {
         return actvAnticipos.getText().toString().equalsIgnoreCase("");
+    }
+
+    private void listar() {
+        new Comprobante().cargarDatosComprobante();
+        comprobanteAdapter.cargarDatosComprobante(Comprobante.comprobanteListado);
     }
 }

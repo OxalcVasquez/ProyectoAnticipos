@@ -32,7 +32,7 @@ public class RendicionFragment extends Fragment {
                 case R.id.opcion_registrar_redencion:
                     fragment = new RendicionGastosFragment();
                     break;
-                case R.id.opcion_listar_anticipos:
+                case R.id.opcion_listar_redencion:
                     fragment = new RendicionListadoFragment();
                     break;
             }

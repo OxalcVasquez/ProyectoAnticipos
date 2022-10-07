@@ -11,9 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.usat.desarrollo.moviles.appanticipos.adapter.RendicionAdapter;
+import com.usat.desarrollo.moviles.appanticipos.modelo.InformeGasto;
+
 public class RendicionListadoFragment extends Fragment {
 
     RecyclerView recyclerRendicionGastos;
+    RendicionAdapter rendicionAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,16 @@ public class RendicionListadoFragment extends Fragment {
         recyclerRendicionGastos.setHasFixedSize(true);
         recyclerRendicionGastos.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        rendicionAdapter = new RendicionAdapter(this.getContext());
+        recyclerRendicionGastos.setAdapter(rendicionAdapter);
+        listar();
+
         return view;
+    }
+
+    private void listar() {
+        new InformeGasto().cargarDatosRendicion();
+        rendicionAdapter.cargarDatosRendicion(InformeGasto.listaInformeGasto);
+
     }
 }

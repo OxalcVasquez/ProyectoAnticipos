@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvCliente"
+        android:id="@+id/rvAnticipo"
         tools:listitem="@layout/anticipo_cardview"/>
 
 </FrameLayout>

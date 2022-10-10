@@ -42,6 +42,11 @@ public class AnticipoFragment extends Fragment implements BottomNavigationView.O
             case R.id.opcion_solicitar_anticipo:
                 fragment = new SolicitudAnticipoFragment();
                 break;
+
+            case R.id.opcion_listar_anticipos:
+                fragment = new AnticipoListadoFragment();
+                break;
+
         }
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

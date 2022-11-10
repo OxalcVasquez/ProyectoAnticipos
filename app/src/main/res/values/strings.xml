@@ -36,6 +36,10 @@
     <string name="title_registro_rendicion_gastos">Registrar rendición de gastos</string>
     <string name="title_rendicion_gastos">Rendición de gastos</string>
     <string name="dialog_agregar_comprobante">Debes agregar un comprobante</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Contraseña</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="title_login">Inicio de sesión</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             DatosSesion.USUARIO_NOMBRE = loginResponse.getData().getNombres() + " " + loginResponse.getData().getApellidos();
                             DatosSesion.USUARIO_EMAIL = loginResponse.getData().getEmail();
                             DatosSesion.TOKEN = loginResponse.getData().getToken();
+                            DatosSesion.USUARIO_ID = loginResponse.getData().getUsuarioId();
                             Snackbar
                                     .make(findViewById(R.id.layoutLogin), loginResponse.getMessage(), Snackbar.LENGTH_LONG)
                                     .setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.primaryDarkColor))

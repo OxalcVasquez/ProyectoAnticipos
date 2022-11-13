@@ -5,4 +5,5 @@ public class DatosSesion {
     public static String USUARIO_NOMBRE;
     public static String USUARIO_IMG;
     public static String TOKEN;
+    public static int USUARIO_ID;
 }

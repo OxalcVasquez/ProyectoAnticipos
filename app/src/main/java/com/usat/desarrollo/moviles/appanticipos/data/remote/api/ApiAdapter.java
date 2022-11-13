@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiAdapter {
     private static ApiService apiService;
 
-    private static final String BASE_URL = "http://192.168.1.2:3001/";
+    private static final String BASE_URL = "https://web-services-anticipos.onrender.com/";
 
     public static ApiService getApiService() {
         if (apiService == null) {

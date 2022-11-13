@@ -3,85 +3,58 @@ package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 import java.util.Date;
 
 public class Anticipo {
-    private int idAnt, motivoAnticipoId, sedeId, usuarioId;
-    private Date fechaInicio, fechaFin;
-    private String descripcionAnt, estadoAnt;
+    private int id;
+    private String descripcion;
+    private String estado;
+    private String fecha_fin;
+    private String fecha_inicio;
+    private float monto_total;
 
-    public Anticipo(int idAnt, int motivoAnticipoId, int sedeId, int usuarioId, Date fechaInicio, Date fechaFin, String descripcionAnt, String estadoAnt) {
-        this.idAnt = idAnt;
-        this.motivoAnticipoId = motivoAnticipoId;
-        this.sedeId = sedeId;
-        this.usuarioId = usuarioId;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.descripcionAnt = descripcionAnt;
-        this.estadoAnt = estadoAnt;
+    public int getId() {
+        return id;
     }
 
-    public Anticipo() {
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdAnt() {
-        return idAnt;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setIdAnt(int idAnt) {
-        this.idAnt = idAnt;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public int getMotivoAnticipoId() {
-        return motivoAnticipoId;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setMotivoAnticipoId(int motivoAnticipoId) {
-        this.motivoAnticipoId = motivoAnticipoId;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public int getSedeId() {
-        return sedeId;
+    public String getFecha_fin() {
+        return fecha_fin;
     }
 
-    public void setSedeId(int sedeId) {
-        this.sedeId = sedeId;
+    public void setFecha_fin(String fecha_fin) {
+        this.fecha_fin = fecha_fin;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
+    public String getFecha_inicio() {
+        return fecha_inicio;
     }
 
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setFecha_inicio(String fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public float getMonto_total() {
+        return monto_total;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public String getDescripcionAnt() {
-        return descripcionAnt;
-    }
-
-    public void setDescripcionAnt(String descripcionAnt) {
-        this.descripcionAnt = descripcionAnt;
-    }
-
-    public String getEstadoAnt() {
-        return estadoAnt;
-    }
-
-    public void setEstadoAnt(String estadoAnt) {
-        this.estadoAnt = estadoAnt;
+    public void setMonto_total(float monto_total) {
+        this.monto_total = monto_total;
     }
 }

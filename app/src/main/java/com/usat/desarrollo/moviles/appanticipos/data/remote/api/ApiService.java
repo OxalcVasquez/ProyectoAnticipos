@@ -1,11 +1,10 @@
 package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 
-import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
-import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -40,7 +39,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("anticipo/registrar")
-    Call<AnticipoResponse> getAnticipoRegistrado(
+    Call<AnticipoRegistroResponse> getAnticipoRegistrado(
             @Field("token") String token,
             @Field("descripcion") String descripcion,
             @Field("fecha_inicio") String fecha_inicio,

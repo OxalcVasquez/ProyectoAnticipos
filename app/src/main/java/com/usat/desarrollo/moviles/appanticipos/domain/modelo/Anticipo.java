@@ -3,19 +3,15 @@ package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 import java.util.Date;
 
 public class Anticipo {
-    private int id;
+    private int anticipo_id;
     private String descripcion;
     private String estado;
     private String fecha_fin;
     private String fecha_inicio;
     private float monto_total;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public int getAnticipo_id() {
+        return anticipo_id;
     }
 
     public String getDescripcion() {

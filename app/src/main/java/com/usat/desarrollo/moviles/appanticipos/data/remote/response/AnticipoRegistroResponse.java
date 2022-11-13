@@ -5,12 +5,12 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Usuario;
 
 import java.util.List;
 
-public class AnticipoResponse {
-    private List<Anticipo> data;
+public class AnticipoRegistroResponse {
+    private Anticipo data;
     private String message;
     private Boolean status;
 
-    public List<Anticipo> getData() {
+    public Anticipo getData() {
         return data;
     }
 

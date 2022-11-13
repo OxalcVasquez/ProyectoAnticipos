@@ -16,15 +16,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.usat.desarrollo.moviles.appanticipos.LoginActivity;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
-import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
@@ -179,6 +177,9 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
             case R.id.btn_anticipo_registrar:
                 registrarAnticipo();
                 break;
+            case R.id.btn_anticipo_limpiar:
+                limpiar();
+                break;
             case  R.id.txtFechaFin:
                 new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
                         calendar2.get(Calendar.DAY_OF_MONTH)
@@ -197,20 +198,20 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         progressBar.setVisibility(View.VISIBLE);
         String descripcion = txtDescripcion.getText().toString();
 
-        apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoResponse>() {
+        apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoRegistroResponse>() {
             @Override
-            public void onResponse(Call<AnticipoResponse> call, Response<AnticipoResponse> response) {
+            public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 201) {
-                    AnticipoResponse anticipoResponse = response.body();
+                    AnticipoRegistroResponse anticipoResponse = response.body();
                     boolean status = anticipoResponse.getStatus();
                     if (status){
-                        List<Anticipo> anticipoList = anticipoResponse.getData();
-                        Anticipo anticipo = anticipoList.get(0);
+                        Anticipo anticipo = anticipoResponse.getData();
                         Snackbar
-                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), anticipoResponse.getMessage(), Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryDarkColor))
+                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getAnticipo_id(), Snackbar.LENGTH_LONG)
+                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryColor))
                                 .show();
+                        limpiar();
                     }
                 }  else {
                     try {
@@ -231,7 +232,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<AnticipoResponse> call, Throwable t) {
+            public void onFailure(Call<AnticipoRegistroResponse> call, Throwable t) {
                 Log.e("Error registrando anticipo", t.getMessage());
 
             }
@@ -362,5 +363,14 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
             }
         });
+    }
+    private void limpiar(){
+        actvSedeDestino.setText("");
+        actvMotivoAnticipo.setText("");
+        txtFechaFin.setText("");
+        txtFechaInicio.setText("");
+        txtDescripcion.setText("");
+        txtResumenSolicitud.setText("RESUMEN");
+        txtTotalViaticos.setText("TOTAL VIÁTICOS");
     }
 }

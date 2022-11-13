@@ -24,9 +24,11 @@ import com.usat.desarrollo.moviles.appanticipos.LoginActivity;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
@@ -52,7 +54,7 @@ import retrofit2.Response;
 public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener {
 
     TextView txtDescripcion,txtFechaInicio,txtFechaFin,txtResumenSolicitud,txtTotalViaticos;
-    MaterialButton btnAgregar,btnLimpiar;
+    MaterialButton btnRegistrarAnticipo,btnLimpiar;
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
     ProgressBar progressBar;
     int idMotivoSeleccionado,idSedeSeleccionada;
@@ -83,15 +85,15 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         txtResumenSolicitud = view.findViewById(R.id.txt_resumen_solicitud_anticipo);
         txtTotalViaticos = view.findViewById(R.id.txt_total_viaticos);
         progressBar = view.findViewById(R.id.progressBar_resumen);
-        btnAgregar = view.findViewById(R.id.btnRegistrarS);
-        btnLimpiar = view.findViewById(R.id.btnLimpiarS);
+        btnRegistrarAnticipo = view.findViewById(R.id.btn_anticipo_registrar);
+        btnLimpiar = view.findViewById(R.id.btn_anticipo_limpiar);
 
         actvMotivoAnticipo = view.findViewById(R.id.actvMotivoAnticipo);
         actvSedeDestino = view.findViewById(R.id.actvSedeDestino);
 
         apiService = ApiAdapter.getApiService();
 
-        btnAgregar.setOnClickListener(this);
+        btnRegistrarAnticipo.setOnClickListener(this);
         btnLimpiar.setOnClickListener(this);
         txtFechaInicio.setOnClickListener(this);
         txtFechaFin.setOnClickListener(this);
@@ -169,7 +171,9 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-
+            case R.id.btn_anticipo_registrar:
+                registrarAnticipo();
+                break;
             case  R.id.txtFechaFin:
                 new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
                         calendar2.get(Calendar.DAY_OF_MONTH)
@@ -182,6 +186,52 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                 break;
 
         }
+    }
+
+    private void registrarAnticipo() {
+        progressBar.setVisibility(View.VISIBLE);
+        String descripcion = txtDescripcion.getText().toString();
+        String fechaInicio = txtFechaInicio.getText().toString();
+        String fechaFin = txtFechaFin.getText().toString();
+
+        apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoResponse>() {
+            @Override
+            public void onResponse(Call<AnticipoResponse> call, Response<AnticipoResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.code() == 201) {
+                    AnticipoResponse anticipoResponse = response.body();
+                    boolean status = anticipoResponse.getStatus();
+                    if (status){
+                        List<Anticipo> anticipoList = anticipoResponse.getData();
+                        Anticipo anticipo = anticipoList.get(0);
+                        Snackbar
+                                .make(getActivity().findViewById(R.id.layoutLogin), anticipoResponse.getMessage(), Snackbar.LENGTH_LONG)
+                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryDarkColor))
+                                .show();
+                    }
+                }  else {
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        String message =  jsonError.getString("message");
+                        Snackbar
+                                .make(getActivity().findViewById(R.id.layoutLogin), message, Snackbar.LENGTH_LONG)
+                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
+                                .show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<AnticipoResponse> call, Throwable t) {
+                Log.e("Error registrando anticipo", t.getMessage());
+
+            }
+        });
     }
 
     private void cargarMotivosAnticipo(){

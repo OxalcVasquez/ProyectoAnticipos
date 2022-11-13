@@ -3,6 +3,7 @@ package com.usat.desarrollo.moviles.appanticipos.presentation.anticipo;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.usat.desarrollo.moviles.appanticipos.LoginActivity;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
@@ -128,6 +131,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
         }
     };
+
     DatePickerDialog.OnDateSetListener fecha2 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
@@ -137,6 +141,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
             actualizarCalendario();
 
         }
+
     };
     //luego agregar el validar fecha inicio y fin
     private void actualizarCalendario(){
@@ -151,6 +156,12 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
         LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText().toString(), dtf);
         diasAnticipo = Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
+        if (diasAnticipo<=0){
+            Snackbar
+                    .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "La fecha de fin debe ser mayor a la de inicio", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
+                    .show();
+        }
 
     }
 

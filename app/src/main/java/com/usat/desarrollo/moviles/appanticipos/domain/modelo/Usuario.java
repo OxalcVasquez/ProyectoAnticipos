@@ -1,38 +1,23 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
 public class Usuario {
-    private int usuarioId, rolId;
+    private int id, rol_id;
     private String email, nombres, apellidos, password, estado_usuario, token, estado_token;
 
-    public Usuario(int usuarioId, int rolId, String email, String nombres, String apellidos, String password, String estado_usuario, String token, String estado_token) {
-        this.usuarioId = usuarioId;
-        this.rolId = rolId;
-        this.email = email;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.password = password;
-        this.estado_usuario = estado_usuario;
-        this.token = token;
-        this.estado_token = estado_token;
+    public int getId() {
+        return id;
     }
 
-    public Usuario() {
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
+    public int getRol_id() {
+        return rol_id;
     }
 
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public int getRolId() {
-        return rolId;
-    }
-
-    public void setRolId(int rolId) {
-        this.rolId = rolId;
+    public void setRol_id(int rol_id) {
+        this.rol_id = rol_id;
     }
 
     public String getEmail() {

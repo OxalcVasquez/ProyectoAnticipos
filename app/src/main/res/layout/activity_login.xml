@@ -43,7 +43,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt_login_password"
             android:layout_width="match_parent"
-            android:text="usat"
+            android:text="USAT"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -59,6 +59,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     ProgressBar progressBar;
     int idMotivoSeleccionado,idSedeSeleccionada;
     long diasAnticipo;
+    String fechaInicio,fechaFin;
 
     Calendar calendar1 = Calendar.getInstance();
     Calendar calendar2 = Calendar.getInstance();
@@ -149,15 +150,19 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void actualizarCalendario(){
         String format = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-
         txtFechaInicio.setText(sdf.format(calendar1.getTime()));
         txtFechaFin.setText(sdf.format(calendar2.getTime()));
+        String formatRegistro = "yyyy-MM-dd";
+        SimpleDateFormat sdfRegistro = new SimpleDateFormat(formatRegistro, Locale.US);
+        fechaInicio =sdfRegistro.format(calendar1.getTime());
+        fechaFin =sdfRegistro.format(calendar2.getTime());
 
         //Para obtener dias de diferencia entre los anticipos
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
         LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
         LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText().toString(), dtf);
         diasAnticipo = Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
+
         if (diasAnticipo<=0){
             Snackbar
                     .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "La fecha de fin debe ser mayor a la de inicio", Snackbar.LENGTH_LONG)
@@ -191,8 +196,6 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void registrarAnticipo() {
         progressBar.setVisibility(View.VISIBLE);
         String descripcion = txtDescripcion.getText().toString();
-        String fechaInicio = txtFechaInicio.getText().toString();
-        String fechaFin = txtFechaFin.getText().toString();
 
         apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoResponse>() {
             @Override
@@ -205,7 +208,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         List<Anticipo> anticipoList = anticipoResponse.getData();
                         Anticipo anticipo = anticipoList.get(0);
                         Snackbar
-                                .make(getActivity().findViewById(R.id.layoutLogin), anticipoResponse.getMessage(), Snackbar.LENGTH_LONG)
+                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), anticipoResponse.getMessage(), Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryDarkColor))
                                 .show();
                     }
@@ -214,9 +217,10 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
                         String message =  jsonError.getString("message");
                         Snackbar
-                                .make(getActivity().findViewById(R.id.layoutLogin), message, Snackbar.LENGTH_LONG)
+                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), message, Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
                                 .show();
+                        Log.e("ERROR ---->",message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

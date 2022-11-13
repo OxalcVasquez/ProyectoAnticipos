@@ -3,6 +3,7 @@ package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,6 +27,13 @@ public interface ApiService {
     @POST("sede/listar")
     Call<SedesResponse> getSedes(
             @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("tarifa/viaticos")
+    Call<TarifaResponse> getViaticos(
+            @Field("token") String token,
+            @Field("sede_id") int sede_id
     );
 
 }

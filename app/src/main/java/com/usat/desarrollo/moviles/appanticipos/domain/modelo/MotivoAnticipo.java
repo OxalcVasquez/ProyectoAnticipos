@@ -1,30 +1,23 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
-public class MotivoAnticipo {
-    private int idAnt;
-    private String descripcionAnt;
+import androidx.annotation.NonNull;
 
-    public MotivoAnticipo(int idAnt, String descripcionAnt) {
-        this.idAnt = idAnt;
-        this.descripcionAnt = descripcionAnt;
+import java.io.Serializable;
+
+public class MotivoAnticipo{
+    private int id;
+    private String descripcion;
+
+    public int getId() {
+        return id;
     }
 
-    public MotivoAnticipo() {
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public int getIdAnt() {
-        return idAnt;
-    }
-
-    public void setIdAnt(int idAnt) {
-        this.idAnt = idAnt;
-    }
-
-    public String getDescripcionAnt() {
-        return descripcionAnt;
-    }
-
-    public void setDescripcionAnt(String descripcionAnt) {
-        this.descripcionAnt = descripcionAnt;
+    @Override
+    public String toString() {
+        return id + ". "+ descripcion;
     }
 }

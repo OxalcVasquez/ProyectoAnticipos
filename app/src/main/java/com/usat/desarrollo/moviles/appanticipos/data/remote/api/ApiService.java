@@ -1,6 +1,7 @@
 package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -13,5 +14,10 @@ public interface ApiService {
     Call<LoginResponse> getSesion(
             @Field("email") String email,
             @Field("password") String password
+    );
+    @FormUrlEncoded
+    @POST("motivo_anticipo/listar")
+    Call<MotivoAnticipoResponse> getMotivosAnticipos(
+            @Field("token") String token
     );
 }

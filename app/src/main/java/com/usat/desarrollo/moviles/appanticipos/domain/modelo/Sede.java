@@ -1,30 +1,20 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
 public class Sede {
-    private int idSede;
-    private String nombreSede;
+    private int id;
+    private String nombre;
 
-    public Sede(int idSede, String nombreSede) {
-        this.idSede = idSede;
-        this.nombreSede = nombreSede;
+    public int getId() {
+        return id;
     }
 
-    public Sede() {
+    public String getNombre() {
+        return nombre;
     }
 
-    public int getIdSede() {
-        return idSede;
+    @Override
+    public String toString() {
+        return id + ". "+ nombre;
     }
 
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
-    }
-
-    public String getNombreSede() {
-        return nombreSede;
-    }
-
-    public void setNombreSede(String nombreSede) {
-        this.nombreSede = nombreSede;
-    }
 }

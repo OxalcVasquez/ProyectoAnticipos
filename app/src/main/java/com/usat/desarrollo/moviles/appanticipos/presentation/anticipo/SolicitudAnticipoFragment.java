@@ -28,8 +28,10 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,6 +89,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         txtFechaFin.setOnClickListener(this);
 
         cargarMotivosAnticipo();
+        cargarSedes();
         return view;
     }
 
@@ -158,11 +161,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     try {
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
                         String message =  jsonError.getString("message");
-                        Snackbar
-                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), message, Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
-                                .show();
-
+                        Log.e("ERROR CARGANDO LISTADO MOTIVOS", message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -173,7 +172,45 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
             @Override
             public void onFailure(Call<MotivoAnticipoResponse> call, Throwable t) {
-                Log.e("LoginError", t.getMessage());
+                Log.e("Error cargando motivos anticipos", t.getMessage());
+            }
+        });
+
+    }
+
+    private void cargarSedes(){
+        apiService.getSedes(DatosSesion.TOKEN).enqueue(new Callback<SedesResponse>() {
+            @Override
+            public void onResponse(Call<SedesResponse> call, Response<SedesResponse> response) {
+                if (response.code() == 200) {
+                    SedesResponse sedesResponse = response.body();
+                    boolean status = sedesResponse.getStatus();
+                    if (status) {
+                        List<Sede> sedeList = sedesResponse.getData();
+                        String sedeDescripcion[] = new String[sedeList.size()];
+                        for (int i = 0; i < sedeList.size() ; i++) {
+                            sedeDescripcion[i] = sedeList.get(i).toString();
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,sedeDescripcion);
+                        actvSedeDestino.setAdapter(adapter);
+                    }
+                } else {
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        String message =  jsonError.getString("message");
+                        Log.e("ERROR CARGANDO LISTADO SEDES", message);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SedesResponse> call, Throwable t) {
+                Log.e("Error cargando sedes", t.getMessage());
             }
         });
 

@@ -7,6 +7,11 @@ public class Tarifa {
     private int rubro_id;
     private String sede;
     private int sede_id;
+    private String se_calcula_por_dia;
+
+    public String getSe_calcula_por_dia() {
+        return se_calcula_por_dia;
+    }
 
     public int getId() {
         return id;

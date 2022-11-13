@@ -142,7 +142,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
 
+            <ProgressBar
+                android:id="@+id/progressBar_resumen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryColor"
+                    android:textStyle="bold"
+                    android:text="Los anticipos a abonar son:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryColor"
+                    android:id="@+id/txt_resumen_solicitud_anticipo"
+                    android:inputType="textMultiLine"
+                    android:text="RESUMEN"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:id="@+id/txt_total_viaticos"
+                    android:text="TOTAL VIÁTICOS"/>
+
+
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

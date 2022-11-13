@@ -1,10 +1,8 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.anticipo;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,29 +13,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.usat.desarrollo.moviles.appanticipos.LoginActivity;
-import com.usat.desarrollo.moviles.appanticipos.MenuActivity;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
-import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -47,12 +46,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener{
+public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener {
 
-    TextView txtDescripcion,txtFechaInicio,txtFechaFin ;
+    TextView txtDescripcion,txtFechaInicio,txtFechaFin,txtResumenSolicitud,txtTotalViaticos;
     MaterialButton btnAgregar,btnLimpiar;
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
-    int idMotivoSeleccionado;
+    ProgressBar progressBar;
+    int idMotivoSeleccionado,idSedeSeleccionada;
+    long diasAnticipo;
 
     Calendar calendar1 = Calendar.getInstance();
     Calendar calendar2 = Calendar.getInstance();
@@ -76,8 +77,12 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         txtDescripcion = view.findViewById(R.id.txtDescripcion);
         txtFechaInicio = view.findViewById(R.id.txtFechaInicio);
         txtFechaFin = view.findViewById(R.id.txtFechaFin);
+        txtResumenSolicitud = view.findViewById(R.id.txt_resumen_solicitud_anticipo);
+        txtTotalViaticos = view.findViewById(R.id.txt_total_viaticos);
+        progressBar = view.findViewById(R.id.progressBar_resumen);
         btnAgregar = view.findViewById(R.id.btnRegistrarS);
         btnLimpiar = view.findViewById(R.id.btnLimpiarS);
+
         actvMotivoAnticipo = view.findViewById(R.id.actvMotivoAnticipo);
         actvSedeDestino = view.findViewById(R.id.actvSedeDestino);
 
@@ -87,6 +92,26 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         btnLimpiar.setOnClickListener(this);
         txtFechaInicio.setOnClickListener(this);
         txtFechaFin.setOnClickListener(this);
+
+        actvMotivoAnticipo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemSeleccionado = adapterView.getItemAtPosition(i).toString().substring(0,1);
+                int id = Integer.parseInt(itemSeleccionado);
+                idMotivoSeleccionado = id;
+
+            }
+        });
+        actvSedeDestino.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemSeleccionado = adapterView.getItemAtPosition(i).toString().substring(0,1);
+                int id = Integer.parseInt(itemSeleccionado);
+                idSedeSeleccionada = id;
+                resumenTarifas();
+            }
+        });
+
 
         cargarMotivosAnticipo();
         cargarSedes();
@@ -113,13 +138,20 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
         }
     };
-//luego agregar el validar fecha inicio y fin
+    //luego agregar el validar fecha inicio y fin
     private void actualizarCalendario(){
         String format = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
 
         txtFechaInicio.setText(sdf.format(calendar1.getTime()));
         txtFechaFin.setText(sdf.format(calendar2.getTime()));
+
+        //Para obtener dias de diferencia entre los anticipos
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+        LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
+        LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText().toString(), dtf);
+        diasAnticipo = Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
+
     }
 
     @Override
@@ -198,7 +230,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     try {
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
                         String message =  jsonError.getString("message");
-                        Log.e("ERROR CARGANDO LISTADO SEDES", message);
+                        Log.e("MENSAJE RESUMEN TARIFAS", message);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -216,4 +248,54 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
     }
 
+
+
+    private void resumenTarifas() {
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.getViaticos(DatosSesion.TOKEN,idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
+            @Override
+            public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.code() == 200) {
+                    TarifaResponse tarifaResponse = response.body();
+                    boolean status = tarifaResponse.getStatus();
+                    if (status) {
+                        String resumen = "";
+                        float montoTotal=0;
+                        float montoRubro =0;
+                        List<Tarifa> tarifaList = tarifaResponse.getData();
+                        for (Tarifa tarifa:tarifaList ) {
+                            if (tarifa.getSe_calcula_por_dia().equals("1")) {
+                                 montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
+                            } else {
+                                 montoRubro = tarifa.getMonto_maximo();
+                            }
+                            montoTotal += montoRubro;
+                            resumen += tarifa.getRubro() +": S./" + montoRubro + "\n";
+                    }
+                        txtResumenSolicitud.setText(resumen);
+                        txtTotalViaticos.setText("TOTAL VIATICOS S./"+montoTotal);
+                } else {
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        String message =  jsonError.getString("message");
+                        Log.e("ERROR CARGANDO RESUMEN VIATICOS", message);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+        }
+            @Override
+            public void onFailure(Call<TarifaResponse> call, Throwable t) {
+                Log.e("Error cargando resumen viaticos", t.getMessage());
+
+            }
+        });
+    }
 }

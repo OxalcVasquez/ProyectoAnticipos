@@ -34,11 +34,11 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Anticipo anticipo = listaAnticipo.get(position);
 
-        holder.txtAnticipo.setText(anticipo.getDescripcion());
-        holder.txtFechaInicio.setText("Del: "+anticipo.getFecha_inicio());
-        holder.txtFechaFin.setText("Al: "+anticipo.getFecha_fin());
-        holder.txtEstado.setText(anticipo.getEstado());
-        holder.txtMonto.setText("Monto: "+anticipo.getMonto_total());
+        holder.txtAnticipo.setText(""+ String.valueOf(anticipo.getDescripcion()));
+        holder.txtFechaInicio.setText("Del: "+String.valueOf(anticipo.getFecha_inicio()));
+        holder.txtFechaFin.setText("Al: "+String.valueOf(anticipo.getFecha_fin()));
+        holder.txtEstado.setText(""+ String.valueOf(anticipo.getEstado()));
+        holder.txtMonto.setText("Monto: "+ String.valueOf(anticipo.getMonto_total()));
 
     }
 

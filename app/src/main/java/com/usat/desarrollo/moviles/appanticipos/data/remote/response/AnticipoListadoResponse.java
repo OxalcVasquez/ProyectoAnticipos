@@ -5,13 +5,14 @@ import android.content.Context;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnticipoListadoResponse {
-    private Anticipo data;
+    private Anticipo[] data;
     private String message;
     private Boolean status;
 
-    public Anticipo getData() {
+    public Anticipo[] getData() {
         return data;
     }
 

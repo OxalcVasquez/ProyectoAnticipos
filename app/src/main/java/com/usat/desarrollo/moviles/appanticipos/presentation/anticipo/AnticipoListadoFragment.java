@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
@@ -35,16 +36,24 @@ public class AnticipoListadoFragment extends Fragment {
     RecyclerView rvAnticipo;
     AnticipoAdapter adapter;
     ArrayList<Anticipo> listaAnticipo;
+    ApiService apiService;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_anticipo_listado, container, false);
+
         rvAnticipo=view.findViewById(R.id.rvAnticipo);
         rvAnticipo.setHasFixedSize(true);
         rvAnticipo.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
+        apiService = ApiAdapter.getApiService();
         adapter = new AnticipoAdapter(this.getActivity());
         rvAnticipo.setAdapter(adapter);
         listar();
@@ -52,15 +61,16 @@ public class AnticipoListadoFragment extends Fragment {
     }
 
     public void listar(){
-        ApiService apiService = ApiAdapter.getApiService();
-        Call<AnticipoListadoResponse> call = apiService.getAnticipoListado(DatosSesion.TOKEN,"1");
-        call.enqueue(new Callback<AnticipoListadoResponse>() {
+
+        apiService.getAnticipoListado(DatosSesion.USUARIO_ID,DatosSesion.TOKEN).enqueue(new Callback<AnticipoListadoResponse>() {
             @Override
             public void onResponse(Call<AnticipoListadoResponse> call, Response<AnticipoListadoResponse> response) {
+                Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipo = response.body();
                     listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
                     adapter.cargarDatos(listaAnticipo);
+
                 }else{
                     try {
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
@@ -73,8 +83,11 @@ public class AnticipoListadoFragment extends Fragment {
                 }
             }
 
+
             @Override
             public void onFailure(Call<AnticipoListadoResponse> call, Throwable t) {
+                Log.e("Error listando anticipo", t.getMessage());
+                Log.e("error listado",""+call);
 
             }
         });

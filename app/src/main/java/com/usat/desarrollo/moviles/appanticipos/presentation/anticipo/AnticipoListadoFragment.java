@@ -3,64 +3,81 @@ package com.usat.desarrollo.moviles.appanticipos.presentation.anticipo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.usat.desarrollo.moviles.appanticipos.R;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
+import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.AnticipoAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AnticipoListadoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class AnticipoListadoFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AnticipoListadoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnticipoListadoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnticipoListadoFragment newInstance(String param1, String param2) {
-        AnticipoListadoFragment fragment = new AnticipoListadoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    RecyclerView rvAnticipo;
+    AnticipoAdapter adapter;
+    ArrayList<Anticipo> listaAnticipo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anticipo_listado, container, false);
+        View view = inflater.inflate(R.layout.fragment_anticipo_listado, container, false);
+        rvAnticipo=view.findViewById(R.id.rvAnticipo);
+        rvAnticipo.setHasFixedSize(true);
+        rvAnticipo.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
+        adapter = new AnticipoAdapter(this.getActivity());
+        rvAnticipo.setAdapter(adapter);
+        listar();
+        return view;
+    }
+
+    public void listar(){
+        ApiService apiService = ApiAdapter.getApiService();
+        Call<AnticipoListadoResponse> call = apiService.getAnticipoListado(DatosSesion.TOKEN,"1");
+        call.enqueue(new Callback<AnticipoListadoResponse>() {
+            @Override
+            public void onResponse(Call<AnticipoListadoResponse> call, Response<AnticipoListadoResponse> response) {
+                if (response.code() == 200){
+                    AnticipoListadoResponse anticipo = response.body();
+                    listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
+                    adapter.cargarDatos(listaAnticipo);
+                }else{
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        Log.e("Error", jsonError.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnticipoListadoResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 }

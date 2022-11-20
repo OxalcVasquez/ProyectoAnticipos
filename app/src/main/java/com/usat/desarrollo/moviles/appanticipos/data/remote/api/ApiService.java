@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
@@ -48,5 +49,13 @@ public interface ApiService {
             @Field("sede_id") int sede_id,
             @Field("docente_id") int docente_id
             );
+
+    @FormUrlEncoded
+    @POST("anticipos/docente/listar")
+    Call<AnticipoListadoResponse> getAnticipoListado(
+            @Field("token") String token,
+            @Field("docente_id") String docente
+    );
+
 
 }

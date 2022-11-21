@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,6 +99,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_rendicion_gastos:
                 fragment = new RendicionFragment();
+                break;
+            case R.id.nav_logout:
+                DatosSesion.clear();
+                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
 
         }

@@ -45,14 +45,21 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         progressBar = findViewById(R.id.progressBar);
         apiService = ApiAdapter.getApiService();
-
-        login(txtEmail.getText().toString(), Helper.convertPassMd5(txtPassword.getText().toString()));
+        login();
     }
 
-    private void login(String email, String password) {
+    private void login() {
         btnLogin.setOnClickListener(view -> {
+            if (validation()) {
+                Snackbar
+                        .make(findViewById(R.id.layoutLogin), R.string.txt_validation, Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.warning))
+                        .show();
+                return;
+            }
+
             progressBar.setVisibility(View.VISIBLE);
-            apiService.getSesion(email, password).enqueue(new Callback<LoginResponse>() {
+            apiService.getSesion(txtEmail.getText().toString(), Helper.convertPassMd5(txtPassword.getText().toString())).enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     progressBar.setVisibility(View.GONE);
@@ -97,5 +104,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private boolean validation() {
+        return txtEmail.getText().toString().isEmpty() || txtPassword.getText().toString().isEmpty();
     }
 }

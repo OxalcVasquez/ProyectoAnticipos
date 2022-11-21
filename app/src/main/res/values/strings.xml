@@ -40,6 +40,7 @@
     <string name="login_password">Contraseña</string>
     <string name="btn_login">Ingresar</string>
     <string name="title_login">Inicio de sesión</string>
+    <string name="txt_validation">Debes ingresar el email y contraseña</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

@@ -37,4 +37,5 @@
     <string name="dialog_agregar_comprobante">Debes agregar un comprobante</string>
     <string name="login_email">Email</string>
     <string name="login_password">Contraseña</string>
+    <string name="txt_validation">Debes ingresar el email y contraseña</string>
 </resources>

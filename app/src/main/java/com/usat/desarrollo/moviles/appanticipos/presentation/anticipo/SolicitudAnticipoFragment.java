@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,11 +65,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
     ProgressBar progressBar;
     int idMotivoSeleccionado,idSedeSeleccionada;
-    long diasAnticipo;
-
-    Calendar calendar1 = Calendar.getInstance();
-    Calendar calendar2 = Calendar.getInstance();
-
+    long diasAnticipo=1;
     ApiService apiService;
 
 
@@ -101,10 +98,47 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         btnLimpiar.setOnClickListener(this);
         txtFechaInicio.setOnClickListener(this);
         txtFechaFin.setOnClickListener(this);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        txtFechaInicio.setText(sdf.format(new Date()));
-        txtFechaFin.setText(sdf.format(new Date()));
 
+        //Seteando fecha actual
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date actual = new Date();
+        Date diaSiguente = new Date(actual.getTime() + (1000 * 60 * 60 * 24));
+        txtFechaInicio.setText(sdf.format(actual));
+        txtFechaFin.setText(sdf.format(diaSiguente));
+
+        txtFechaInicio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                actualizarCalendario();
+            }
+        });
+
+        txtFechaFin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                actualizarCalendario();
+            }
+        });
 
         actvMotivoAnticipo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -140,6 +174,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
                     .show();
         }
+        resumenTarifas();
 
     }
 
@@ -155,11 +190,9 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                 break;
             case  R.id.txtFechaFin:
                 Pickers.obtenerFecha(getActivity(),txtFechaFin);
-                actualizarCalendario();
                 break;
             case R.id.txtFechaInicio:
                 Pickers.obtenerFecha(getActivity(),txtFechaInicio);
-                actualizarCalendario();
                 break;
 
         }
@@ -294,52 +327,54 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
 
     private void resumenTarifas() {
-        progressBar.setVisibility(View.VISIBLE);
-        apiService.getViaticos(DatosSesion.TOKEN,idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
-            @Override
-            public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.code() == 200) {
-                    TarifaResponse tarifaResponse = response.body();
-                    boolean status = tarifaResponse.getStatus();
-                    if (status) {
-                        String resumen = "";
-                        float montoTotal=0;
-                        float montoRubro =0;
-                        List<Tarifa> tarifaList = tarifaResponse.getData();
-                        for (Tarifa tarifa:tarifaList ) {
-                            if (tarifa.getSe_calcula_por_dia().equals("1")) {
-                                 montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
-                            } else {
-                                 montoRubro = tarifa.getMonto_maximo();
+        if (idMotivoSeleccionado>0 && idSedeSeleccionada>0 && diasAnticipo>0) {
+            progressBar.setVisibility(View.VISIBLE);
+            apiService.getViaticos(DatosSesion.TOKEN,idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
+                @Override
+                public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.code() == 200) {
+                        TarifaResponse tarifaResponse = response.body();
+                        boolean status = tarifaResponse.getStatus();
+                        if (status) {
+                            String resumen = "";
+                            float montoTotal=0;
+                            float montoRubro =0;
+                            List<Tarifa> tarifaList = tarifaResponse.getData();
+                            for (Tarifa tarifa:tarifaList ) {
+                                if (tarifa.getSe_calcula_por_dia().equals("1")) {
+                                    montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
+                                } else {
+                                    montoRubro = tarifa.getMonto_maximo();
+                                }
+                                montoTotal += montoRubro;
+                                resumen += tarifa.getRubro() +": S./" + montoRubro + "\n";
                             }
-                            montoTotal += montoRubro;
-                            resumen += tarifa.getRubro() +": S./" + montoRubro + "\n";
-                    }
-                        txtResumenSolicitud.setText(resumen);
-                        txtTotalViaticos.setText("TOTAL VIATICOS S./"+montoTotal);
-                } else {
-                    try {
-                        JSONObject jsonError = new JSONObject(response.errorBody().string());
-                        String message =  jsonError.getString("message");
-                        Log.e("ERROR CARGANDO RESUMEN VIATICOS", message);
+                            txtResumenSolicitud.setText(resumen);
+                            txtTotalViaticos.setText("TOTAL VIATICOS S./"+montoTotal);
+                        } else {
+                            try {
+                                JSONObject jsonError = new JSONObject(response.errorBody().string());
+                                String message =  jsonError.getString("message");
+                                Log.e("ERROR CARGANDO RESUMEN VIATICOS", message);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
+
+
                 }
-            }
+                @Override
+                public void onFailure(Call<TarifaResponse> call, Throwable t) {
+                    Log.e("Error cargando resumen viaticos", t.getMessage());
 
-
+                }
+            });
         }
-            @Override
-            public void onFailure(Call<TarifaResponse> call, Throwable t) {
-                Log.e("Error cargando resumen viaticos", t.getMessage());
-
-            }
-        });
     }
     private void limpiar(){
         actvSedeDestino.setText("");

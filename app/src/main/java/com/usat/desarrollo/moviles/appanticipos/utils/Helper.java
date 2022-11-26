@@ -185,7 +185,7 @@ public class Helper {
         String a = fecha.substring(fecha.length()-4);
         String m = fecha.substring(3,5);
         String d = fecha.substring(0, 2);
-        return  a+"/"+m+"/"+d;
+        return  a+"-"+m+"-"+d;
     }
 
     public static String formatearAMD_to_DMA(String fecha){

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,14 +65,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     ProgressBar progressBar;
     int idMotivoSeleccionado,idSedeSeleccionada;
     long diasAnticipo;
-    String fechaInicio,fechaFin;
 
     Calendar calendar1 = Calendar.getInstance();
     Calendar calendar2 = Calendar.getInstance();
 
     ApiService apiService;
-
-
 
 
     @Override
@@ -101,6 +101,10 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         btnLimpiar.setOnClickListener(this);
         txtFechaInicio.setOnClickListener(this);
         txtFechaFin.setOnClickListener(this);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        txtFechaInicio.setText(sdf.format(new Date()));
+        txtFechaFin.setText(sdf.format(new Date()));
+
 
         actvMotivoAnticipo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -122,44 +126,14 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         return view;
     }
 
-    DatePickerDialog.OnDateSetListener fecha1 = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
-            calendar1.set(Calendar.YEAR,anio);
-            calendar1.set(Calendar.MONTH,mes);
-            calendar1.set(Calendar.DAY_OF_MONTH,dia);
-            actualizarCalendario();
-
-        }
-    };
-
-    DatePickerDialog.OnDateSetListener fecha2 = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
-            calendar2.set(Calendar.YEAR,anio);
-            calendar2.set(Calendar.MONTH,mes);
-            calendar2.set(Calendar.DAY_OF_MONTH,dia);
-            actualizarCalendario();
-
-        }
-
-    };
     //luego agregar el validar fecha inicio y fin
     private void actualizarCalendario(){
-        String format = "dd/MM/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-        txtFechaInicio.setText(sdf.format(calendar1.getTime()));
-        txtFechaFin.setText(sdf.format(calendar2.getTime()));
-        String formatRegistro = "yyyy-MM-dd";
-        SimpleDateFormat sdfRegistro = new SimpleDateFormat(formatRegistro, Locale.US);
-        fechaInicio =sdfRegistro.format(calendar1.getTime());
-        fechaFin =sdfRegistro.format(calendar2.getTime());
         //Para obtener dias de diferencia entre los anticipos
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
         LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText().toString(), dtf);
         diasAnticipo = Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
-
+        Toast.makeText(getActivity(), "DIAS DIEFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
         if (diasAnticipo<=0){
             Snackbar
                     .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "La fecha de fin debe ser mayor a la de inicio", Snackbar.LENGTH_LONG)
@@ -181,16 +155,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                 break;
             case  R.id.txtFechaFin:
                 Pickers.obtenerFecha(getActivity(),txtFechaFin);
-//                new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
-//                        calendar2.get(Calendar.DAY_OF_MONTH)
-//                ).show();
+                actualizarCalendario();
                 break;
             case R.id.txtFechaInicio:
                 Pickers.obtenerFecha(getActivity(),txtFechaInicio);
-//
-//                new DatePickerDialog(getActivity(),fecha1,calendar1.get(Calendar.YEAR),calendar1.get(Calendar.MONTH),
-//                        calendar1.get(Calendar.DAY_OF_MONTH)
-//                ).show();
+                actualizarCalendario();
                 break;
 
         }
@@ -199,6 +168,9 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void registrarAnticipo() {
         progressBar.setVisibility(View.VISIBLE);
         String descripcion = txtDescripcion.getText().toString();
+        String fechaInicio = Helper.formatearDMA_to_AMD(txtFechaInicio.getText().toString());
+        String fechaFin = Helper.formatearDMA_to_AMD(txtFechaFin.getText().toString());
+        Toast.makeText(getActivity(), fechaInicio, Toast.LENGTH_SHORT).show();
 
         apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoRegistroResponse>() {
             @Override

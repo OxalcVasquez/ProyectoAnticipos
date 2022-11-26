@@ -19,6 +19,8 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -173,5 +175,24 @@ public class Helper {
         return strAdd.substring(0,strAdd.length()-1);
     }
 
+    public static String obtenerFechaActual(){
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+        return formatofecha.format(fecha);
+    }
+
+    public static String formatearDMA_to_AMD(String fecha){
+        String a = fecha.substring(fecha.length()-4);
+        String m = fecha.substring(3,5);
+        String d = fecha.substring(0, 2);
+        return  a+"/"+m+"/"+d;
+    }
+
+    public static String formatearAMD_to_DMA(String fecha){
+        String d = fecha.substring(fecha.length()-2);
+        String m = fecha.substring(5,7);
+        String a = fecha.substring(0,4);
+        return  a+"/"+m+"/"+d;
+    }
 
 }

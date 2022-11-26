@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,8 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
+import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
+import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +55,8 @@ import retrofit2.Response;
 
 public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener {
 
-    TextView txtDescripcion,txtFechaInicio,txtFechaFin,txtResumenSolicitud,txtTotalViaticos;
+    TextView txtDescripcion,txtResumenSolicitud,txtTotalViaticos;
+    EditText txtFechaInicio,txtFechaFin;
     MaterialButton btnRegistrarAnticipo,btnLimpiar;
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
     ProgressBar progressBar;
@@ -150,7 +154,6 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         SimpleDateFormat sdfRegistro = new SimpleDateFormat(formatRegistro, Locale.US);
         fechaInicio =sdfRegistro.format(calendar1.getTime());
         fechaFin =sdfRegistro.format(calendar2.getTime());
-
         //Para obtener dias de diferencia entre los anticipos
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
         LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
@@ -177,14 +180,17 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                 limpiar();
                 break;
             case  R.id.txtFechaFin:
-                new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
-                        calendar2.get(Calendar.DAY_OF_MONTH)
-                ).show();
+                Pickers.obtenerFecha(getActivity(),txtFechaFin);
+//                new DatePickerDialog(getActivity(),fecha2,calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH),
+//                        calendar2.get(Calendar.DAY_OF_MONTH)
+//                ).show();
                 break;
             case R.id.txtFechaInicio:
-                new DatePickerDialog(getActivity(),fecha1,calendar1.get(Calendar.YEAR),calendar1.get(Calendar.MONTH),
-                        calendar1.get(Calendar.DAY_OF_MONTH)
-                ).show();
+                Pickers.obtenerFecha(getActivity(),txtFechaInicio);
+//
+//                new DatePickerDialog(getActivity(),fecha1,calendar1.get(Calendar.YEAR),calendar1.get(Calendar.MONTH),
+//                        calendar1.get(Calendar.DAY_OF_MONTH)
+//                ).show();
                 break;
 
         }

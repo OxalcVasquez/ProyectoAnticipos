@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -100,18 +101,13 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         actvMotivoAnticipo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemSeleccionado = adapterView.getItemAtPosition(i).toString().substring(0,1);
-                int id = Integer.parseInt(itemSeleccionado);
-                idMotivoSeleccionado = id;
-
+                idMotivoSeleccionado = MotivoAnticipo.listaMotivos.get(i).getId();
             }
         });
         actvSedeDestino.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemSeleccionado = adapterView.getItemAtPosition(i).toString().substring(0,1);
-                int id = Integer.parseInt(itemSeleccionado);
-                idSedeSeleccionada = id;
+                idSedeSeleccionada = Sede.listaSedes.get(i).getId();
                 resumenTarifas();
             }
         });
@@ -248,9 +244,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     boolean status = motivoAnticipoResponse.getStatus();
                     if (status) {
                         List<MotivoAnticipo> motivoAnticipoList = motivoAnticipoResponse.getData();
+                        //Enlazando lista motivos a clase
+                        MotivoAnticipo.listaMotivos = motivoAnticipoList;
                         String motivosDescripcion[] = new String[motivoAnticipoList.size()];
                         for (int i = 0; i < motivoAnticipoList.size() ; i++) {
-                            motivosDescripcion[i] = motivoAnticipoList.get(i).toString();
+                            motivosDescripcion[i] = motivoAnticipoList.get(i).getDescripcion();
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,motivosDescripcion);
                         actvMotivoAnticipo.setAdapter(adapter);
@@ -285,9 +283,10 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     boolean status = sedesResponse.getStatus();
                     if (status) {
                         List<Sede> sedeList = sedesResponse.getData();
+                        Sede.listaSedes = sedeList;
                         String sedeDescripcion[] = new String[sedeList.size()];
                         for (int i = 0; i < sedeList.size() ; i++) {
-                            sedeDescripcion[i] = sedeList.get(i).toString();
+                            sedeDescripcion[i] = sedeList.get(i).getNombre();
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,sedeDescripcion);
                         actvSedeDestino.setAdapter(adapter);

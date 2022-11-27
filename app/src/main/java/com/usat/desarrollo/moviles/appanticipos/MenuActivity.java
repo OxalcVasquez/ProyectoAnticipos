@@ -51,8 +51,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         txtEmail = cabeceraMenu.findViewById(R.id.loginUsuario);
 
         //Mostrar los datos del usuario: Nombre y su email
-        txtNombre.setText(DatosSesion.USUARIO_NOMBRE);
-        txtEmail.setText(DatosSesion.USUARIO_EMAIL);
+        txtNombre.setText(DatosSesion.sesion.getNombres() + " "+ DatosSesion.sesion.getApellidos());
+        txtEmail.setText(DatosSesion.sesion.getEmail());
     }
 
     @Override

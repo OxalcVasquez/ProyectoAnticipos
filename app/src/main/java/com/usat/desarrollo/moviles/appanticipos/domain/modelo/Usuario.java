@@ -2,7 +2,15 @@ package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
 public class Usuario {
     private int id, rol_id;
-    private String email, nombres, apellidos, password, estado_usuario, token, estado_token;
+    private String email, nombres, apellidos, password, estado_usuario, token, estado_token,img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public int getId() {
         return id;

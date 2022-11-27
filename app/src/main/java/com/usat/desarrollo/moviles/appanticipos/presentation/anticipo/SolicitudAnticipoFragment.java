@@ -205,7 +205,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         String fechaFin = Helper.formatearDMA_to_AMD(txtFechaFin.getText().toString());
         Toast.makeText(getActivity(), fechaInicio, Toast.LENGTH_SHORT).show();
 
-        apiService.getAnticipoRegistrado(DatosSesion.TOKEN,descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.USUARIO_ID).enqueue(new Callback<AnticipoRegistroResponse>() {
+        apiService.getAnticipoRegistrado(DatosSesion.sesion.getToken(),descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.sesion.getId()).enqueue(new Callback<AnticipoRegistroResponse>() {
             @Override
             public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
                 progressBar.setVisibility(View.GONE);
@@ -247,7 +247,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     }
 
     private void cargarMotivosAnticipo(){
-        apiService.getMotivosAnticipos(DatosSesion.TOKEN).enqueue(new Callback<MotivoAnticipoResponse>() {
+        apiService.getMotivosAnticipos(DatosSesion.sesion.getToken()).enqueue(new Callback<MotivoAnticipoResponse>() {
             @Override
             public void onResponse(Call<MotivoAnticipoResponse> call, Response<MotivoAnticipoResponse> response) {
                 if (response.code() == 200) {
@@ -286,7 +286,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     }
 
     private void cargarSedes(){
-        apiService.getSedes(DatosSesion.TOKEN).enqueue(new Callback<SedesResponse>() {
+        apiService.getSedes(DatosSesion.sesion.getToken()).enqueue(new Callback<SedesResponse>() {
             @Override
             public void onResponse(Call<SedesResponse> call, Response<SedesResponse> response) {
                 if (response.code() == 200) {
@@ -329,7 +329,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void resumenTarifas() {
         if (idMotivoSeleccionado>0 && idSedeSeleccionada>0 && diasAnticipo>0) {
             progressBar.setVisibility(View.VISIBLE);
-            apiService.getViaticos(DatosSesion.TOKEN,idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
+            apiService.getViaticos(DatosSesion.sesion.getToken(),idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
                 @Override
                 public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
                     progressBar.setVisibility(View.GONE);

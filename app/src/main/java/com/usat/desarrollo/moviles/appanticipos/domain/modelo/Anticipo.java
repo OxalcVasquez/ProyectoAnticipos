@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Anticipo {
@@ -9,6 +10,7 @@ public class Anticipo {
     private String fecha_fin;
     private String fecha_inicio;
     private float monto_total;
+    public static ArrayList<Anticipo> listaAnticipos;
 
     public int getAnticipo_id() {
         return anticipo_id;

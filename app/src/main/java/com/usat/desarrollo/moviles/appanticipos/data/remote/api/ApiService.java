@@ -57,5 +57,13 @@ public interface ApiService {
             @Field("token") String token
     );
 
+    @FormUrlEncoded
+    @POST("anticipos/docente/listar/estado")
+    Call<AnticipoListadoResponse> getAnticiposEstados(
+            @Field("docente_id") int docente_id,
+            @Field("estado") int estado,
+            @Field("token") String token
+    );
+
 
 }

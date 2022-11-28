@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
+import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,6 +96,7 @@ public class RendicionGastosFragment extends Fragment {
         }
 
         cargarAnticiposPendientesARendicion();
+        agregarComprobante();
         return view;
     }
 
@@ -107,6 +110,9 @@ public class RendicionGastosFragment extends Fragment {
 
     private void agregarComprobante() {
         btnAgregarComprobante.setOnClickListener(view -> {
+            Intent intent = new Intent(this.getActivity(), AgregarComprobanteActivity.class);
+            startActivity(intent);
+
         });
     }
 

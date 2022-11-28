@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoFragment;
-import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.ComprobanteFragment;
 import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -43,9 +42,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        if (DatosSesion.sesion.getRol_id() != 1) {
-            navigationView.getMenu().findItem(R.id.nav_comprobantes).setVisible(false);
-        }
+
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -94,10 +91,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         Fragment fragment = new Fragment();
         switch (id) {
-            case R.id.nav_comprobantes:
-                fragment = new ComprobanteFragment();
-                break;
-
             case R.id.nav_anticipo:
                 fragment = new AnticipoFragment();
                 break;

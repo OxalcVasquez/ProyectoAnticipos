@@ -9,11 +9,6 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Anticipos" />
         <item
-            android:id="@+id/nav_comprobantes"
-            android:icon="@drawable/ic_comprobantes"
-            android:title="Comprobantes" />
-
-        <item
             android:id="@+id/nav_rendicion_gastos"
             android:icon="@drawable/ic_rendicion_gastos"
             android:title="Rendición de gastos" />

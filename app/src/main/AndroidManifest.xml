@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppNavigationDrawerActivity"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".presentation.comprobante.AgregarComprobanteActivity"
+            android:exported="false" />
+        <activity
             android:name=".MenuActivity"
             android:exported="false"
             android:theme="@style/Theme.AppNavigationDrawerActivity.NoActionBar">

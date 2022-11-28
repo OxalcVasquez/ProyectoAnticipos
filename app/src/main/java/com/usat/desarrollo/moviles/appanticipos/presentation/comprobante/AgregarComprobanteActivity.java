@@ -9,17 +9,34 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.usat.desarrollo.moviles.appanticipos.R;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.RubrosResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Rubro;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.TipoComprobante;
 import com.usat.desarrollo.moviles.appanticipos.utils.Gallery;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AgregarComprobanteActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,7 +44,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
     MaterialButton btnAgregar,btnLimpiar,btnAgregarFoto;
     AutoCompleteTextView actvRubro,actvComprobante;
     ImageView imgComprobante;
-    Calendar calendar = Calendar.getInstance();
+    ApiService apiService;
     public static final int REQUEST_PICK = 1;
 
 
@@ -49,11 +66,17 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         btnAgregarFoto = findViewById(R.id.btn_comprobante_foto);
         imgComprobante = findViewById(R.id.img_comprobante);
 
+        //Inicializando api service
+        apiService = ApiAdapter.getApiService();
 
         btnAgregarFoto.setOnClickListener(this);
         btnAgregar.setOnClickListener(this);
         btnLimpiar.setOnClickListener(this);
         txtFecha.setOnClickListener(this);
+
+        //Cargando datos de autocompletextview
+        cargarRubros();
+        cargarTipoComprobante();
     }
 
     private void abrirGaleria() {
@@ -98,5 +121,85 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         }
     }
 
+    private void cargarRubros() {
+        apiService.getRubros(DatosSesion.sesion.getToken()).enqueue(new Callback<RubrosResponse>() {
+            @Override
+            public void onResponse(Call<RubrosResponse> call, Response<RubrosResponse> response) {
+                if (response.code() == 200) {
+                    RubrosResponse rubrosResponse = response.body();
+                    boolean status = rubrosResponse.getStatus();
+                    if (status) {
+                        List<Rubro> rubroList = rubrosResponse.getData();
+                        Rubro.listaRubros = rubroList;
+                        String nombreRubros[] = new String[rubroList.size()];
+                        for (int i = 0; i < rubroList.size(); i++) {
+                            nombreRubros[i] = rubroList.get(i).getNombre();
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarComprobanteActivity.this, android.R.layout.simple_dropdown_item_1line, nombreRubros);
+                        actvRubro.setAdapter(adapter);
+                    }
+
+                } else {
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        String message = jsonError.getString("message");
+                        Log.e("ERROR CARGANDO LISTADO RUBROS", message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RubrosResponse> call, Throwable t) {
+                Log.e("Error cargando  rubros", t.getMessage());
+
+            }
+        });
+    }
+
+        private void cargarTipoComprobante() {
+            apiService.getTiposComprobante(DatosSesion.sesion.getToken()).enqueue(new Callback<TipoComprobanteResponse>() {
+                @Override
+                public void onResponse(Call<TipoComprobanteResponse> call, Response<TipoComprobanteResponse> response) {
+                    if (response.code() == 200) {
+                        TipoComprobanteResponse tipoComprobanteResponse = response.body();
+                        boolean status = tipoComprobanteResponse.getStatus();
+                        if (status) {
+                            List<TipoComprobante> tipoComprobanteList = tipoComprobanteResponse.getData();
+                            TipoComprobante.listaComprobamte = tipoComprobanteList;
+                            String tipos[] = new String[tipoComprobanteList.size()];
+                            for (int i = 0; i < tipoComprobanteList.size(); i++) {
+                                tipos[i] = tipoComprobanteList.get(i).getNombre();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarComprobanteActivity.this, android.R.layout.simple_dropdown_item_1line, tipos);
+                            actvComprobante.setAdapter(adapter);
+                        }
+
+                    } else {
+                        try {
+                            JSONObject jsonError = new JSONObject(response.errorBody().string());
+                            String message = jsonError.getString("message");
+                            Log.e("ERROR CARGANDO LISTADO RUBROS", message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<TipoComprobanteResponse> call, Throwable t) {
+                    Log.e("Error cargando  rubros", t.getMessage());
+
+                }
+            });
+
+    }
 
 }

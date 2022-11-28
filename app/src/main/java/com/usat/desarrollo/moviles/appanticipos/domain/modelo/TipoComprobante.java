@@ -1,30 +1,28 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import java.util.List;
+
 public class TipoComprobante {
-    private int idCom;
-    private String nombreCom;
+    private int id;
+    private String nombre;
+    public static List<TipoComprobante> listaComprobamte;
 
-    public TipoComprobante(int idCom, String nombreCom) {
-        this.idCom = idCom;
-        this.nombreCom = nombreCom;
+    public int getId() {
+        return id;
     }
 
-    public TipoComprobante() {
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdCom() {
-        return idCom;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setIdCom(int idCom) {
-        this.idCom = idCom;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getNombreCom() {
-        return nombreCom;
-    }
 
-    public void setNombreCom(String nombreCom) {
-        this.nombreCom = nombreCom;
-    }
+
 }

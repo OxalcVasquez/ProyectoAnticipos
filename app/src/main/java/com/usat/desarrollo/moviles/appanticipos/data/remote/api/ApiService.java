@@ -4,8 +4,10 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoLis
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.RubrosResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -32,11 +34,24 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("rubro/listar")
+    Call<RubrosResponse> getRubros(
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("tipo_comprobante/listar")
+    Call<TipoComprobanteResponse> getTiposComprobante(
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
     @POST("tarifa/viaticos")
     Call<TarifaResponse> getViaticos(
             @Field("token") String token,
             @Field("sede_id") int sede_id
     );
+
 
     @FormUrlEncoded
     @POST("anticipo/registrar")

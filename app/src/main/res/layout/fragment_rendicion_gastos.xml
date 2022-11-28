@@ -70,7 +70,7 @@
                         android:layout_gravity="end"
                         android:paddingBottom="8dp"
                         android:text="@string/btn_agregar_comprobante"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/secondaryTextColor" />
 
                 </LinearLayout>
 
@@ -366,7 +366,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/btn_registro_rendicion"
-                    android:textColor="@color/primaryTextColor" />
+                    android:textColor="@color/secondaryTextColor" />
 
             </LinearLayout>
 

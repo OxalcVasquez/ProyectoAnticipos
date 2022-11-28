@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.usat.desarrollo.moviles.appanticipos.R;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 
 
 public class AnticipoFragment extends Fragment {
@@ -43,14 +44,19 @@ public class AnticipoFragment extends Fragment {
                 case R.id.opcion_listar_anticipos:
                     fragment = new AnticipoListadoFragment();
                     break;
-
             }
 
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.contenedor_anticipos,fragment).commit();
             return true;
         });
-        bottomAnticipo.setSelectedItemId(R.id.opcion_solicitar_anticipo);
+
+        if (DatosSesion.sesion.getRol_id() != 1) {
+            bottomAnticipo.getMenu().findItem(R.id.opcion_solicitar_anticipo).setVisible(false);
+            bottomAnticipo.setSelectedItemId(R.id.opcion_listar_anticipos);
+        } else {
+            bottomAnticipo.setSelectedItemId(R.id.opcion_solicitar_anticipo);
+        }
         return view;
     }
 

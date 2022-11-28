@@ -42,6 +42,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (DatosSesion.sesion.getRol_id() != 1) {
+            navigationView.getMenu().findItem(R.id.nav_comprobantes).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         //Referenciar a la cabecera del menú

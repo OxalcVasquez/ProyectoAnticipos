@@ -9,8 +9,17 @@ public class Anticipo {
     private String estado;
     private String fecha_fin;
     private String fecha_inicio;
+    private String img;
     private float monto_total;
     public static ArrayList<Anticipo> listaAnticipos;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public int getAnticipo_id() {
         return anticipo_id;

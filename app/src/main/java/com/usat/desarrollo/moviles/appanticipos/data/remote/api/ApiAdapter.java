@@ -7,6 +7,8 @@ public class ApiAdapter {
     private static ApiService apiService;
 
     public static final String BASE_URL = "https://web-services-anticipos.onrender.com/";
+    //public static final String BASE_URL = "http://192.168.0.6:3001/";
+
 
     public static ApiService getApiService() {
         if (apiService == null) {

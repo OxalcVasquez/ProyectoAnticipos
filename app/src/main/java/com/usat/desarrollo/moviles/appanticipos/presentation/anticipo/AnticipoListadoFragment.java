@@ -65,7 +65,7 @@ public class AnticipoListadoFragment extends Fragment {
         apiService.getAnticipoListado(DatosSesion.sesion.getId(),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoListadoResponse>() {
             @Override
             public void onResponse(Call<AnticipoListadoResponse> call, Response<AnticipoListadoResponse> response) {
-                Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipo = response.body();
                     listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));

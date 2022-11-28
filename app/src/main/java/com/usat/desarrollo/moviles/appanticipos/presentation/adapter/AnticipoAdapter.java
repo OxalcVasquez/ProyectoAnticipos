@@ -4,12 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.usat.desarrollo.moviles.appanticipos.R;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 
 import java.util.ArrayList;
@@ -39,7 +43,9 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         holder.txtFechaFin.setText("Al: "+String.valueOf(anticipo.getFecha_fin()));
         holder.txtEstado.setText(""+ String.valueOf(anticipo.getEstado()));
         holder.txtMonto.setText("Monto: "+ String.valueOf(anticipo.getMonto_total()));
-
+        Glide.with(context)
+                .load(ApiAdapter.BASE_URL.toString() + anticipo.getImg())
+                .into(holder.imgSede);
     }
 
     @Override
@@ -54,14 +60,17 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txtAnticipo, txtMonto, txtFechaInicio, txtFechaFin, txtEstado;
+        ImageView imgSede;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtAnticipo = itemView.findViewById(R.id.txtAnticipo);
             txtMonto = itemView.findViewById(R.id.txtMonto);
             txtFechaInicio = itemView.findViewById(R.id.txtFechaInicio);
             txtFechaFin = itemView.findViewById(R.id.txtFechaFin);
             txtEstado = itemView.findViewById(R.id.txtEstado);
+            imgSede = itemView.findViewById(R.id.imgSede);
 
 
         }

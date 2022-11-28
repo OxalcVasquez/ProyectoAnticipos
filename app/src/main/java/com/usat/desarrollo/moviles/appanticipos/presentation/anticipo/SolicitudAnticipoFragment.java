@@ -379,8 +379,6 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void limpiar(){
         actvSedeDestino.setText("");
         actvMotivoAnticipo.setText("");
-        txtFechaFin.setText("");
-        txtFechaInicio.setText("");
         txtDescripcion.setText("");
         txtResumenSolicitud.setText("RESUMEN");
         txtTotalViaticos.setText("TOTAL VIÁTICOS");

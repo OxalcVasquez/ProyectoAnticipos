@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.usat.desarrollo.moviles.appanticipos.R;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
@@ -75,7 +76,8 @@ public class RendicionGastosFragment extends Fragment {
 
         txtDocente.setText(DatosSesion.sesion.getNombres() + " "+DatosSesion.sesion.getApellidos());
 
-
+        //Inicailzando api service
+        apiService = ApiAdapter.getApiService();
 
         recyclerComprobante = view.findViewById(R.id.recycler_comprobantes_rendicion);
         recyclerComprobante.setHasFixedSize(true);

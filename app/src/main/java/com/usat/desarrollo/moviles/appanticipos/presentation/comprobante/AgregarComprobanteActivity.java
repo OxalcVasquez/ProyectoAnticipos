@@ -11,8 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,10 +24,15 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.RubrosResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Rubro;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.TipoComprobante;
+import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
+import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionGastosFragment;
 import com.usat.desarrollo.moviles.appanticipos.utils.Gallery;
+import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,13 +47,14 @@ import retrofit2.Response;
 
 public class AgregarComprobanteActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtFecha,txtRuc,txtDescripcion,txtSerie,txtCorrelativo,txtMontoComprobante;
-    MaterialButton btnAgregar,btnLimpiar,btnAgregarFoto;
+    EditText txtFecha,txtRuc,txtDescripcion,txtSerie,txtCorrelativo,txtMontoComprobante;
+    MaterialButton btnAgregar,btnAgregarFoto;
     AutoCompleteTextView actvRubro,actvComprobante;
     ImageView imgComprobante;
     ApiService apiService;
     public static final int REQUEST_PICK = 1;
-
+    int idRubroSeleccionado, idTipoSeleccionado;
+    String rubro, tipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,6 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         txtSerie = findViewById(R.id.txt_serie_comprobante);
         txtCorrelativo = findViewById(R.id.txt_correlativo_comprobante);
         btnAgregar = findViewById(R.id.btn_comprobante_agregar);
-        btnLimpiar =findViewById(R.id.btn_comprobante_limpiar);
         txtMontoComprobante = findViewById(R.id.txt_monto_comprobante);
         actvComprobante = findViewById(R.id.actv_comprobante);
         actvRubro = findViewById(R.id.actv_comprobante_rubro);
@@ -71,12 +78,30 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
 
         btnAgregarFoto.setOnClickListener(this);
         btnAgregar.setOnClickListener(this);
-        btnLimpiar.setOnClickListener(this);
         txtFecha.setOnClickListener(this);
 
         //Cargando datos de autocompletextview
         cargarRubros();
         cargarTipoComprobante();
+
+        //Para obtener id cada vez que sse cambie
+        actvComprobante.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                idTipoSeleccionado = TipoComprobante.listaComprobamte.get(i).getId();
+                tipo = adapterView.getItemAtPosition(i).toString();
+            }
+        });
+
+        actvRubro.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                idRubroSeleccionado = Rubro.listaRubros.get(i).getId();
+                rubro = adapterView.getItemAtPosition(i).toString();
+            }
+        });
+
+
     }
 
     private void abrirGaleria() {
@@ -108,18 +133,39 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         switch (id) {
             case R.id.btn_comprobante_agregar:
                 //TODO AGREGAR
-                break;
-            case R.id.btn_comprobante_limpiar:
-                //TODO LIMPIAR
+                agregarComprobante();
                 break;
             case R.id.btn_comprobante_foto:
                 abrirGaleria();
                 break;
             case R.id.txt_fecha_comprobante:
-                //TODO CALENDAR
+                Pickers.obtenerFecha(AgregarComprobanteActivity.this,txtFecha);
                 break;
         }
     }
+
+    private void agregarComprobante() {
+        Comprobante comprobante = new Comprobante();
+        String ruc = txtRuc.getText().toString();
+        String descripcion = txtDescripcion.getText().toString();
+        String serie = txtSerie.getText().toString();
+        String correlativo = txtCorrelativo.getText().toString();
+        String montoTotal = txtMontoComprobante.getText().toString();
+        String fecha = txtFecha.getText().toString();
+        comprobante.setRuc(ruc);
+        comprobante.setDescripcion(descripcion);
+        comprobante.setSerie(serie);
+        comprobante.setCorrelativo(correlativo);
+        comprobante.setMontoTotal(Double.parseDouble(montoTotal));
+        comprobante.setFechaEmision(fecha);
+        comprobante.setRubro(rubro);
+        comprobante.setTipoComprobante(tipo);
+        Comprobante.comprobanteListado.add(comprobante);
+        RendicionGastosFragment.listar();
+        this.finish();
+    }
+
+
 
     private void cargarRubros() {
         apiService.getRubros(DatosSesion.sesion.getToken()).enqueue(new Callback<RubrosResponse>() {

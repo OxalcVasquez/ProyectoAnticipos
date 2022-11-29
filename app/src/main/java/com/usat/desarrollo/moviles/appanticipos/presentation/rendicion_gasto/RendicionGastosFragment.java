@@ -1,11 +1,14 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,15 +42,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RendicionGastosFragment extends Fragment {
+public class RendicionGastosFragment extends Fragment  {
 
     TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante;
     AutoCompleteTextView actvAnticipos;
     Button btnAgregarComprobante, btnRegistrarRedencion;
-    int pos = 0;
-
-    RecyclerView recyclerComprobante;
-    ComprobanteAdapter comprobanteAdapter;
+    public static ScrollView svComprobantes;
+    public static RecyclerView recyclerComprobante;
+    public static ComprobanteAdapter comprobanteAdapter;
 
     ApiService apiService;
 
@@ -75,6 +78,7 @@ public class RendicionGastosFragment extends Fragment {
         txtRestante = view.findViewById(R.id.txt_restante_rendicion);
         btnAgregarComprobante = view.findViewById(R.id.btn_comprobante_agregar_rendicion);
         btnRegistrarRedencion = view.findViewById(R.id.btn_registrar_rendicion);
+        svComprobantes = view.findViewById(R.id.sv_comprobantes);
 
         txtDocente.setText(DatosSesion.sesion.getNombres() + " "+DatosSesion.sesion.getApellidos());
 
@@ -84,16 +88,10 @@ public class RendicionGastosFragment extends Fragment {
         recyclerComprobante = view.findViewById(R.id.recycler_comprobantes_rendicion);
         recyclerComprobante.setHasFixedSize(true);
         recyclerComprobante.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-        comprobanteAdapter = new ComprobanteAdapter(this.getContext());
+        comprobanteAdapter = new ComprobanteAdapter(this.getActivity());
         recyclerComprobante.setAdapter(comprobanteAdapter);
+
         listar();
-
-        getPos();
-
-        if (recyclerComprobante.getAdapter().getItemCount() == 0) {
-            recyclerComprobante.setVisibility(View.GONE);
-        }
 
         cargarAnticiposPendientesARendicion();
         agregarComprobante();
@@ -110,25 +108,25 @@ public class RendicionGastosFragment extends Fragment {
 
     private void agregarComprobante() {
         btnAgregarComprobante.setOnClickListener(view -> {
-            Intent intent = new Intent(this.getActivity(), AgregarComprobanteActivity.class);
-            startActivity(intent);
-
+            startActivity(new Intent(this.getActivity(),AgregarComprobanteActivity.class));
         });
     }
 
-    private void getPos() {
-        actvAnticipos.setOnItemClickListener((adapterView, view, i, l) -> {
-            pos = i;
-        });
-    }
+
+
+
 
     private boolean validate() {
         return actvAnticipos.getText().toString().equalsIgnoreCase("");
     }
 
-    private void listar() {
-        new Comprobante().cargarDatosComprobante();
+    public static void listar() {
+        if (Comprobante.comprobanteListado.size()>0){
+            recyclerComprobante.setVisibility(View.VISIBLE);
+            svComprobantes.setVisibility(View.VISIBLE);
+        }
         comprobanteAdapter.cargarDatosComprobante(Comprobante.comprobanteListado);
+
     }
 
     private void cargarAnticiposPendientesARendicion(){
@@ -168,5 +166,6 @@ public class RendicionGastosFragment extends Fragment {
             }
         });
     }
+
 
 }

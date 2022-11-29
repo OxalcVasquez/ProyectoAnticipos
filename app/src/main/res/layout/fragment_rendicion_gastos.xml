@@ -74,12 +74,20 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_comprobantes_rendicion"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:paddingVertical="8dp"
-                    tools:listitem="@layout/comprobante_rendicion_cardview" />
+                    android:id="@+id/sv_comprobantes"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="20dp"
+                    >
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_comprobantes_rendicion"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:paddingVertical="8dp"
+                        tools:listitem="@layout/comprobante_rendicion_cardview" />
+
+                </ScrollView>
 
                 <LinearLayout
                     android:layout_width="match_parent"

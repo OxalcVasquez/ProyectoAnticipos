@@ -106,7 +106,7 @@
                             android:id="@+id/txt_serie_comprobante"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="text" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +125,7 @@
                             android:id="@+id/txt_correlativo_comprobante"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -197,7 +197,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="end"
                     >
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
@@ -207,17 +207,6 @@
                         android:textColor="@android:color/white"
                         android:id="@+id/btn_comprobante_agregar"
                         style="@style/Widget.MaterialComponents.Button"
-                        />
-                    <Space
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent" />
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Limpiar"
-                        app:icon="@drawable/ic_clean"
-                        android:id="@+id/btn_comprobante_limpiar"
-                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         />
                 </LinearLayout>
             </LinearLayout>

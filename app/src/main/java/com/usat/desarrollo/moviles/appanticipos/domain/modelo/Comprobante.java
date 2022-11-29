@@ -1,33 +1,33 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Comprobante {
+public class Comprobante implements Serializable {
     private int idCom, tipoComprobanteId, rubroId, numOperacion, informeGastoId;
-    private String serie, correlativo, ruc, descripcion, foto;
+    private String serie, correlativo, ruc, descripcion, foto, rubro,tipoComprobante;
     private Double montoTotal;
-    private Date fechaEmision;
+    private String fechaEmision;
+
+    public String getRubro() {
+        return rubro;
+    }
+
+    public void setRubro(String rubro) {
+        this.rubro = rubro;
+    }
+
+    public String getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(String tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
 
     public static ArrayList<Comprobante> comprobanteListado = new ArrayList<>();
 
-    public Comprobante(int idCom, int tipoComprobanteId, int rubroId, int numOperacion, int informeGastoId, String serie, String correlativo, String ruc, String descripcion, String foto, Double montoTotal, Date fechaEmision) {
-        this.idCom = idCom;
-        this.tipoComprobanteId = tipoComprobanteId;
-        this.rubroId = rubroId;
-        this.numOperacion = numOperacion;
-        this.informeGastoId = informeGastoId;
-        this.serie = serie;
-        this.correlativo = correlativo;
-        this.ruc = ruc;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.montoTotal = montoTotal;
-        this.fechaEmision = fechaEmision;
-    }
-
-    public Comprobante() {
-    }
 
     public int getIdCom() {
         return idCom;
@@ -117,11 +117,11 @@ public class Comprobante {
         this.montoTotal = montoTotal;
     }
 
-    public Date getFechaEmision() {
+    public String getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(String fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 

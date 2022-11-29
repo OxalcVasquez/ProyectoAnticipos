@@ -16,12 +16,11 @@ import java.util.ArrayList;
 
 public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.ViewHolder> {
 
-    private ArrayList<Comprobante> comprobanteList;
+    public static  ArrayList<Comprobante> comprobanteList = new ArrayList<>();
     private Context context;
 
     public ComprobanteAdapter(Context context) {
         this.comprobanteList = new ArrayList<>();
-        this.context = context;
     }
 
     @NonNull
@@ -33,7 +32,13 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mostrarComprobante(position);
+        Comprobante comprobante = comprobanteList.get(position);
+        holder.txtRubro.setText(comprobante.getRubro());
+        holder.txtFechaEmision.setText(comprobante.getFechaEmision());
+        holder.txtTipo.setText(comprobante.getTipoComprobante());
+        holder.txtTotal.setText("S/. "+comprobante.getMontoTotal());
+        holder.txtComprobante.setText(comprobante.getSerie() + "-" +comprobante.getCorrelativo());
+
     }
 
     @Override
@@ -48,18 +53,17 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtRubro, txtFechaEmision, txtComprobante, txtTotal;
+        TextView txtRubro, txtFechaEmision, txtComprobante, txtTotal, txtTipo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtRubro = itemView.findViewById(R.id.txt_rubro_listado);
             txtFechaEmision = itemView.findViewById(R.id.txt_fecha_emision_listado);
             txtComprobante = itemView.findViewById(R.id.txt_comprobante_listado);
+            txtTipo = itemView.findViewById(R.id.txt_tipo_comprobante);
             txtTotal = itemView.findViewById(R.id.txt_factura_total_listado);
         }
 
-        public void mostrarComprobante(int pos) {
 
-        }
     }
 }

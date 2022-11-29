@@ -26,6 +26,7 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
@@ -36,6 +37,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
 import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,7 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RendicionGastosFragment extends Fragment  {
+public class RendicionGastosFragment extends Fragment implements View.OnClickListener {
 
     TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante;
     AutoCompleteTextView actvAnticipos;
@@ -111,15 +113,66 @@ public class RendicionGastosFragment extends Fragment  {
         });
         cargarAnticiposPendientesARendicion();
         agregarComprobante();
+        btnRegistrarRedencion.setOnClickListener(this);
         return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_registrar_rendicion:
+                Helper.mensajeConfirmacion(RendicionGastosFragment.this.getActivity(),"CONFIRMACION","Desea grabar informe?","SI","NO",new TaskGrabarRendicion());
+                break;
+        }
+    }
+
+
     private void registrarRendicion() {
-        btnRegistrarRedencion.setOnClickListener(view -> {
-            if (validate()) {
                 Toast.makeText(this.getActivity(), R.string.dialog_agregar_comprobante, Toast.LENGTH_SHORT).show();
-            }
-        });
+                int anticipoId = anticipoSeleccionado.getId();
+                JSONArray jsonArray = new JSONArray();
+                for (Comprobante comprobante : ComprobanteAdapter.comprobanteList){
+                    jsonArray.put(comprobante.getJSONComprobantes());
+                }
+                String detalleComprobantes = jsonArray.toString();
+                Log.e("ERROR", detalleComprobantes);
+                apiService.getInformeRegistrado(DatosSesion.sesion.getToken(), anticipoId,detalleComprobantes).enqueue(new Callback<InformeGastoResponse>() {
+                    @Override
+                    public void onResponse(Call<InformeGastoResponse> call, Response<InformeGastoResponse> response) {
+                        if (response.code() == 201){
+                            if (response.body().getStatus()){
+                                String numInforme = response.body().getData().getNumInf();
+                                String informeGrabado = "Informe de rendicion registrado \n\n" +
+                                        "Numero Informe : " + numInforme + "\n"+
+                                        "Devolucion realizada : " + txtDevolucion.getText() + "\n"+
+                                        "Devolucion restante: " +txtRestante.getText() + "\n";
+                                Helper.mensajeInformacion(getActivity(),"INFORME GASTO",informeGrabado);
+                            }
+
+                        } else if (response.code() == 500) {
+                            try {
+                                JSONObject error = new JSONObject(response.errorBody().string());
+                                Helper.mensajeInformacion(getActivity(),"ERROR",error.getString("message"));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } else {
+                            Log.e("ERROR ---->",response.message());
+                            Toast.makeText(getActivity(), "ERROR : "+response.message(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<InformeGastoResponse> call, Throwable t) {
+                        Log.e("Error registrando gastos", t.getMessage());
+
+                    }
+                });
     }
 
     private void agregarComprobante() {
@@ -165,22 +218,23 @@ public class RendicionGastosFragment extends Fragment  {
         }
 
         if (montosRendidos[1] > montoAlimentacion) {
-            restante -= montoPasajes;
+            restante -= montoAlimentacion;
         } else {
             restante -= montosRendidos[1];
         }
 
         if (montosRendidos[2] > montoHotel) {
-            restante -= montoPasajes;
+            restante -= montoHotel;
         } else {
             restante -= montosRendidos[2];
         }
 
         if (montosRendidos[3] > montoMovilidad) {
-            restante -= montoPasajes;
+            restante -= montoMovilidad;
         } else {
             restante -= montosRendidos[3];
         }
+
         restante -= montosRendidos[4];
 
 
@@ -189,6 +243,7 @@ public class RendicionGastosFragment extends Fragment  {
 
     private void calcularMontosPorRendir() {
         int dias = Helper.diasEntreDosFechas(Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_inicio()),Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_fin()));
+        Toast.makeText(getContext(), "hola "+dias, Toast.LENGTH_SHORT).show();
         apiService.getViaticos(DatosSesion.sesion.getToken(),anticipoSeleccionado.getSede_id(),dias).enqueue(new Callback<TarifaResponse>() {
             @Override
             public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
@@ -278,6 +333,12 @@ public class RendicionGastosFragment extends Fragment  {
 
             }
         });
+    }
+    class TaskGrabarRendicion implements Runnable{
+        @Override
+        public void run() {
+            registrarRendicion();
+        }
     }
 
 

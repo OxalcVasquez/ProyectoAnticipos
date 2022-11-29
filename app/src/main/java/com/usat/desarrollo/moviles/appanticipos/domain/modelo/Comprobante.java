@@ -1,5 +1,7 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -125,7 +127,22 @@ public class Comprobante implements Serializable {
         this.fechaEmision = fechaEmision;
     }
 
-    public void cargarDatosComprobante() {
-
+    public JSONObject getJSONComprobantes(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("serie", this.getSerie());
+            jsonObject.put("correlativo", this.getCorrelativo());
+            jsonObject.put("fecha_emision", this.getFechaEmision());
+            jsonObject.put("monto_total", this.getMontoTotal());
+            jsonObject.put("ruc", this.getRuc());
+            jsonObject.put("descripcion", this.getDescripcion());
+            jsonObject.put("tipo_comprobante_id", this.getTipoComprobanteId());
+            jsonObject.put("rubro_id", this.getRubroId());
+            jsonObject.put("foto", "");
+            jsonObject.put("num_operacion", this.getNumOperacion());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return  jsonObject;
     }
 }

@@ -1,11 +1,16 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class InformeGasto {
+
     private int id, anticipoId, usuarioId;
-    private String numInf, estadoAnt;
+    @SerializedName("num_informe")
+    private String numInforme;
+    private String estadoAnt;
     private Date fecha;
     private Double totalRendir, totalRendido;
 
@@ -15,7 +20,7 @@ public class InformeGasto {
         this.id = id;
         this.anticipoId = anticipoId;
         this.usuarioId = usuarioId;
-        this.numInf = numInf;
+        this.numInforme = numInf;
         this.estadoAnt = estadoAnt;
         this.fecha = fecha;
         this.totalRendir = totalRendir;
@@ -50,11 +55,11 @@ public class InformeGasto {
     }
 
     public String getNumInf() {
-        return numInf;
+        return numInforme;
     }
 
     public void setNumInf(String numInf) {
-        this.numInf = numInf;
+        this.numInforme = numInf;
     }
 
     public String getEstadoAnt() {

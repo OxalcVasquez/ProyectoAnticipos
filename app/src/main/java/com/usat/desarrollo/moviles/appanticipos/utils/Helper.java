@@ -120,9 +120,10 @@ public class Helper {
     }
 
     //Gestionar diálogos
-    public static void mensajeConfirmacion(Context context, String message, String bt_ok, String bt_cancel, final Runnable if_ok){
+    public static void mensajeConfirmacion(Context context, String title, String message, String bt_ok, String bt_cancel, final Runnable if_ok){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
+                .setTitle(title)
                 .setCancelable(false)
                 .setPositiveButton(bt_ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -130,11 +131,11 @@ public class Helper {
                         if_ok.run();
                     }
                 }).setNegativeButton(bt_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel(); //close dialog
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel(); //close dialog
+                    }
+                });
 
         //show dialog
         AlertDialog dialog = builder.create();

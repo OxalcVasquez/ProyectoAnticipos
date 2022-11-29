@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Anticipo {
-    private int anticipo_id;
+    private int id;
     private String descripcion;
     private String estado;
     private String fecha_fin;
@@ -14,16 +14,20 @@ public class Anticipo {
     private float monto_total;
     public static ArrayList<Anticipo> listaAnticipos;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getImg() {
         return img;
     }
 
     public void setImg(String img) {
         this.img = img;
-    }
-
-    public int getAnticipo_id() {
-        return anticipo_id;
     }
 
     public String getDescripcion() {

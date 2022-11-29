@@ -214,7 +214,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     if (status){
                         Anticipo anticipo = anticipoResponse.getData();
                         Snackbar
-                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getAnticipo_id(), Snackbar.LENGTH_LONG)
+                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getId(), Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryColor))
                                 .show();
                         limpiar();

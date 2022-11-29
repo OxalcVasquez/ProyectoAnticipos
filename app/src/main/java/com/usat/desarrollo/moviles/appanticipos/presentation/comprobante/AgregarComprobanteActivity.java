@@ -32,6 +32,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.TipoComprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
 import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionGastosFragment;
 import com.usat.desarrollo.moviles.appanticipos.utils.Gallery;
+import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
 import org.json.JSONException;
@@ -151,7 +152,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         String serie = txtSerie.getText().toString();
         String correlativo = txtCorrelativo.getText().toString();
         String montoTotal = txtMontoComprobante.getText().toString();
-        String fecha = txtFecha.getText().toString();
+        String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
         comprobante.setRuc(ruc);
         comprobante.setDescripcion(descripcion);
         comprobante.setSerie(serie);
@@ -161,6 +162,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         comprobante.setRubro(rubro);
         comprobante.setRubroId(idRubroSeleccionado);
         comprobante.setTipoComprobante(tipo);
+        comprobante.setTipoComprobanteId(idTipoSeleccionado);
         Comprobante.comprobanteListado.add(comprobante);
         this.finish();
     }

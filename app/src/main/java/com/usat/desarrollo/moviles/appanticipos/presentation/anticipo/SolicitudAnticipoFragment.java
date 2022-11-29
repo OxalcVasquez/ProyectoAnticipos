@@ -65,7 +65,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
     ProgressBar progressBar;
     int idMotivoSeleccionado,idSedeSeleccionada;
-    long diasAnticipo=1;
+    int diasAnticipo=1;
     ApiService apiService;
 
 
@@ -165,12 +165,8 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 
     //luego agregar el validar fecha inicio y fin
     private void actualizarCalendario(){
-        //Para obtener dias de diferencia entre los anticipos
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText().toString(), dtf);
-        LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText().toString(), dtf);
-        diasAnticipo = Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
-        Toast.makeText(getActivity(), "DIAS DIEFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
+        diasAnticipo = Helper.diasEntreDosFechas(txtFechaInicio.getText().toString(),txtFechaFin.getText().toString());
+        Toast.makeText(getActivity(), "DIAS DIFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
         if (diasAnticipo<=0){
             Snackbar
                     .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "La fecha de fin debe ser mayor a la de inicio", Snackbar.LENGTH_LONG)
@@ -332,7 +328,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     private void resumenTarifas() {
         if (idMotivoSeleccionado>0 && idSedeSeleccionada>0 && diasAnticipo>0) {
             progressBar.setVisibility(View.VISIBLE);
-            apiService.getViaticos(DatosSesion.sesion.getToken(),idSedeSeleccionada).enqueue(new Callback<TarifaResponse>() {
+            apiService.getViaticos(DatosSesion.sesion.getToken(),idSedeSeleccionada,diasAnticipo).enqueue(new Callback<TarifaResponse>() {
                 @Override
                 public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
                     progressBar.setVisibility(View.GONE);
@@ -344,6 +340,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                             double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0;
                             List<Tarifa> tarifaList = tarifaResponse.getData();
                             for (Tarifa tarifa:tarifaList ) {
+                                Toast.makeText(getContext(), "DDD  " + tarifa.getMonto_maximo(), Toast.LENGTH_SHORT).show();
 //                                if (tarifa.getSe_calcula_por_dia().equals("1")) {
 //                                    montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
 //                                } else {
@@ -351,7 +348,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
 //                                }
                                 switch (tarifa.getRubro_id()){
                                     case 1 :
-                                        montoPasajes = tarifa.getMonto_maximo() * diasAnticipo;
+                                        montoPasajes = tarifa.getMonto_maximo();
                                         break;
                                     case 2:
                                         montoAlimentacion = tarifa.getMonto_maximo();

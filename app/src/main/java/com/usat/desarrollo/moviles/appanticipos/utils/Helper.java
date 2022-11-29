@@ -20,6 +20,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -192,7 +195,15 @@ public class Helper {
         String d = fecha.substring(fecha.length()-2);
         String m = fecha.substring(5,7);
         String a = fecha.substring(0,4);
-        return  a+"/"+m+"/"+d;
+        return  d+"/"+m+"/"+a;
+    }
+
+
+    public static int diasEntreDosFechas(String fecha1,String fecha2){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaInicio = LocalDate.parse(fecha1, dtf);
+        LocalDate fechaFin = LocalDate.parse(fecha2, dtf);
+        return (int) Duration.between(fechaInicio.atStartOfDay(), fechaFin.atStartOfDay()).toDays();
     }
 
 }

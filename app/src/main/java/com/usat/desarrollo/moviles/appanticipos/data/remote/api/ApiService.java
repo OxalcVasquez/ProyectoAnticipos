@@ -49,7 +49,8 @@ public interface ApiService {
     @POST("tarifa/viaticos")
     Call<TarifaResponse> getViaticos(
             @Field("token") String token,
-            @Field("sede_id") int sede_id
+            @Field("sede_id") int sede_id,
+            @Field("dias") int dias
     );
 
 

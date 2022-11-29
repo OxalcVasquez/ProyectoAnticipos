@@ -159,13 +159,17 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         comprobante.setMontoTotal(Double.parseDouble(montoTotal));
         comprobante.setFechaEmision(fecha);
         comprobante.setRubro(rubro);
+        comprobante.setRubroId(idRubroSeleccionado);
         comprobante.setTipoComprobante(tipo);
         Comprobante.comprobanteListado.add(comprobante);
-        RendicionGastosFragment.listar();
         this.finish();
     }
 
-
+    @Override
+    public void finish() {
+        setResult(RESULT_OK);
+        super.finish();
+    }
 
     private void cargarRubros() {
         apiService.getRubros(DatosSesion.sesion.getToken()).enqueue(new Callback<RubrosResponse>() {

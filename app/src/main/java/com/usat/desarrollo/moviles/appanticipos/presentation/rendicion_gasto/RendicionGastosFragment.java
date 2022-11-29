@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,11 +26,15 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.TipoComprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
+import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +42,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,11 +53,14 @@ public class RendicionGastosFragment extends Fragment  {
     TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante;
     AutoCompleteTextView actvAnticipos;
     Button btnAgregarComprobante, btnRegistrarRedencion;
-    public static ScrollView svComprobantes;
-    public static RecyclerView recyclerComprobante;
-    public static ComprobanteAdapter comprobanteAdapter;
+    ScrollView svComprobantes;
+    RecyclerView recyclerComprobante;
+    ComprobanteAdapter comprobanteAdapter;
 
+    Anticipo anticipoSeleccionado;
     ApiService apiService;
+    double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +97,18 @@ public class RendicionGastosFragment extends Fragment  {
         recyclerComprobante = view.findViewById(R.id.recycler_comprobantes_rendicion);
         recyclerComprobante.setHasFixedSize(true);
         recyclerComprobante.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        comprobanteAdapter = new ComprobanteAdapter(this.getActivity());
-        recyclerComprobante.setAdapter(comprobanteAdapter);
+//        comprobanteAdapter = new ComprobanteAdapter(this.getActivity());
+//        recyclerComprobante.setAdapter(comprobanteAdapter);
 
-        listar();
+//        listar();
 
+        //Para obtener id cada vez que sse cambie
+        actvAnticipos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                anticipoSeleccionado = Anticipo.listaAnticipos.get(i);
+            }
+        });
         cargarAnticiposPendientesARendicion();
         agregarComprobante();
         return view;
@@ -108,26 +124,123 @@ public class RendicionGastosFragment extends Fragment  {
 
     private void agregarComprobante() {
         btnAgregarComprobante.setOnClickListener(view -> {
-            startActivity(new Intent(this.getActivity(),AgregarComprobanteActivity.class));
+            startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), 2);// Activity is started with requestCode 2
         });
     }
 
-
-
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode == Activity.RESULT_OK) {
+           listar();
+        }
+    }
 
     private boolean validate() {
         return actvAnticipos.getText().toString().equalsIgnoreCase("");
     }
 
-    public static void listar() {
+    private void  listar() {
         if (Comprobante.comprobanteListado.size()>0){
             recyclerComprobante.setVisibility(View.VISIBLE);
             svComprobantes.setVisibility(View.VISIBLE);
         }
+        comprobanteAdapter = new ComprobanteAdapter(getActivity());
+        recyclerComprobante.setAdapter(comprobanteAdapter);
         comprobanteAdapter.cargarDatosComprobante(Comprobante.comprobanteListado);
 
+        calcularMontosPorRendir();
+        double montosRendidos[] = comprobanteAdapter.calcularTotales();
+        txtPasajes.setText("S./ " + montosRendidos[0]);
+        txtAlimentacion.setText("S./ " + montosRendidos[1]);
+        txtHotel.setText("S./ " + montosRendidos[2]);
+        txtMovilidad.setText("S./ " + montosRendidos[3]);
+        txtDevolucion.setText("S./ " + montosRendidos[4]);
+        double restante = anticipoSeleccionado.getMonto_total();
+
+        if (montosRendidos[0] > montoPasajes) {
+            restante -= montoPasajes;
+        } else {
+            restante -= montosRendidos[0];
+        }
+
+        if (montosRendidos[1] > montoAlimentacion) {
+            restante -= montoPasajes;
+        } else {
+            restante -= montosRendidos[1];
+        }
+
+        if (montosRendidos[2] > montoHotel) {
+            restante -= montoPasajes;
+        } else {
+            restante -= montosRendidos[2];
+        }
+
+        if (montosRendidos[3] > montoMovilidad) {
+            restante -= montoPasajes;
+        } else {
+            restante -= montosRendidos[3];
+        }
+        restante -= montosRendidos[4];
+
+
+        txtRestante.setText("S./" + restante);
     }
+
+    private void calcularMontosPorRendir() {
+        int dias = Helper.diasEntreDosFechas(Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_inicio()),Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_fin()));
+        apiService.getViaticos(DatosSesion.sesion.getToken(),anticipoSeleccionado.getSede_id(),dias).enqueue(new Callback<TarifaResponse>() {
+            @Override
+            public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
+                if (response.code() == 200) {
+                    TarifaResponse tarifaResponse = response.body();
+                    boolean status = tarifaResponse.getStatus();
+                    if (status) {
+                        List<Tarifa> tarifaList = tarifaResponse.getData();
+                        for (Tarifa tarifa:tarifaList ) {
+                            switch (tarifa.getRubro_id()){
+                                case 1 :
+                                    montoPasajes = tarifa.getMonto_maximo();
+                                    txtPasajesDe.setText("S./ " + montoPasajes);
+                                    break;
+                                case 2:
+                                    montoAlimentacion = tarifa.getMonto_maximo();
+                                    txtAlimentacionDe.setText("S./ " + montoAlimentacion);
+                                    break;
+                                case 3 :
+                                    montoHotel = tarifa.getMonto_maximo();
+                                    txtHotelDe.setText("S./ " + montoHotel);
+                                    break;
+                                case 4:
+                                    montoMovilidad = tarifa.getMonto_maximo();
+                                    txtMovilidadDe.setText("S./ " + montoMovilidad);
+
+                                    break;
+                            }
+
+                        }
+                    } else {
+                        try {
+                            JSONObject jsonError = new JSONObject(response.errorBody().string());
+                            String message =  jsonError.getString("message");
+                            Log.e("ERROR CARGANDO RESUMEN VIATICOS", message);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TarifaResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private void cargarAnticiposPendientesARendicion(){
         apiService.getAnticiposEstados(DatosSesion.sesion.getId(),7,DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoListadoResponse>() {

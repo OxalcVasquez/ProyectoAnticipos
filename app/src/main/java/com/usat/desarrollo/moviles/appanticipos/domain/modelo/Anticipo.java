@@ -10,6 +10,7 @@ public class Anticipo {
     private String fecha_fin;
     private String fecha_inicio;
     private String img;
+    private int sede_id;
     private float monto_total;
     public static ArrayList<Anticipo> listaAnticipos;
 
@@ -63,5 +64,13 @@ public class Anticipo {
 
     public void setMonto_total(float monto_total) {
         this.monto_total = monto_total;
+    }
+
+    public int getSede_id() {
+        return sede_id;
+    }
+
+    public void setSede_id(int sede_id) {
+        this.sede_id = sede_id;
     }
 }

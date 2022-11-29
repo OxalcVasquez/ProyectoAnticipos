@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">App Proyecto Moviles</string>
-    <string name="title_activity_main_menu">Menu</string>
+    <string name="app_name">Anticipos App</string>
+    <string name="title_activity_main_menu">Advance Payment App</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -42,6 +42,19 @@
     <string name="title_login">Inicio de sesión</string>
     <string name="txt_validation">Debes ingresar el email y contraseña</string>
     <string name="total_de_viaticos">TOTAL DE VIATICOS</string>
+    <string name="motivo_del_anticipo">Motivo del Anticipo</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="fecha_inicio">Fecha inicio</string>
+    <string name="fecha_fin">Fecha fin</string>
+    <string name="sede_destino">Sede destino</string>
+    <string name="los_anticipos_a_abonar_son">Los anticipos a abonar son:</string>
+    <string name="limpiar">limpiar</string>
+    <string name="descripci_n_del_anticipo">Descripción del anticipo</string>
+    <string name="del">Del :</string>
+    <string name="al">Al:</string>
+    <string name="anticipos">Anticipos</string>
+    <string name="rendici_n_de_gastos">Rendición de gastos</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

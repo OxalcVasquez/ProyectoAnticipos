@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción del anticipo"
+                android:text="@string/descripci_n_del_anticipo"
                 android:textColor="@color/primaryColor"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -50,11 +50,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/del"
+                    android:textColor="#000000"
+                    android:textSize="14dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Del: 10/10/2022"
+                    android:text="10/10/2022"
                     android:textColor="#000000"
                     android:textSize="14dp"
                     android:id="@+id/txtFechaInicio" />
@@ -76,11 +82,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Al: 10/10/2022"
+                    android:text="@string/al"
+                    android:textColor="#000000"
+                    android:textSize="14dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10/10/2022"
                     android:textColor="#000000"
                     android:textSize="14dp"
                     android:id="@+id/txtFechaFin" />

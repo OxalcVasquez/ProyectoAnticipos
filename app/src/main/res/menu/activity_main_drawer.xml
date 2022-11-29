@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_anticipo"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Anticipos" />
+            android:title="@string/anticipos" />
         <item
             android:id="@+id/nav_rendicion_gastos"
             android:icon="@drawable/ic_rendicion_gastos"
-            android:title="Rendición de gastos" />
+            android:title="@string/rendici_n_de_gastos" />
     </group>
 
     <item android:title="Communicate">
@@ -28,7 +28,7 @@
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"
-                    android:title="Cerrar sesión" />
+                    android:title="@string/cerrar_sesi_n" />
             </group>
         </menu>
     </item>

@@ -34,7 +34,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Motivo del Anticipo">
+                android:hint="@string/motivo_del_anticipo">
 
                 <AutoCompleteTextView
                     android:id="@+id/actvMotivoAnticipo"
@@ -52,7 +52,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Descripción"
+                android:hint="@string/descripci_n"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_descriipcion">
 
@@ -71,7 +71,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Fecha inicio"
+                    android:hint="@string/fecha_inicio"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_calendar">
 
@@ -91,7 +91,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Fecha fin"
+                    android:hint="@string/fecha_fin"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_calendar">
 
@@ -116,7 +116,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sede destino">
+                android:hint="@string/sede_destino">
 
                 <AutoCompleteTextView
                     android:id="@+id/actvSedeDestino"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/primaryColor"
                     android:textStyle="bold"
-                    android:text="Los anticipos a abonar son:"/>
+                    android:text="@string/los_anticipos_a_abonar_son"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -378,7 +378,7 @@
                     android:id="@+id/btn_anticipo_registrar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Registrar"
+                    android:text="@string/registrar"
                     android:textColor="@android:color/white"
                     app:icon="@drawable/ic_save"
                     style="@style/Widget.MaterialComponents.Button"/>
@@ -393,7 +393,7 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="123dp"
                     android:layout_height="wrap_content"
-                    android:text="limpiar"
+                    android:text="@string/limpiar"
                     app:icon="@drawable/ic_clean" />
 
             </LinearLayout>

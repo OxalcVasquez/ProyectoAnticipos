@@ -41,6 +41,7 @@
     <string name="btn_login">Ingresar</string>
     <string name="title_login">Inicio de sesión</string>
     <string name="txt_validation">Debes ingresar el email y contraseña</string>
+    <string name="total_de_viaticos">TOTAL DE VIATICOS</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

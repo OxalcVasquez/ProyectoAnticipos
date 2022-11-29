@@ -59,7 +59,7 @@ import retrofit2.Response;
 
 public class SolicitudAnticipoFragment extends Fragment implements View.OnClickListener {
 
-    TextView txtDescripcion,txtResumenSolicitud,txtTotalViaticos;
+    TextView txtDescripcion,txtTotalViaticos,txtPasajes, txtAlimentacion, txtHotel, txtMovilidad;
     EditText txtFechaInicio,txtFechaFin;
     MaterialButton btnRegistrarAnticipo,btnLimpiar;
     AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
@@ -83,8 +83,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         txtDescripcion = view.findViewById(R.id.txtDescripcion);
         txtFechaInicio = view.findViewById(R.id.txtFechaInicio);
         txtFechaFin = view.findViewById(R.id.txtFechaFin);
-        txtResumenSolicitud = view.findViewById(R.id.txt_resumen_solicitud_anticipo);
         txtTotalViaticos = view.findViewById(R.id.txt_total_viaticos);
+        txtPasajes = view.findViewById(R.id.txt_pasajes_anticipo);
+        txtAlimentacion = view.findViewById(R.id.txt_alimentacion_anticipo);
+        txtHotel = view.findViewById(R.id.txt_hotel_anticipo);
+        txtMovilidad = view.findViewById(R.id.txt_movilidad_anticipo);
         progressBar = view.findViewById(R.id.progressBar_resumen);
         btnRegistrarAnticipo = view.findViewById(R.id.btn_anticipo_registrar);
         btnLimpiar = view.findViewById(R.id.btn_anticipo_limpiar);
@@ -337,21 +340,37 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         TarifaResponse tarifaResponse = response.body();
                         boolean status = tarifaResponse.getStatus();
                         if (status) {
-                            String resumen = "";
-                            float montoTotal=0;
-                            float montoRubro =0;
+                            double montoTotal=0;
+                            double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0;
                             List<Tarifa> tarifaList = tarifaResponse.getData();
                             for (Tarifa tarifa:tarifaList ) {
-                                if (tarifa.getSe_calcula_por_dia().equals("1")) {
-                                    montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
-                                } else {
-                                    montoRubro = tarifa.getMonto_maximo();
+//                                if (tarifa.getSe_calcula_por_dia().equals("1")) {
+//                                    montoRubro = tarifa.getMonto_maximo() * diasAnticipo;
+//                                } else {
+//                                    montoRubro = tarifa.getMonto_maximo();
+//                                }
+                                switch (tarifa.getRubro_id()){
+                                    case 1 :
+                                        montoPasajes = tarifa.getMonto_maximo() * diasAnticipo;
+                                        break;
+                                    case 2:
+                                        montoAlimentacion = tarifa.getMonto_maximo();
+                                        break;
+                                    case 3 :
+                                        montoHotel = tarifa.getMonto_maximo();
+                                        break;
+                                    case 4:
+                                        montoMovilidad = tarifa.getMonto_maximo();
+                                        break;
                                 }
-                                montoTotal += montoRubro;
-                                resumen += tarifa.getRubro() +": S./" + montoRubro + "\n";
+
                             }
-                            txtResumenSolicitud.setText(resumen);
-                            txtTotalViaticos.setText("TOTAL VIATICOS S./"+montoTotal);
+                            montoTotal = montoPasajes + montoAlimentacion + montoHotel + montoMovilidad;
+                            txtPasajes.setText("S/. "+ montoPasajes);
+                            txtAlimentacion.setText("S/. "+ montoAlimentacion);
+                            txtHotel.setText("S/. "+ montoHotel);
+                            txtMovilidad.setText("S/. "+ montoMovilidad);
+                            txtTotalViaticos.setText("S./"+montoTotal);
                         } else {
                             try {
                                 JSONObject jsonError = new JSONObject(response.errorBody().string());
@@ -380,7 +399,10 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         actvSedeDestino.setText("");
         actvMotivoAnticipo.setText("");
         txtDescripcion.setText("");
-        txtResumenSolicitud.setText("RESUMEN");
-        txtTotalViaticos.setText("TOTAL VIÁTICOS");
+        txtPasajes.setText("");
+        txtAlimentacion.setText("");
+        txtHotel.setText("");
+        txtMovilidad.setText("");
+        txtTotalViaticos.setText("");
     }
 }

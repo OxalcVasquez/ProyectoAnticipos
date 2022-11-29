@@ -136,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,22 +144,221 @@
                     android:textStyle="bold"
                     android:text="Los anticipos a abonar son:"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryColor"
-                    android:id="@+id/txt_resumen_solicitud_anticipo"
-                    android:inputType="textMultiLine"
-                    android:text="RESUMEN"/>
+                    android:baselineAligned="false"
+                    android:paddingVertical="4dp">
 
-                <TextView
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/pasajes_terrestres_rendicion"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txt_pasajes_rendicion"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/txt_pasajes_anticipo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:id="@+id/txt_total_viaticos"
-                    android:text="TOTAL VIÁTICOS"/>
+                    android:baselineAligned="false"
+                    android:paddingVertical="4dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/alimentacion_rendicion"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txt_alimentacion_rendicion"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/txt_alimentacion_anticipo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:paddingVertical="4dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/hotel_rendicion"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txt_hotel_rendicion"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/txt_hotel_anticipo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:paddingVertical="4dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/movilidad_interna_rendicion"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txt_movilidad_rendicion"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/txt_movilidad_anticipo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textSize="16sp"
+                            tools:ignore="NestedWeights" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/total_de_viaticos"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_total_viaticos"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/secondaryTextColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
 
             </LinearLayout>

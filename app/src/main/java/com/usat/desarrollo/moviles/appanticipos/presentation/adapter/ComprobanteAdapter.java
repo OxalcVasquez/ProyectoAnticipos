@@ -66,4 +66,30 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
 
 
     }
+
+    public double[] calcularTotales(){
+        double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0,montoDevolucion = 0,devRestante = 0;
+        for (Comprobante comprobante: comprobanteList) {
+            switch (comprobante.getRubroId()){
+                case 1 :
+                    montoPasajes += montoPasajes;
+                    break;
+                case 2:
+                    montoAlimentacion += montoAlimentacion;
+                    break;
+                case 3 :
+                    montoHotel += montoHotel;
+                    break;
+                case 4:
+                    montoMovilidad += montoMovilidad;
+                    break;
+                case 5 :
+                    montoDevolucion += montoDevolucion;
+                    break;
+            }
+        }
+
+        double montos [] = {montoPasajes,montoAlimentacion,montoHotel,montoMovilidad,montoDevolucion,devRestante};
+        return montos;
+    }
 }

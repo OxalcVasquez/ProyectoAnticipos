@@ -10,10 +10,15 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesRespon
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
     @FormUrlEncoded
@@ -88,6 +93,12 @@ public interface ApiService {
             @Field("token") String token,
             @Field("anticipo_id") int anticipo_id,
             @Field("detalle_comprobantes") String detalle_comprobantes
+    );
+
+    @Multipart
+    @POST("comprobante/foto")
+    Call<ResponseBody> subirImage(
+            @Part MultipartBody.Part imagen
     );
 
 }

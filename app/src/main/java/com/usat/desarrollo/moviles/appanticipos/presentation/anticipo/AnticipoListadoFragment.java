@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,11 +33,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AnticipoListadoFragment extends Fragment {
+public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     RecyclerView rvAnticipo;
     AnticipoAdapter adapter;
     ArrayList<Anticipo> listaAnticipo;
     ApiService apiService;
+    SwipeRefreshLayout srlAnticipo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class AnticipoListadoFragment extends Fragment {
         rvAnticipo.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         apiService = ApiAdapter.getApiService();
+        srlAnticipo = view.findViewById(R.id.srlAnticipo);
+        srlAnticipo.setOnRefreshListener(this);
         adapter = new AnticipoAdapter(this.getActivity());
         rvAnticipo.setAdapter(adapter);
         listar();
@@ -70,6 +74,7 @@ public class AnticipoListadoFragment extends Fragment {
                     AnticipoListadoResponse anticipo = response.body();
                     listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
                     adapter.cargarDatos(listaAnticipo);
+                    srlAnticipo.setRefreshing(false);
 
                 }else{
                     try {
@@ -92,5 +97,10 @@ public class AnticipoListadoFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onRefresh() {
+        listar();
     }
 }

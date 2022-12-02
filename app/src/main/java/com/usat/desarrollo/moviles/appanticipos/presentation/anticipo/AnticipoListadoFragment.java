@@ -2,6 +2,7 @@ package com.usat.desarrollo.moviles.appanticipos.presentation.anticipo;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -97,6 +99,25 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
             }
         });
 
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        //Identificar la opción seleccionada en el menú contextual
+        switch (item.getItemId()){
+            case 1:
+                Toast.makeText(this.getActivity(), "Opcion Aceptar", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                Toast.makeText(this.getActivity(), "Opcion Rechazar", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override

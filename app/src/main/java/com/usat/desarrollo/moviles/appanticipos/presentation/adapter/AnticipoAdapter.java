@@ -1,11 +1,14 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.adapter;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHolder>{
     private Context context;
     public static ArrayList<Anticipo> listaAnticipo;
+    public int posicionItemSeleccionadoRecyclerView;
 
     public AnticipoAdapter(Context context) {
         this.context = context;
@@ -39,10 +43,10 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         Anticipo anticipo = listaAnticipo.get(position);
 
         holder.txtAnticipo.setText(""+ String.valueOf(anticipo.getDescripcion()));
-        holder.txtFechaInicio.setText("Del: "+String.valueOf(anticipo.getFecha_inicio()));
-        holder.txtFechaFin.setText("Al: "+String.valueOf(anticipo.getFecha_fin()));
+        holder.txtFechaInicio.setText(""+String.valueOf(anticipo.getFecha_inicio()));
+        holder.txtFechaFin.setText(""+String.valueOf(anticipo.getFecha_fin()));
         holder.txtEstado.setText(""+ String.valueOf(anticipo.getEstado()));
-        holder.txtMonto.setText("Monto: "+ String.valueOf(anticipo.getMonto_total()));
+        holder.txtMonto.setText(""+ String.valueOf(anticipo.getMonto_total()));
         Glide.with(context)
                 .load(ApiAdapter.BASE_URL.toString() + anticipo.getImg())
                 .into(holder.imgSede);
@@ -58,13 +62,12 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener, View.OnLongClickListener{
         TextView txtAnticipo, txtMonto, txtFechaInicio, txtFechaFin, txtEstado;
         ImageView imgSede;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             txtAnticipo = itemView.findViewById(R.id.txtAnticipo);
             txtMonto = itemView.findViewById(R.id.txtMonto);
             txtFechaInicio = itemView.findViewById(R.id.txtFechaInicio);
@@ -72,12 +75,31 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
             txtEstado = itemView.findViewById(R.id.txtEstado);
             imgSede = itemView.findViewById(R.id.imgSede);
 
+            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnLongClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
 
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle("Opciones");
+            contextMenu.add(0, 1, 0, "Aceptar");
+            contextMenu.add(0, 2, 0, "Observar");
+            contextMenu.add(0, 3, 0, "Rechazar");
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            //Permite obtener la posición del item seleccionado en el RecyclerView
+            posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
+            Log.e("ANTICIPO_ID", String.valueOf(listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId()));
+            Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 

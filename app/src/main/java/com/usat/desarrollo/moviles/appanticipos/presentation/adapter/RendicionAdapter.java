@@ -116,21 +116,21 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
 
         @Override
         public void onClick(View view) {
-            final Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
-            dialog.setContentView(R.layout.dialog_historial_informe);
-            dialog.setCancelable(true);
-
-            //Configure controls
-            TextView txtInstanciaInforme = dialog.findViewById(R.id.txt_instancia_informe);
-            TextView txtEvaluador = dialog.findViewById(R.id.txt_dialog_evaluador);
-            TextView txtEstado = dialog.findViewById(R.id.txt_estado_rendicion);
-
-            HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
-            txtInstanciaInforme.setText(historialAnticipo.getInstancia());
-            txtEvaluador.setText(historialAnticipo.getEvaluador());
-            txtEstado.setText(historialAnticipo.getEstado());
-
-            dialog.show();
+//            final Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+//            dialog.setContentView(R.layout.dialog_historial_informe);
+//            dialog.setCancelable(true);
+//
+//            //Configure controls
+//            TextView txtInstanciaInforme = dialog.findViewById(R.id.txt_instancia_informe);
+//            TextView txtEvaluador = dialog.findViewById(R.id.txt_dialog_evaluador);
+//            TextView txtEstado = dialog.findViewById(R.id.txt_estado_rendicion);
+//
+//            HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
+//            txtInstanciaInforme.setText(historialAnticipo.getInstancia());
+//            txtEvaluador.setText(historialAnticipo.getEvaluador());
+//            txtEstado.setText(historialAnticipo.getEstado());
+//
+//            dialog.show();
 
         }
 
@@ -139,7 +139,9 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
             if (DatosSesion.sesion.getRol_id() == 1) {
                 contextMenu.setHeaderTitle("Opciones");
                 contextMenu.add(0,1,0,"Ver instancia");
-                contextMenu.add(0,2,0,"Subsanar");
+                if (txtEstado.getText().toString().equalsIgnoreCase("RECHAZADO")) {
+                    contextMenu.add(0,2,0,"Subsanar");
+                }
             }
         }
     }

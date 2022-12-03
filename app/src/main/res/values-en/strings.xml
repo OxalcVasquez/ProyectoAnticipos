@@ -13,6 +13,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="informe_redencion">Report N°</string>
+    <string name="informe_registrado">EXPENSE REPORT</string>
     <string name="fecha_rendicion_listado">Registration date:</string>
     <string name="total_rendido_listado">Total compensated:</string>
     <string name="fecha_al_listado">To:</string>
@@ -42,6 +43,7 @@
     <string name="btn_login">Login</string>
     <string name="title_login">Login</string>
     <string name="txt_validation">You must enter the email and password</string>
+    <string name="txt_validation_informe">You must return the total per diem assigned</string>
     <string name="total_de_viaticos">VIATICS TOTAL</string>
     <string name="motivo_del_anticipo">Reason for the Advance payment</string>
     <string name="descripci_n">Description</string>
@@ -60,6 +62,10 @@
     <string name="anticipo">Advance payment :</string>
     <string name="option_rechazar">Reject</string>
     <string name="option_aprobar">Approve</string>
+    <string name="anticipo_info">Registered advance request</string>
+    <string name="informe_info">Registered report</string>
+    <string name="informe_title">EXPENSE REPORT</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

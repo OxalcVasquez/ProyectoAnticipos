@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +57,8 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     ScrollView svComprobantes;
     RecyclerView recyclerComprobante;
     ComprobanteAdapter comprobanteAdapter;
+    float restante;
+    public static final int REQUEST_COMPROBANTES = 2;
 
     Anticipo anticipoSeleccionado = new Anticipo();
     ApiService apiService;
@@ -91,6 +94,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         svComprobantes = view.findViewById(R.id.sv_comprobantes);
 
         txtDocente.setText(DatosSesion.sesion.getNombres() + " "+DatosSesion.sesion.getApellidos());
+        txtDocente.setTextColor(ContextCompat.getColor(getActivity(),R.color.primaryColor));
 
         //Inicailzando api service
         apiService = ApiAdapter.getApiService();
@@ -108,7 +112,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 anticipoSeleccionado = Anticipo.listaAnticipos.get(i);
-                calcularMontosPorRendir();
+                cargarComprobantes();
             }
         });
         cargarAnticiposPendientesARendicion();
@@ -131,7 +135,6 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
 
 
     private void registrarRendicion() {
-                Toast.makeText(this.getActivity(), R.string.dialog_agregar_comprobante, Toast.LENGTH_SHORT).show();
                 int anticipoId = anticipoSeleccionado.getId();
                 JSONArray jsonArray = new JSONArray();
                 for (Comprobante comprobante : ComprobanteAdapter.comprobanteList){
@@ -139,48 +142,58 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                 }
                 String detalleComprobantes = jsonArray.toString();
                 Log.e("ERROR", detalleComprobantes);
-                apiService.getInformeRegistrado(DatosSesion.sesion.getToken(), anticipoId,detalleComprobantes).enqueue(new Callback<InformeGastoResponse>() {
-                    @Override
-                    public void onResponse(Call<InformeGastoResponse> call, Response<InformeGastoResponse> response) {
-                        if (response.code() == 201){
-                            if (response.body().getStatus()){
-                                String numInforme = response.body().getData().getNumInforme();
-                                String informeGrabado = "Informe de rendicion registrado \n\n" +
-                                        "Numero Informe : " + numInforme + "\n"+
-                                        "Devolucion realizada : " + txtDevolucion.getText() + "\n"+
-                                        "Devolucion restante: " +txtRestante.getText() + "\n";
-                                Helper.mensajeInformacion(getActivity(),"INFORME GASTO",informeGrabado);
+                if (!validarComprobantes()){
+                    if (restante == 0){
+                        apiService.getInformeRegistrado(DatosSesion.sesion.getToken(), anticipoId,detalleComprobantes).enqueue(new Callback<InformeGastoResponse>() {
+                            @Override
+                            public void onResponse(Call<InformeGastoResponse> call, Response<InformeGastoResponse> response) {
+                                if (response.code() == 201){
+                                    if (response.body().getStatus()){
+                                        String numInforme = response.body().getData().getNumInforme();
+                                        String informeGrabado = getResources().getString(R.string.informe_info) + "\n\n" +
+                                                getResources().getString(R.string.informe_redencion) + " : " + numInforme + "\n"+
+                                                getResources().getString(R.string.devolucion_rendicion_registro) + txtDevolucion.getText() + "\n";
+                                        Helper.mensajeInformacion(getActivity(),getResources().getString(R.string.informe_redencion),informeGrabado);
+                                    }
+
+                                } else if (response.code() == 500) {
+                                    try {
+                                        JSONObject error = new JSONObject(response.errorBody().string());
+                                        Helper.mensajeInformacion(getActivity(),"ERROR",error.getString("message"));
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                } else {
+                                    Log.e("ERROR ---->",response.message());
+                                    Toast.makeText(getActivity(), "ERROR : "+response.message(), Toast.LENGTH_SHORT).show();
+                                }
                             }
 
-                        } else if (response.code() == 500) {
-                            try {
-                                JSONObject error = new JSONObject(response.errorBody().string());
-                                Helper.mensajeInformacion(getActivity(),"ERROR",error.getString("message"));
+                            @Override
+                            public void onFailure(Call<InformeGastoResponse> call, Throwable t) {
+                                Log.e("Error registrando gastos", t.getMessage());
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
+                        });
 
-
-                        } else {
-                            Log.e("ERROR ---->",response.message());
-                            Toast.makeText(getActivity(), "ERROR : "+response.message(), Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Helper.mensajeInformacion(getActivity(),"INFO",getResources().getString(R.string.txt_validation_informe));
                     }
 
-                    @Override
-                    public void onFailure(Call<InformeGastoResponse> call, Throwable t) {
-                        Log.e("Error registrando gastos", t.getMessage());
+                } else {
+                    Toast.makeText(this.getActivity(), R.string.dialog_agregar_comprobante, Toast.LENGTH_SHORT).show();
+                }
 
-                    }
-                });
     }
 
     private void agregarComprobante() {
         if (anticipoSeleccionado.getId()!=0) {
-                startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), 2);// Activity is started with requestCode 2
+                startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), REQUEST_COMPROBANTES);// Activity is started with requestCode 2
         } else {
             Helper.mensajeInformacion(getActivity(),"Informacion","Debes seleccionar un anticipo");
         }
@@ -190,13 +203,13 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && resultCode == Activity.RESULT_OK) {
+        if(requestCode == REQUEST_COMPROBANTES && resultCode == Activity.RESULT_OK) {
             cargarComprobantes();
         }
     }
 
-    private boolean validate() {
-        return actvAnticipos.getText().toString().equalsIgnoreCase("");
+    private boolean validarComprobantes() {
+        return ComprobanteAdapter.comprobanteList.isEmpty();
     }
 
     private void  cargarComprobantes() {
@@ -216,7 +229,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         txtHotel.setText("S./ " + montosRendidos[2]);
         txtMovilidad.setText("S./ " + montosRendidos[3]);
         txtDevolucion.setText("S./ " + montosRendidos[4]);
-        double restante = anticipoSeleccionado.getMonto_total();
+        restante = anticipoSeleccionado.getMonto_total();
 
         if (montosRendidos[0] > montoPasajes) {
             restante -= montoPasajes;
@@ -252,6 +265,8 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     }
 
     private void calcularMontosPorRendir() {
+        Toast.makeText(getActivity(), "holaaa " + anticipoSeleccionado.getSede_id(), Toast.LENGTH_SHORT).show();
+
         txtMontoRendir.setText("S./" + anticipoSeleccionado.getMonto_total());
         txtRestante.setText("S./" + anticipoSeleccionado.getMonto_total());
 
@@ -309,17 +324,21 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
 
 
     private void cargarAnticiposPendientesARendicion(){
-        apiService.getAnticiposEstados(DatosSesion.sesion.getId(),7,DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoListadoResponse>() {
+        apiService.getAnticipoListado(DatosSesion.sesion.getId(),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoListadoResponse>() {
             @Override
             public void onResponse(Call<AnticipoListadoResponse> call, Response<AnticipoListadoResponse> response) {
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipoListadoResponse = response.body();
                     if (anticipoListadoResponse.getStatus()){
                         Anticipo.listaAnticipos = new ArrayList<>(Arrays.asList(anticipoListadoResponse.getData()));
-                        String descripcion[] = new String[anticipoListadoResponse.getData().length];
+                        List<String> listaAnticipo = new ArrayList<String>();
                         for (int i = 0; i <anticipoListadoResponse.getData().length ; i++) {
-                            descripcion[i] = anticipoListadoResponse.getData()[i].getDescripcion();
+                            if (anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("RENDICION R") || anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("PENDIENTE")){
+                                listaAnticipo.add(anticipoListadoResponse.getData()[i].getDescripcion());
+                            }
                         }
+
+                        String descripcion[] = listaAnticipo.toArray(new String[0]);
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,descripcion);
                         actvAnticipos.setAdapter(adapter);
                     }
@@ -351,6 +370,5 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
             registrarRendicion();
         }
     }
-
 
 }

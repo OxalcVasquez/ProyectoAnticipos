@@ -1,12 +1,15 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
@@ -30,6 +34,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.RendicionAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.InformeGasto;
+import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -174,12 +179,22 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                     TextView txtEvaluador = dialog.findViewById(R.id.txt_dialog_evaluador);
                                     TextView txtEstado = dialog.findViewById(R.id.txt_dialog_informe_estado);
                                     TextView txtDescripcion = dialog.findViewById(R.id.txt_dialgo_descripcion);
+                                    MaterialButton btnCerrar = dialog.findViewById(R.id.btn_cerrar_historial_informe);
 
                                     HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
                                     txtInstanciaInforme.setText(historialAnticipo.getInstancia());
                                     txtEvaluador.setText(historialAnticipo.getEvaluador());
                                     txtEstado.setText(historialAnticipo.getEstado());
                                     txtDescripcion.setText(historialAnticipo.getDescripcion());
+
+                                    btnCerrar.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+
 
                                     dialog.show();
                                 } else {
@@ -203,6 +218,13 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
 
                     break;
                 case 2:
+                    Fragment fragment = new RendicionFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("anticipoId",RendicionAdapter.listadoInformes.get(rendicionAdapter.itemSeleccionado).getAnticipoId());
+//                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = this.getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container_redencion, fragment);
+                    fragmentTransaction.commit();
                     break;
             }
         }

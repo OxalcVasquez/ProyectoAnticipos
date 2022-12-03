@@ -12,6 +12,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="informe_redencion">Informe N°</string>
+    <string name="informe_registrado">INFORME GASTO</string>
     <string name="fecha_rendicion_listado">Fecha de registro:</string>
     <string name="total_rendido_listado">Total rendido:</string>
     <string name="fecha_al_listado">Al:</string>
@@ -41,6 +42,7 @@
     <string name="btn_login">Ingresar</string>
     <string name="title_login">Inicio de sesión</string>
     <string name="txt_validation">Debes ingresar el email y contraseña</string>
+    <string name="txt_validation_informe">Debe devolver el total de viaticos asignado</string>
     <string name="total_de_viaticos">TOTAL DE VIATICOS</string>
     <string name="motivo_del_anticipo">Motivo del Anticipo</string>
     <string name="descripci_n">Descripción</string>
@@ -59,6 +61,10 @@
     <string name="anticipo">Anticipo :</string>
     <string name="option_rechazar">Rechazar</string>
     <string name="option_aprobar">Aprobar</string>
+    <string name="anticipo_info">Solicitud de anticipo registrado</string>
+    <string name="informe_info">Informe rendicion registrado</string>
+    <string name="informe_title">INFORME GASTO</string>
+
     <!-- TODO: Remove or change this placeholder text -->
 
 

@@ -213,10 +213,17 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                     boolean status = anticipoResponse.getStatus();
                     if (status){
                         Anticipo anticipo = anticipoResponse.getData();
-                        Snackbar
-                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getId(), Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryColor))
-                                .show();
+                        String anticipoGrabado = getResources().getString(R.string.anticipo_info)+ "\n\n" +
+                                getResources().getString(R.string.anticipo) + anticipo.getId() + "\n"+
+                                getResources().getString(R.string.descripci_n) + " : "+txtDescripcion.getText() + "\n" +
+                                getResources().getString(R.string.total_de_viaticos) + " : " +txtTotalViaticos.getText() + "\n"
+                        ;
+
+                        Helper.mensajeInformacion(getActivity(),getResources().getString(R.string.anticipo),anticipoGrabado);
+//                        Snackbar
+//                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getId(), Snackbar.LENGTH_LONG)
+//                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryColor))
+//                                .show();
                         limpiar();
                     }
                 }  else {

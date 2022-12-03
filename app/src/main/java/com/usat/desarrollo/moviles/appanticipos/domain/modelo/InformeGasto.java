@@ -4,38 +4,79 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class InformeGasto {
 
-    private int id, anticipoId, usuarioId;
+    @SerializedName("anticipo_id")
+    private int anticipoId;
     @SerializedName("num_informe")
     private String numInforme;
-    private String estadoAnt;
-    private Date fecha;
-    private Double totalRendir, totalRendido;
+    private String anticipo;
+    private String estado;
+    @SerializedName("fecha_hora")
+    private String fechaRegistro;
+    @SerializedName("fecha_inicio")
+    private String fechaInicion;
+    @SerializedName("fecha_fin")
+    private String fechaFin;
+    @SerializedName("total_rendido")
+    private double totalRendido;
 
-    public static ArrayList<InformeGasto> listaInformeGasto = new ArrayList<>();
+    public String getNumInforme() {
+        return numInforme;
+    }
 
-    public InformeGasto(int id, int anticipoId, int usuarioId, String numInf, String estadoAnt, Date fecha, Double totalRendir, Double totalRendido) {
-        this.id = id;
-        this.anticipoId = anticipoId;
-        this.usuarioId = usuarioId;
-        this.numInforme = numInf;
-        this.estadoAnt = estadoAnt;
-        this.fecha = fecha;
-        this.totalRendir = totalRendir;
+    public void setNumInforme(String numInforme) {
+        this.numInforme = numInforme;
+    }
+
+    public String getAnticipo() {
+        return anticipo;
+    }
+
+    public void setAnticipo(String anticipo) {
+        this.anticipo = anticipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(String fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public double getTotalRendido() {
+        return totalRendido;
+    }
+
+    public void setTotalRendido(double totalRendido) {
         this.totalRendido = totalRendido;
     }
 
-    public InformeGasto() {
+    public String getFechaInicion() {
+        return fechaInicion;
     }
 
-    public int getId() {
-        return id;
+    public void setFechaInicion(String fechaInicion) {
+        this.fechaInicion = fechaInicion;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public int getAnticipoId() {
@@ -44,57 +85,5 @@ public class InformeGasto {
 
     public void setAnticipoId(int anticipoId) {
         this.anticipoId = anticipoId;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public String getNumInf() {
-        return numInforme;
-    }
-
-    public void setNumInf(String numInf) {
-        this.numInforme = numInf;
-    }
-
-    public String getEstadoAnt() {
-        return estadoAnt;
-    }
-
-    public void setEstadoAnt(String estadoAnt) {
-        this.estadoAnt = estadoAnt;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Double getTotalRendir() {
-        return totalRendir;
-    }
-
-    public void setTotalRendir(Double totalRendir) {
-        this.totalRendir = totalRendir;
-    }
-
-    public Double getTotalRendido() {
-        return totalRendido;
-    }
-
-    public void setTotalRendido(Double totalRendido) {
-        this.totalRendido = totalRendido;
-    }
-
-    public void cargarDatosRendicion() {
-
     }
 }

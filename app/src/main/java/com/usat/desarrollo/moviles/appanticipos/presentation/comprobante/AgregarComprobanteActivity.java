@@ -186,26 +186,26 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             }
         });
 
-//        Comprobante comprobante = new Comprobante();
-//        String ruc = txtRuc.getText().toString();
-//        String descripcion = txtDescripcion.getText().toString();
-//        String serie = txtSerie.getText().toString();
-//        String correlativo = txtCorrelativo.getText().toString();
-//        String montoTotal = txtMontoComprobante.getText().toString();
-//        String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
-//        comprobante.setRuc(ruc);
-//        comprobante.setDescripcion(descripcion);
-//        comprobante.setSerie(serie);
-//        comprobante.setCorrelativo(correlativo);
-//        comprobante.setMontoTotal(Double.parseDouble(montoTotal));
-//        comprobante.setFechaEmision(fecha);
-//        comprobante.setRubro(rubro);
-//        comprobante.setRubroId(idRubroSeleccionado);
-//        comprobante.setTipoComprobante(tipo);
-//        comprobante.setTipoComprobanteId(idTipoSeleccionado);
-//        comprobante.setFoto(file.getName());
-//        Comprobante.comprobanteListado.add(comprobante);
-//        this.finish();
+        Comprobante comprobante = new Comprobante();
+        String ruc = txtRuc.getText().toString();
+        String descripcion = txtDescripcion.getText().toString();
+        String serie = txtSerie.getText().toString();
+        String correlativo = txtCorrelativo.getText().toString();
+        String montoTotal = txtMontoComprobante.getText().toString();
+        String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
+        comprobante.setRuc(ruc);
+        comprobante.setDescripcion(descripcion);
+        comprobante.setSerie(serie);
+        comprobante.setCorrelativo(correlativo);
+        comprobante.setMontoTotal(Double.parseDouble(montoTotal));
+        comprobante.setFechaEmision(fecha);
+        comprobante.setRubro(rubro);
+        comprobante.setRubroId(idRubroSeleccionado);
+        comprobante.setTipoComprobante(tipo);
+        comprobante.setTipoComprobanteId(idTipoSeleccionado);
+        comprobante.setFoto(file.getName());
+        Comprobante.comprobanteListado.add(comprobante);
+        this.finish();
     }
 
     @Override

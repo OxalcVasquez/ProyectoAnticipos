@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="INSTANCIA : " />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_instancia_informe"
+            android:layout_weight="1"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="INSTANCIA" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="ESTADO : " />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/txt_dialog_informe_estado"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="INSTANCIA" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="EVALUADOR : " />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/txt_dialog_evaluador"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="INSTANCIA" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="DESCRIPCION : " />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/txt_dialgo_descripcion"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="15sp"
+            android:text="INSTANCIA" />
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cerrar_historial_informe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryTextColor"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primaryColor"
+            android:text="CERRAR" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

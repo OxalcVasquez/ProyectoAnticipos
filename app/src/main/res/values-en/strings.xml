@@ -56,5 +56,8 @@
     <string name="anticipos">Payment advances</string>
     <string name="rendici_n_de_gastos">Expense report</string>
     <string name="cerrar_sesi_n">Log out</string>
+    <string name="monto_rentir">AMOUNT TO COMPENSATE</string>
+    <string name="anticipo">Advance payment :</string>
+
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

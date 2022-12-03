@@ -92,7 +92,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/secondaryColor"
+                    android:background="#fff"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="4dp">
@@ -337,6 +337,32 @@
                             android:layout_weight="1"
                             android:textColor="#000000"
                             android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/monto_rentir"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_monto_rendir"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/secondaryDarkColor"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 

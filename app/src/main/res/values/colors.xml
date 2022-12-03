@@ -9,5 +9,8 @@
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="error">#FD2525</color>
+    <color name="register">#03A9F4</color>
+    <color name="approved">#4CAF50</color>
+    <color name="unapproved">#F44336</color>
     <color name="warning">#FFC107</color>
 </resources>

@@ -2,6 +2,8 @@ package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
@@ -100,5 +102,21 @@ public interface ApiService {
     Call<ResponseBody> subirImage(
             @Part MultipartBody.Part imagen
     );
+
+    @FormUrlEncoded
+    @POST("informe_gasto/docente/listar")
+    Call<InformeGastoListadoResponse> getInformeListado(
+            @Field("token") String token,
+            @Field("docente_id") int docente_id
+            );
+
+    @FormUrlEncoded
+    @POST("historial/anticipo")
+    Call<HistorialAnticipoResponse> getHistorial(
+            @Field("token") String token,
+            @Field("anticipo_id") int anticipoId,
+            @Field("tipo") String tipo
+    );
+
 
 }

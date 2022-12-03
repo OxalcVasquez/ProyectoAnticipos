@@ -1,36 +1,24 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
 import java.util.Date;
+import java.util.List;
 
 public class HistorialAnticipo {
-    private int id, usuarioId;
+
+    public static List<HistorialAnticipo> listaHistorial;
+    private String descripcion;
     private String estado;
-    private Date fecha;
+    private String evaluador;
+    private String fechaHora;
+    private String instancia;
+    private String tipo;
 
-    public HistorialAnticipo(int id, int usuarioId, String estado, Date fecha) {
-        this.id = id;
-        this.usuarioId = usuarioId;
-        this.estado = estado;
-        this.fecha = fecha;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public HistorialAnticipo() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getEstado() {
@@ -41,11 +29,35 @@ public class HistorialAnticipo {
         this.estado = estado;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getEvaluador() {
+        return evaluador;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setEvaluador(String evaluador) {
+        this.evaluador = evaluador;
+    }
+
+    public String getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public String getInstancia() {
+        return instancia;
+    }
+
+    public void setInstancia(String instancia) {
+        this.instancia = instancia;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaRespo
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
-import com.usat.desarrollo.moviles.appanticipos.domain.modelo.TipoComprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
 import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
@@ -52,16 +50,16 @@ import retrofit2.Response;
 
 public class RendicionGastosFragment extends Fragment implements View.OnClickListener {
 
-    TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante;
+    TextView txtDocente, txtPasajes, txtPasajesDe, txtAlimentacion, txtAlimentacionDe, txtHotel, txtHotelDe, txtMovilidad, txtMovilidadDe, txtDevolucion, txtRestante, txtMontoRendir;
     AutoCompleteTextView actvAnticipos;
     Button btnAgregarComprobante, btnRegistrarRedencion;
     ScrollView svComprobantes;
     RecyclerView recyclerComprobante;
     ComprobanteAdapter comprobanteAdapter;
 
-    Anticipo anticipoSeleccionado;
+    Anticipo anticipoSeleccionado = new Anticipo();
     ApiService apiService;
-    double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0;
+    double montoPasajes = 0,montoAlimentacion = 0,montoHotel = 0,montoMovilidad = 0, montoDevolucion = 0;
 
 
     @Override
@@ -87,6 +85,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         txtMovilidadDe = view.findViewById(R.id.txt_movilidad_de_rendicion);
         txtDevolucion = view.findViewById(R.id.txt_devolucion_rendicion);
         txtRestante = view.findViewById(R.id.txt_restante_rendicion);
+        txtMontoRendir = view.findViewById(R.id.txt_monto_rendir);
         btnAgregarComprobante = view.findViewById(R.id.btn_comprobante_agregar_rendicion);
         btnRegistrarRedencion = view.findViewById(R.id.btn_registrar_rendicion);
         svComprobantes = view.findViewById(R.id.sv_comprobantes);
@@ -109,17 +108,21 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 anticipoSeleccionado = Anticipo.listaAnticipos.get(i);
+                calcularMontosPorRendir();
             }
         });
         cargarAnticiposPendientesARendicion();
-        agregarComprobante();
         btnRegistrarRedencion.setOnClickListener(this);
+        btnAgregarComprobante.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btn_comprobante_agregar_rendicion:
+                agregarComprobante();
+                break;
             case R.id.btn_registrar_rendicion:
                 Helper.mensajeConfirmacion(RendicionGastosFragment.this.getActivity(),"CONFIRMACION","Desea grabar informe?","SI","NO",new TaskGrabarRendicion());
                 break;
@@ -141,7 +144,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                     public void onResponse(Call<InformeGastoResponse> call, Response<InformeGastoResponse> response) {
                         if (response.code() == 201){
                             if (response.body().getStatus()){
-                                String numInforme = response.body().getData().getNumInf();
+                                String numInforme = response.body().getData().getNumInforme();
                                 String informeGrabado = "Informe de rendicion registrado \n\n" +
                                         "Numero Informe : " + numInforme + "\n"+
                                         "Devolucion realizada : " + txtDevolucion.getText() + "\n"+
@@ -176,16 +179,19 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     }
 
     private void agregarComprobante() {
-        btnAgregarComprobante.setOnClickListener(view -> {
-            startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), 2);// Activity is started with requestCode 2
-        });
+        if (anticipoSeleccionado.getId()!=0) {
+                startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), 2);// Activity is started with requestCode 2
+        } else {
+            Helper.mensajeInformacion(getActivity(),"Informacion","Debes seleccionar un anticipo");
+        }
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2 && resultCode == Activity.RESULT_OK) {
-           listar();
+            cargarComprobantes();
         }
     }
 
@@ -193,7 +199,8 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         return actvAnticipos.getText().toString().equalsIgnoreCase("");
     }
 
-    private void  listar() {
+    private void  cargarComprobantes() {
+
         if (Comprobante.comprobanteListado.size()>0){
             recyclerComprobante.setVisibility(View.VISIBLE);
             svComprobantes.setVisibility(View.VISIBLE);
@@ -234,16 +241,21 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         } else {
             restante -= montosRendidos[3];
         }
+        if (montosRendidos[4] > restante){
+            restante = 0;
+        } else {
+            restante -= montosRendidos[4];
 
-        restante -= montosRendidos[4];
-
+        }
 
         txtRestante.setText("S./" + restante);
     }
 
     private void calcularMontosPorRendir() {
+        txtMontoRendir.setText("S./" + anticipoSeleccionado.getMonto_total());
+        txtRestante.setText("S./" + anticipoSeleccionado.getMonto_total());
+
         int dias = Helper.diasEntreDosFechas(Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_inicio()),Helper.formatearAMD_to_DMA(anticipoSeleccionado.getFecha_fin()));
-        Toast.makeText(getContext(), "hola "+dias, Toast.LENGTH_SHORT).show();
         apiService.getViaticos(DatosSesion.sesion.getToken(),anticipoSeleccionado.getSede_id(),dias).enqueue(new Callback<TarifaResponse>() {
             @Override
             public void onResponse(Call<TarifaResponse> call, Response<TarifaResponse> response) {
@@ -269,7 +281,6 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                                 case 4:
                                     montoMovilidad = tarifa.getMonto_maximo();
                                     txtMovilidadDe.setText("S./ " + montoMovilidad);
-
                                     break;
                             }
 

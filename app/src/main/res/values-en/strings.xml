@@ -68,6 +68,16 @@
     <string name="estado_aprobado">APPROVED</string>
     <string name="estado_registrado">REGISTERED</string>
     <string name="estado_rechazado">REJECTED</string>
+    <string name="estado_designado">DESIGNATED</string>
+
+    <string name="estado_rendido">SURRENDERED</string>
+    <string name="estado_observado">OBSERVED</string>
+    <string name="estado_pendiente">SLOPE</string>
+    <string name="estado_rendicionr">SURRENDER REJ</string>
+    <string name="estado_rendiciona">SURRENDER APP</string>
+    <string name="estado_cerrado">CLOSED</string>
+    <string name="estado_subsanado">CORRECTED</string>
+    <string name="monto_anticipo">AMOUNT:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

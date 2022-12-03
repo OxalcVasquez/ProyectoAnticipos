@@ -66,7 +66,18 @@
     <string name="informe_title">INFORME GASTO</string>
     <string name="estado_aprobado">APROBADO</string>
     <string name="estado_registrado">REGISTRADO</string>
+    <string name="estado_designado">DESIGNADO</string>
     <string name="estado_rechazado">RECHAZADO</string>
+
+    <string name="estado_rendido">RENDIDO</string>
+    <string name="estado_observado">OBSERVADO</string>
+    <string name="estado_pendiente">PENDIENTE</string>
+    <string name="estado_rendicionr">RECHAZADO REN</string>
+    <string name="estado_rendiciona">APROBADO REN</string>
+    <string name="estado_cerrado">CERRADO</string>
+    <string name="estado_subsanado">SUBSANADO</string>
+    <string name="monto_anticipo">Monto:</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -59,6 +59,7 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
         holder.txtFechaAl.setText(informeGasto.getFechaInicion());
         holder.txtAnticipo.setText(informeGasto.getAnticipo());
         holder.txtFechaDel.setText(informeGasto.getFechaFin());
+
         if (informeGasto.getEstado().equalsIgnoreCase("REGISTRADO")) {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.register));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_registrado));

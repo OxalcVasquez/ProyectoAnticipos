@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,8 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
+import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoListadoFragment;
+import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.SolicitudAnticipoFragment;
 
 import java.util.ArrayList;
 
@@ -42,11 +45,59 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Anticipo anticipo = listaAnticipo.get(position);
 
-        holder.txtAnticipo.setText(""+ String.valueOf(anticipo.getDescripcion()));
-        holder.txtFechaInicio.setText(""+String.valueOf(anticipo.getFecha_inicio()));
-        holder.txtFechaFin.setText(""+String.valueOf(anticipo.getFecha_fin()));
-        holder.txtEstado.setText(""+ String.valueOf(anticipo.getEstado()));
-        holder.txtMonto.setText(""+ String.valueOf(anticipo.getMonto_total()));
+        holder.txtAnticipo.setText(" "+ String.valueOf(anticipo.getDescripcion()));
+        holder.txtFechaInicio.setText(" "+String.valueOf(anticipo.getFecha_inicio()));
+        holder.txtFechaFin.setText(" "+String.valueOf(anticipo.getFecha_fin()));
+        //holder.txtEstado.setText(""+ String.valueOf(anticipo.getEstado()));
+        holder.txtMonto.setText(" "+ String.valueOf(anticipo.getMonto_total()));
+
+        switch (anticipo.getEstado()) {
+            case "REGISTRADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.register));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_registrado));
+                break;
+            case "APROBADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_aprobado));
+                break;
+            case "DESIGNADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_designado));
+                break;
+            case "RECHAZADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.unapproved));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rechazado));
+                break;
+            case "RENDIDO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.register));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rendido));
+                break;
+            case "OBSERVADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.warning));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_observado));
+                break;
+            case "PENDIENTE":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.secondaryDarkColor));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_pendiente));
+                break;
+            case "RENDICION R":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.unapproved));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rendicionr));
+                break;
+            case "RENDICION A":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rendiciona));
+                break;
+            case "CERRADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.primaryTextColor));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_cerrado));
+                break;
+            case "SUBSANADO":
+                holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.ic_launcher_background));
+                holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_subsanado));
+                break;
+        }
+
         Glide.with(context)
                 .load(ApiAdapter.BASE_URL.toString() + anticipo.getImg())
                 .into(holder.imgSede);
@@ -97,7 +148,6 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         public boolean onLongClick(View view) {
             //Permite obtener la posición del item seleccionado en el RecyclerView
             posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
-            Log.e("ANTICIPO_ID", String.valueOf(listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId()));
             Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
             return false;
         }

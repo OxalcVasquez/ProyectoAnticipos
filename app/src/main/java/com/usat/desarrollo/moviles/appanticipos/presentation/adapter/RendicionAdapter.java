@@ -136,9 +136,11 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Opciones");
-            contextMenu.add(0,1,0,"Ver instancia");
-            contextMenu.add(0,2,0,"Subsanar");
+            if (DatosSesion.sesion.getRol_id() == 1) {
+                contextMenu.setHeaderTitle("Opciones");
+                contextMenu.add(0,1,0,"Ver instancia");
+                contextMenu.add(0,2,0,"Subsanar");
+            }
         }
     }
 }

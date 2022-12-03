@@ -97,18 +97,18 @@ public interface ApiService {
             @Field("detalle_comprobantes") String detalle_comprobantes
     );
 
-    @Multipart
-    @POST("comprobante/foto")
-    Call<ResponseBody> subirImage(
-            @Part MultipartBody.Part imagen
-    );
-
     @FormUrlEncoded
     @POST("informe_gasto/docente/listar")
     Call<InformeGastoListadoResponse> getInformeListado(
             @Field("token") String token,
             @Field("docente_id") int docente_id
-            );
+    );
+
+    @FormUrlEncoded
+    @POST("informe_gasto/administracion/listar")
+    Call<InformeGastoListadoResponse> getInformeAdminListado(
+            @Field("token") String token
+    );
 
     @FormUrlEncoded
     @POST("historial/anticipo")

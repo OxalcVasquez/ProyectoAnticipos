@@ -42,16 +42,8 @@ import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +58,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
     public static final int REQUEST_PICK = 1;
     int idRubroSeleccionado, idTipoSeleccionado;
     String rubro, tipo;
-    String imagePath;
+    String imageBASE64;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,9 +119,9 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             if(resultCode == Activity.RESULT_OK){
                 try {
                     Uri rutaImagen = data.getData();
-                    imagePath = getPath(getApplicationContext(), rutaImagen);
                     Bitmap bitmap = Gallery.rotateImage(AgregarComprobanteActivity.this,rutaImagen,Gallery.getOrientation(AgregarComprobanteActivity.this,rutaImagen));
                     Bitmap bitmapCompress = Gallery.compress(bitmap);
+                    imageBASE64 = Helper.imageToBase64(bitmapCompress);
                     imgComprobante.setImageBitmap(bitmapCompress);
                     imgComprobante.setTag("foto_real");
                 } catch (IOException e){
@@ -145,14 +137,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         int id = view.getId();
         switch (id) {
             case R.id.btn_comprobante_agregar:
-                //TODO AGREGAR
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    } else {
-                        agregarComprobante();
-                    }
-                }
+                agregarComprobante();
                 break;
             case R.id.btn_comprobante_foto:
                 abrirGaleria();
@@ -164,28 +149,6 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
     }
 
     private void agregarComprobante() {
-        File file = new File(imagePath);
-        RequestBody requestFile = RequestBody.create(
-                MediaType.parse("image/*"),
-                file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData(
-                "image",
-                file.getName(),
-                requestFile);
-
-        apiService.subirImage(part).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("prueba", "Code: " + String.valueOf(response.code()));
-                Log.d("prueba", "isSuccessful: " +  String.valueOf(response.isSuccessful()));
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
         Comprobante comprobante = new Comprobante();
         String ruc = txtRuc.getText().toString();
         String descripcion = txtDescripcion.getText().toString();
@@ -203,7 +166,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
         comprobante.setRubroId(idRubroSeleccionado);
         comprobante.setTipoComprobante(tipo);
         comprobante.setTipoComprobanteId(idTipoSeleccionado);
-        comprobante.setFoto(file.getName());
+        comprobante.setFoto(imageBASE64);
         Comprobante.comprobanteListado.add(comprobante);
         this.finish();
     }
@@ -294,94 +257,4 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             });
 
     }
-
-    public static String getPath(final Context context, final Uri uri) {
-
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-            }
-            else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getDataColumn(context, contentUri, null, null);
-            }
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
-                        split[1]
-                };
-
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }
-        }
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            return getDataColumn(context, uri, null, null);
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
-
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
-
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {
-                column
-        };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
-    }
-
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
 }

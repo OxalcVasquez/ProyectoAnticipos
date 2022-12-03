@@ -57,6 +57,8 @@
     <string name="cerrar_sesi_n">Cerrar sesión</string>
     <string name="monto_rentir">Monto a rendir</string>
     <string name="anticipo">Anticipo :</string>
+    <string name="option_rechazar">Rechazar</string>
+    <string name="option_aprobar">Aprobar</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

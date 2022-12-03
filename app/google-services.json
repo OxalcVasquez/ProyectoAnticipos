@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "461908224919",
+    "project_id": "proyecto-anticipos",
+    "storage_bucket": "proyecto-anticipos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461908224919:android:6649d1c075f0818e7b72d2",
+        "android_client_info": {
+          "package_name": "com.usat.desarrollo.moviles.appanticipos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461908224919-q87j91qbp4cvqlsqsvclg41e0j7jtn2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4KzWwjt4hpVYIKS7gQ59Bx-EkTlb4NDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461908224919-q87j91qbp4cvqlsqsvclg41e0j7jtn2l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

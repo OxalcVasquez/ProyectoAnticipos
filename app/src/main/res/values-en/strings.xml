@@ -58,6 +58,8 @@
     <string name="cerrar_sesi_n">Log out</string>
     <string name="monto_rentir">AMOUNT TO COMPENSATE</string>
     <string name="anticipo">Advance payment :</string>
+    <string name="option_rechazar">Reject</string>
+    <string name="option_aprobar">Approve</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

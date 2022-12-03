@@ -37,6 +37,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Validacion;
+import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionGastosFragment;
 import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
@@ -205,7 +206,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         Toast.makeText(getActivity(), "DIAS DIFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
         if (diasAnticipo<=0){
             Snackbar
-                    .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "La fecha de fin debe ser mayor a la de inicio", Snackbar.LENGTH_LONG)
+                    .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), getContext().getResources().getString(R.string.validacion_fechas), Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
                     .show();
         }
@@ -218,7 +219,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         int id = view.getId();
         switch (id) {
             case R.id.btn_anticipo_registrar:
-                registrarAnticipo();
+                Helper.mensajeConfirmacion(SolicitudAnticipoFragment.this.getActivity(),getString(R.string.confirmacion),getString(R.string.confirmacion_anticipo),getString(R.string.si),"NO",new TaskGrabarAnticipo());
                 break;
             case R.id.btn_anticipo_limpiar:
                 limpiar();
@@ -234,58 +235,60 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     }
 
     private void registrarAnticipo() {
-        progressBar.setVisibility(View.VISIBLE);
         String descripcion = txtDescripcion.getText().toString();
         String fechaInicio = Helper.formatearDMA_to_AMD(txtFechaInicio.getText().toString());
         String fechaFin = Helper.formatearDMA_to_AMD(txtFechaFin.getText().toString());
-        Toast.makeText(getActivity(), fechaInicio, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), fechaInicio, Toast.LENGTH_SHORT).show();
+        if (validar()){
+            progressBar.setVisibility(View.VISIBLE);
+            apiService.getAnticipoRegistrado(DatosSesion.sesion.getToken(),descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.sesion.getId()).enqueue(new Callback<AnticipoRegistroResponse>() {
+                @Override
+                public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.code() == 201) {
+                        AnticipoRegistroResponse anticipoResponse = response.body();
+                        boolean status = anticipoResponse.getStatus();
+                        if (status){
+                            Anticipo anticipo = anticipoResponse.getData();
+                            String anticipoGrabado = getResources().getString(R.string.anticipo_info)+ "\n\n" +
+                                    getResources().getString(R.string.anticipo) + anticipo.getId() + "\n"+
+                                    getResources().getString(R.string.descripci_n) + " : "+txtDescripcion.getText() + "\n" +
+                                    getResources().getString(R.string.total_de_viaticos) + " : " +txtTotalViaticos.getText() + "\n"
+                                    ;
 
-        apiService.getAnticipoRegistrado(DatosSesion.sesion.getToken(),descripcion,fechaInicio,fechaFin,idMotivoSeleccionado,idSedeSeleccionada,DatosSesion.sesion.getId()).enqueue(new Callback<AnticipoRegistroResponse>() {
-            @Override
-            public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.code() == 201) {
-                    AnticipoRegistroResponse anticipoResponse = response.body();
-                    boolean status = anticipoResponse.getStatus();
-                    if (status){
-                        Anticipo anticipo = anticipoResponse.getData();
-                        String anticipoGrabado = getResources().getString(R.string.anticipo_info)+ "\n\n" +
-                                getResources().getString(R.string.anticipo) + anticipo.getId() + "\n"+
-                                getResources().getString(R.string.descripci_n) + " : "+txtDescripcion.getText() + "\n" +
-                                getResources().getString(R.string.total_de_viaticos) + " : " +txtTotalViaticos.getText() + "\n"
-                        ;
-
-                        Helper.mensajeInformacion(getActivity(),getResources().getString(R.string.anticipo),anticipoGrabado);
+                            Helper.mensajeInformacion(getActivity(),getResources().getString(R.string.anticipo),anticipoGrabado);
 //                        Snackbar
 //                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), "SE REGISTRO EL ANTICIPO "+anticipo.getId(), Snackbar.LENGTH_LONG)
 //                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.primaryColor))
 //                                .show();
-                        limpiar();
+                            limpiar();
+                        }
+                    }  else {
+                        try {
+                            JSONObject jsonError = new JSONObject(response.errorBody().string());
+                            String message =  jsonError.getString("message");
+                            Snackbar
+                                    .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), message, Snackbar.LENGTH_LONG)
+                                    .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
+                                    .show();
+                            Log.e("ERROR ---->",message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }  else {
-                    try {
-                        JSONObject jsonError = new JSONObject(response.errorBody().string());
-                        String message =  jsonError.getString("message");
-                        Snackbar
-                                .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), message, Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(ContextCompat.getColor(getActivity(), R.color.error))
-                                .show();
-                        Log.e("ERROR ---->",message);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<AnticipoRegistroResponse> call, Throwable t) {
+                    Log.e("Error registrando anticipo", t.getMessage());
 
-            @Override
-            public void onFailure(Call<AnticipoRegistroResponse> call, Throwable t) {
-                Log.e("Error registrando anticipo", t.getMessage());
+                }
+            });
 
-            }
-        });
+        }
     }
 
     private void cargarMotivosAnticipo(){
@@ -435,6 +438,30 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
             });
         }
     }
+    private boolean validar(){
+        if (idMotivoSeleccionado==0) {
+            Helper.mensajeInformacion(getContext(),"INFO",getContext().getResources().getString(R.string.validacion_motivo));
+            return false;
+        }
+
+        if (txtDescripcion.getText().toString().equalsIgnoreCase("")) {
+            Helper.mensajeInformacion(getContext(),"INFO",getContext().getResources().getString(R.string.validacion_descripcion));
+            return false;
+        }
+
+        if (idSedeSeleccionada==0) {
+            Helper.mensajeInformacion(getContext(),"INFO",getContext().getResources().getString(R.string.validacion_sede));
+            return false;
+        }
+
+        if (diasAnticipo<=0){
+            Helper.mensajeInformacion(getContext(),"INFO",getContext().getResources().getString(R.string.validacion_fechas));
+            return false;
+
+        }
+        return true;
+    }
+
     private void limpiar(){
         actvSedeDestino.setText("");
         actvMotivoAnticipo.setText("");
@@ -444,5 +471,12 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
         txtHotel.setText("");
         txtMovilidad.setText("");
         txtTotalViaticos.setText("");
+    }
+
+    class TaskGrabarAnticipo implements Runnable{
+        @Override
+        public void run() {
+            registrarAnticipo();
+        }
     }
 }

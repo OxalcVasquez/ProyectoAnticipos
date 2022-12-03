@@ -128,7 +128,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                 agregarComprobante();
                 break;
             case R.id.btn_registrar_rendicion:
-                Helper.mensajeConfirmacion(RendicionGastosFragment.this.getActivity(),"CONFIRMACION","Desea grabar informe?","SI","NO",new TaskGrabarRendicion());
+                Helper.mensajeConfirmacion(RendicionGastosFragment.this.getActivity(),getString(R.string.confirmacion),getString(R.string.confirmacion_informe),getString(R.string.si),"NO",new TaskGrabarRendicion());
                 break;
         }
     }
@@ -337,10 +337,12 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                                 listaAnticipo.add(anticipoListadoResponse.getData()[i].getDescripcion());
                             }
                         }
+                        if (getActivity()!=null){
+                            String descripcion[] = listaAnticipo.toArray(new String[0]);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,descripcion);
+                            actvAnticipos.setAdapter(adapter);
+                        }
 
-                        String descripcion[] = listaAnticipo.toArray(new String[0]);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,descripcion);
-                        actvAnticipos.setAdapter(adapter);
                     }
 
                 }   else {

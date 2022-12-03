@@ -65,7 +65,7 @@ public class Helper {
         alert.setTitle(title);
         alert.setMessage(message);
         alert.setIcon(R.drawable.ic_info);
-        alert.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 mResult = true;
                 handler.sendMessage(handler.obtainMessage());

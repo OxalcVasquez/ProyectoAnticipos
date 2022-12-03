@@ -78,6 +78,16 @@
     <string name="estado_subsanado">SUBSANADO</string>
     <string name="monto_anticipo">Monto:</string>
 
+    <string name="validacion_motivo">Por favor seleccione un motivo de anticipo</string>
+    <string name="validacion_sede">Por favor seleccione una sede</string>
+    <string name="validacion_descripcion">Por favor ingrese una descripcion</string>
+    <string name="validacion_fechas">La fecha de fin debe ser mayor a la de inicio</string>
+
+    <string name="si">SI</string>
+    <string name="confirmacion">CONFIRMACION</string>
+    <string name="confirmacion_informe">¿Desea grabar informe?</string>
+    <string name="confirmacion_anticipo">¿Desea grabar el anticipo?</string>
+    <string name="registrar_solicitud">Registrar solicitud</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

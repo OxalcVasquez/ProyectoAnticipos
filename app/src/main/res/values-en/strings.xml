@@ -79,5 +79,16 @@
     <string name="estado_subsanado">CORRECTED</string>
     <string name="monto_anticipo">AMOUNT:</string>
 
+    <string name="validacion_motivo">Please select a reason for advance payment</string>
+    <string name="validacion_sede">Please select a campus</string>
+    <string name="validacion_descripcion">Please enter a description</string>
+    <string name="validacion_fechas">The end date must be greater than the start date</string>
+
+    <string name="si">YES</string>
+    <string name="confirmacion">CONFIRMATION</string>
+    <string name="confirmacion_informe">Do you want to save report?</string>
+    <string name="confirmacion_anticipo">Do you want to save the advance payment?</string>
+    <string name="registrar_solicitud">Record advance payment</string>
+
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

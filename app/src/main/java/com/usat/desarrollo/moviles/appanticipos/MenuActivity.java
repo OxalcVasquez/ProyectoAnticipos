@@ -7,12 +7,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +16,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoFragment;
 import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionFragment;
-import com.usat.desarrollo.moviles.appanticipos.utils.Config;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,7 +26,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     CircleImageView foto;
     TextView txtNombre, txtEmail;
-    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +42,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-//                    txtTitle.setText(intent.getStringExtra("firebase_title"));
-//                    txtMessage.setText(intent.getStringExtra("firebase_message"));
-//                    MainActivity.this.setTitle(intent.getStringExtra("firebase_timestamp"));
-                }
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(Config.REGISTRATION_COMPLETE));
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(Config.PUSH_NOTIFICATION));
 
         //Referenciar a la cabecera del menú
         View cabeceraMenu = navigationView.getHeaderView(0);

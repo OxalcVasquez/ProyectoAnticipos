@@ -11,6 +11,8 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.RubrosRespo
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ValidacionResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Validacion;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -116,6 +118,13 @@ public interface ApiService {
             @Field("token") String token,
             @Field("anticipo_id") int anticipoId,
             @Field("tipo") String tipo
+    );
+
+    @FormUrlEncoded
+    @POST("anticipo/validar/pendientes")
+    Call<ValidacionResponse> getValidacionAnticipo(
+            @Field("token") String token,
+            @Field("usuario_id") int usuarioId
     );
 
 

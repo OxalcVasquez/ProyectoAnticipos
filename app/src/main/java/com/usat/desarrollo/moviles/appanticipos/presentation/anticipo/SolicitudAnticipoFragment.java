@@ -30,11 +30,13 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoReg
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.MotivoAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ValidacionResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.MotivoAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Sede;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Tarifa;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Validacion;
 import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 import com.usat.desarrollo.moviles.appanticipos.utils.Pickers;
 
@@ -157,10 +159,44 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
             }
         });
 
-
+        validarPendientes();
         cargarMotivosAnticipo();
         cargarSedes();
         return view;
+    }
+
+    private void validarPendientes() {
+        apiService.getValidacionAnticipo(DatosSesion.sesion.getToken(),DatosSesion.sesion.getId()).enqueue(new Callback<ValidacionResponse>() {
+            @Override
+            public void onResponse(Call<ValidacionResponse> call, Response<ValidacionResponse> response) {
+                if (response.code() == 200) {
+                    ValidacionResponse validacion = response.body();
+                    boolean status = validacion.getStatus();
+                    if (status) {
+                        if (validacion.getData().getValidacion().equalsIgnoreCase("1")) {
+                            Helper.mensajeInformacion(getActivity(),"INFO","Tiene 3 o más anticipos pendientes por rendicion por favor, regularizar");
+                            btnRegistrarAnticipo.setEnabled(false);
+                        }
+                    }
+                } else {
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        String message =  jsonError.getString("message");
+                        Log.e("ERROR VALIDANDO", message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ValidacionResponse> call, Throwable t) {
+                Log.e("Error validando anticipo", t.getMessage());
+
+            }
+        });
     }
 
     //luego agregar el validar fecha inicio y fin

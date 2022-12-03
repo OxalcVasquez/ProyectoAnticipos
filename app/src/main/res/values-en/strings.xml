@@ -65,7 +65,9 @@
     <string name="anticipo_info">Registered advance request</string>
     <string name="informe_info">Registered report</string>
     <string name="informe_title">EXPENSE REPORT</string>
-
+    <string name="estado_aprobado">APPROVED</string>
+    <string name="estado_registrado">REGISTERED</string>
+    <string name="estado_rechazado">REJECTED</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

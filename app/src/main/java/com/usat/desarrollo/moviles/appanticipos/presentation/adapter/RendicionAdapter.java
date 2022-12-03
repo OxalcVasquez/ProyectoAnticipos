@@ -61,15 +61,15 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
         holder.txtFechaDel.setText(informeGasto.getFechaFin());
         if (informeGasto.getEstado().equalsIgnoreCase("REGISTRADO")) {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.register));
-            holder.txtEstado.setText("REGISTRADO");
+            holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_registrado));
 
         } else if (informeGasto.getEstado().equalsIgnoreCase("RENDICION A")) {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
-            holder.txtEstado.setText("APROBADO");
+            holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_aprobado));
 
         } else {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.unapproved));
-            holder.txtEstado.setText("RECHAZADO");
+            holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rechazado));
 
         }
         holder.txtTotalRendido.setText("S/." + informeGasto.getTotalRendido());

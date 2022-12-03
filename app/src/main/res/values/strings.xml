@@ -64,6 +64,10 @@
     <string name="anticipo_info">Solicitud de anticipo registrado</string>
     <string name="informe_info">Informe rendicion registrado</string>
     <string name="informe_title">INFORME GASTO</string>
+    <string name="estado_aprobado">APROBADO</string>
+    <string name="estado_registrado">REGISTRADO</string>
+    <string name="estado_rechazado">RECAHAZADO</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
 

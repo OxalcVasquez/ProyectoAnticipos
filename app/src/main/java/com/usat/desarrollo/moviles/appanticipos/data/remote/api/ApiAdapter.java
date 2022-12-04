@@ -6,9 +6,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiAdapter {
     private static ApiService apiService;
 
-    public static final String BASE_URL = "https://web-services-anticipos.onrender.com/";
+//    public static final String BASE_URL = "https://web-services-anticipos.onrender.com/";
     //public static final String BASE_URL = "http://192.168.1.2:3001/";
-//    public static final String BASE_URL = "http://192.168.0.6:3001";
+    public static final String BASE_URL = "http://192.168.0.6:3001";
 //    public static final String BASE_URL = "http://192.168.0.7:3001";
 
 

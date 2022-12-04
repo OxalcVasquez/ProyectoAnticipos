@@ -136,5 +136,17 @@ public interface ApiService {
             @Field("usuario_id") int usuarioId
     );
 
+    @FormUrlEncoded
+    @POST("anticipo/subsanar")
+    Call<AnticipoRegistroResponse> getAnticipoSubsanado(
+            @Field("token") String token,
+            @Field("descripcion") String descripcion,
+            @Field("fecha_inicio") String fecha_inicio,
+            @Field("fecha_fin") String fecha_fin,
+            @Field("motivo_anticipo_id") int motivo_anticipo_id,
+            @Field("sede_id") int sede_id,
+            @Field("id") int id
+    );
+
 
 }

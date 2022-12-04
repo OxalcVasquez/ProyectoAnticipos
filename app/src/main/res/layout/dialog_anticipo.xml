@@ -388,7 +388,7 @@
             </LinearLayout>
 
             <ProgressBar
-                android:id="@+id/progressBar_resumen"
+                android:id="@+id/progress_bar_dialog_anticipo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center|bottom"

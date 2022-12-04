@@ -25,6 +25,7 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.UltimaInstanciaResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
@@ -141,28 +142,27 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
             case 1:
                 //NO TOQUEN NADA DE ACAAAAAAAAAAAAAAAAAAA :C
                 if(DatosSesion.sesion.getRol_id() == 1){
-                    apiService.getHistorial(DatosSesion.sesion.getToken(), AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(),"A").enqueue(new Callback<HistorialAnticipoResponse>() {
+                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(), adapter.anticipoSeleccionado.getId(),"A",1).enqueue(new Callback<UltimaInstanciaResponse>() {
                         @Override
-                        public void onResponse(Call<HistorialAnticipoResponse> call, Response<HistorialAnticipoResponse> response) {
+                        public void onResponse(Call<UltimaInstanciaResponse> call, Response<UltimaInstanciaResponse> response) {
                             if (response.code() == 200) {
-                                Toast.makeText(getContext(), "ID " + AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
-                                HistorialAnticipoResponse historialAnticipoResponse = response.body();
-                                boolean status = historialAnticipoResponse.getStatus();
+                                Toast.makeText(getContext(), "ID " + adapter.anticipoSeleccionado.getId(), Toast.LENGTH_SHORT).show();
+                                UltimaInstanciaResponse ultimaInstanciaResponse = response.body();
+                                boolean status = ultimaInstanciaResponse.getStatus();
                                 if (status){
-                                    HistorialAnticipo.listaHistorial.clear();
-                                    HistorialAnticipo.listaHistorial = historialAnticipoResponse.getData();
-                                    final Dialog dialog = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
-                                    dialog.setContentView(R.layout.dialog_historial_informe);
-                                    dialog.setCancelable(true);
+                                    HistorialAnticipo historialAnticipo =  ultimaInstanciaResponse.getData();
+                                    final Dialog dialogHistorialAnticipo = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+                                    dialogHistorialAnticipo.setContentView(R.layout.dialog_historial_anticipo);
+                                    dialogHistorialAnticipo.setCancelable(true);
 
                                     //Configure controls
-                                    TextView txtInstanciaInforme = dialog.findViewById(R.id.txt_instancia_informe);
-                                    TextView txtEvaluador = dialog.findViewById(R.id.txt_dialog_evaluador);
-                                    TextView txtEstado = dialog.findViewById(R.id.txt_dialog_informe_estado);
-                                    TextView txtDescripcion = dialog.findViewById(R.id.txt_dialgo_descripcion);
-                                    MaterialButton btnCerrar = dialog.findViewById(R.id.btn_cerrar_historial_informe);
+                                    TextView txtInstanciaInforme = dialogHistorialAnticipo.findViewById(R.id.txt_instancia_anticipo);
+                                    TextView txtEvaluador = dialogHistorialAnticipo.findViewById(R.id.txt_dialog_evaluador_anticipo);
+                                    TextView txtEstado = dialogHistorialAnticipo.findViewById(R.id.txt_dialog_anticipo_estado);
+                                    TextView txtDescripcion = dialogHistorialAnticipo.findViewById(R.id.txt_dialgo_descripcion_anticipo);
+                                    MaterialButton btnCerrar = dialogHistorialAnticipo.findViewById(R.id.btn_cerrar_historial_anticipo);
 
-                                    HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
+//                                    HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
                                     txtDescripcion.setText(historialAnticipo.getDescripcion());
                                     txtEvaluador.setText(historialAnticipo.getEvaluador());
 
@@ -225,13 +225,13 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                                     btnCerrar.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            dialog.dismiss();
+                                            dialogHistorialAnticipo.dismiss();
                                         }
                                     });
 
 
 
-                                    dialog.show();
+                                    dialogHistorialAnticipo.show();
                                 } else {
                                     try {
                                         JSONObject jsonError = new JSONObject(response.errorBody().toString());
@@ -246,7 +246,7 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                         }
 
                         @Override
-                        public void onFailure(Call<HistorialAnticipoResponse> call, Throwable t) {
+                        public void onFailure(Call<UltimaInstanciaResponse> call, Throwable t) {
                             Log.e("Error", t.getMessage());
                         }
                     });

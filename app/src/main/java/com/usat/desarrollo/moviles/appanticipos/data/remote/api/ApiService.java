@@ -11,6 +11,7 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.response.RubrosRespo
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.SedesResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TarifaResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.TipoComprobanteResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.UltimaInstanciaResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ValidacionResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Validacion;
 
@@ -126,7 +127,17 @@ public interface ApiService {
     Call<HistorialAnticipoResponse> getHistorial(
             @Field("token") String token,
             @Field("anticipo_id") int anticipoId,
-            @Field("tipo") String tipo
+            @Field("tipo") String tipo,
+            @Field("ultima_instancia") int ultimaInstancia
+    );
+
+    @FormUrlEncoded
+    @POST("historial/anticipo")
+    Call<UltimaInstanciaResponse> getUltimaInstancia(
+            @Field("token") String token,
+            @Field("anticipo_id") int anticipoId,
+            @Field("tipo") String tipo,
+            @Field("ultima_instancia") int ultimaInstancia
     );
 
     @FormUrlEncoded

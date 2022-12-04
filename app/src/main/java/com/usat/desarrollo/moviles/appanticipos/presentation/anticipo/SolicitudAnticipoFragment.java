@@ -82,7 +82,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_solicitud_anticipo, container, false);
-        getActivity().setTitle("Solicitar Anticipo");
+        getActivity().setTitle(getString(R.string.solicitud_anticipo));
         txtDescripcion = view.findViewById(R.id.txtDescripcion);
         txtFechaInicio = view.findViewById(R.id.txtFechaInicio);
         txtFechaFin = view.findViewById(R.id.txtFechaFin);

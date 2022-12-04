@@ -169,7 +169,7 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         //Para up[date
         TextView txtDescripcion , txtTotalViaticos,txtPasajes, txtAlimentacion, txtHotel, txtMovilidad;
         EditText txtFechaInicioDialog,txtFechaFinDialog;
-        MaterialButton btnSubsanar;
+        MaterialButton btnSubsanar,btnCerrarDialog;
         AutoCompleteTextView actvMotivoAnticipo, actvSedeDestino;
         ProgressBar progressBar;
         ApiService apiService = ApiAdapter.getApiService();
@@ -184,8 +184,11 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                     dialog.setCancelable(true);
 
                     txtDescripcion = dialog.findViewById(R.id.txtDialogDescripcion);
+                    txtDescripcion.setTextColor(ContextCompat.getColor(context,R.color.primaryDarkColor));
                     txtFechaInicioDialog = dialog.findViewById(R.id.txtDialogFechaInicio);
+                    txtFechaInicioDialog.setTextColor(ContextCompat.getColor(context,R.color.primaryDarkColor));
                     txtFechaFinDialog = dialog.findViewById(R.id.txtDialogFechaFin);
+                    txtFechaFinDialog.setTextColor(ContextCompat.getColor(context,R.color.primaryDarkColor));
                     txtTotalViaticos = dialog.findViewById(R.id.txt_dialog_total_viaticos);
                     txtPasajes = dialog.findViewById(R.id.txt_dialog_pasajes_anticipo);
                     txtAlimentacion = dialog.findViewById(R.id.txt_dialog_alimentacion_anticipo);
@@ -193,9 +196,13 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                     txtMovilidad = dialog.findViewById(R.id.txt_dialog_movilidad_anticipo);
                     progressBar = dialog.findViewById(R.id.progress_bar_dialog_anticipo);
                     btnSubsanar = dialog.findViewById(R.id.btn_anticipo_subsanar);
+                    btnSubsanar.setBackgroundColor(ContextCompat.getColor(context,R.color.primaryColor));
+                    btnCerrarDialog = dialog.findViewById(R.id.btn_subsanar_cerrar);
 
                     actvMotivoAnticipo = dialog.findViewById(R.id.actvDialogMotivoAnticipo);
+                    actvMotivoAnticipo.setTextColor(ContextCompat.getColor(context,R.color.primaryDarkColor));
                     actvSedeDestino = dialog.findViewById(R.id.actvDialogSedeDestino);
+                    actvSedeDestino.setTextColor(ContextCompat.getColor(context,R.color.primaryDarkColor));
 
                     //Seteando fecha actual
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -333,6 +340,12 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                         }
                     });
 
+                    btnCerrarDialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
                     dialog.show();
 
                 }

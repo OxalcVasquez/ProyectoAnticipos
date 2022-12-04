@@ -93,5 +93,8 @@
     <string name="subsanar">amend</string>
     <string name="universidad_privada_intelect">INTELECT PRIVATE UNIVERSITY</string>
 
+    <string name="solicitud_anticipo">Request advance payment</string>
+    <string name="cerrar">Close</string>
+
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

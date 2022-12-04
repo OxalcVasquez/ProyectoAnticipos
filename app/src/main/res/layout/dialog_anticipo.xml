@@ -371,12 +371,23 @@
                 android:gravity="center_horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_subsanar_cerrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cerrar"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    style="@style/Widget.MaterialComponents.Button"/>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_anticipo_subsanar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/subsanar"
                     android:textColor="@android:color/white"
-                    app:icon="@drawable/ic_save"
                     style="@style/Widget.MaterialComponents.Button"/>
 
 

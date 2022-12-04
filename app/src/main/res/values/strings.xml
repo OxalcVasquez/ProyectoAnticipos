@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Anticipos App</string>
-    <string name="title_activity_main_menu">Advance Payment App</string>
+    <string name="app_name">Intelect App</string>
+    <string name="title_activity_main_menu">Intelect App</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -90,6 +90,7 @@
     <string name="registrar_solicitud">Registrar solicitud</string>
     <string name="comprometidos_con_tu_educacion">Comprometidos con tu educacion</string>
     <string name="subsanar">Subsanar</string>
+    <string name="universidad_privada_intelect">UNIVERSIDAD PRIVADA INTELECT</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

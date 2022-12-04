@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/img1"
         android:padding="0dp"
-        android:text="UNIVERSIDAD DE LA AMISTAD"
+        android:text="@string/universidad_privada_intelect"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
         android:textColor="@color/primaryColor"

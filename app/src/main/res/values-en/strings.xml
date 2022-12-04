@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Advance Payment App</string>
-    <string name="title_activity_main_menu">Advance Payment App</string>
+    <string name="app_name">Intelect App</string>
+    <string name="title_activity_main_menu">Intelect App</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -91,6 +91,7 @@
     <string name="registrar_solicitud">Record advance payment</string>
     <string name="comprometidos_con_tu_educacion">Committed to your education</string>
     <string name="subsanar">amend</string>
+    <string name="universidad_privada_intelect">INTELECT PRIVATE UNIVERSITY</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

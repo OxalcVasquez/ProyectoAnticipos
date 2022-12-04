@@ -118,6 +118,8 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         cargarAnticiposPendientesARendicion();
         btnRegistrarRedencion.setOnClickListener(this);
         btnAgregarComprobante.setOnClickListener(this);
+        recyclerComprobante.setVisibility(View.GONE);
+        svComprobantes.setVisibility(View.GONE);
         return view;
     }
 

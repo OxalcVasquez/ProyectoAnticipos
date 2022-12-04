@@ -92,7 +92,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@color/primaryColor"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="4dp">
@@ -112,7 +112,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:text="@string/pasajes_terrestres_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -120,7 +120,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -136,7 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="8dp"
                                 android:text="@string/de_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -144,7 +144,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -167,7 +167,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:text="@string/alimentacion_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -175,7 +175,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -191,7 +191,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="8dp"
                                 android:text="@string/de_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -199,7 +199,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -222,7 +222,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:text="@string/hotel_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -230,7 +230,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -246,7 +246,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="8dp"
                                 android:text="@string/de_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -254,7 +254,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -277,7 +277,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:text="@string/movilidad_interna_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -285,7 +285,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -301,7 +301,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="8dp"
                                 android:text="@string/de_rendicion"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -309,7 +309,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/secondaryTextColor"
                                 android:textSize="16sp"
                                 tools:ignore="NestedWeights" />
 
@@ -327,7 +327,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:text="@string/devolucion_rendicion_registro"
-                            android:textColor="#000000"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp" />
 
                         <TextView
@@ -335,7 +335,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="#000000"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -351,7 +351,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:text="@string/monto_rentir"
-                            android:textColor="@color/primaryColor"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -360,7 +360,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/secondaryDarkColor"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -377,7 +377,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:text="@string/restante_redencion"
-                            android:textColor="@color/primaryColor"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -386,7 +386,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/secondaryDarkColor"
+                            android:textColor="@color/secondaryTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 

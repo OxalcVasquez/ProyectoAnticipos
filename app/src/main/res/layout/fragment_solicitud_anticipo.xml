@@ -7,13 +7,6 @@
     android:id="@+id/layout_solitcitud_anticipo"
     tools:context=".presentation.anticipo.SolicitudAnticipoFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

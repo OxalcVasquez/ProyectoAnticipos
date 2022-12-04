@@ -90,6 +90,7 @@
     <string name="confirmacion_anticipo">Do you want to save the advance payment?</string>
     <string name="registrar_solicitud">Record advance payment</string>
     <string name="comprometidos_con_tu_educacion">Committed to your education</string>
+    <string name="subsanar">amend</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -10,10 +10,7 @@
     android:padding="16dp"
     tools:context=".LoginActivity">
 
-    <Space
-        android:id="@+id/x3"
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
+
 
     <ImageView
         android:id="@+id/img1"

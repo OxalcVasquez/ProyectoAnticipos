@@ -8,6 +8,7 @@ import java.util.List;
 
 public class InformeGasto {
 
+    private int id;
     @SerializedName("anticipo_id")
     private int anticipoId;
     @SerializedName("num_informe")
@@ -22,6 +23,14 @@ public class InformeGasto {
     private String fechaFin;
     @SerializedName("total_rendido")
     private double totalRendido;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNumInforme() {
         return numInforme;

@@ -148,5 +148,13 @@ public interface ApiService {
             @Field("id") int id
     );
 
-
+    @FormUrlEncoded
+    @POST("informe/evaluar")
+    Call<ValidacionResponse> getValidacionInforme(
+            @Field("token") String token,
+            @Field("estado_id") int estado_id,
+            @Field("descripcion") String descripcion,
+            @Field("usuario_evaluador_id") int usuario_evaluador_id,
+            @Field("id") int id
+    );
 }

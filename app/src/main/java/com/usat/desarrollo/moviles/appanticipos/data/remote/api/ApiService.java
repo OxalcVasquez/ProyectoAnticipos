@@ -84,6 +84,15 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("anticipo/evaluar")
+    Call<AnticipoRegistroResponse> getAnticipoEvaluar(
+            @Field("estado_anticipo_id") String estado_anticipo_id,
+            @Field("id") String id,
+            @Field("usuario_evaluador_id") String usuario_evaluador_id,
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
     @POST("anticipos/docente/listar/estado")
     Call<AnticipoListadoResponse> getAnticiposEstados(
             @Field("docente_id") int docente_id,

@@ -19,6 +19,7 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.AnticipoAdapter;
@@ -67,7 +68,6 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
     }
 
     public void listar(){
-
         apiService.getAnticipoListado(DatosSesion.sesion.getId(),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoListadoResponse>() {
             @Override
             public void onResponse(Call<AnticipoListadoResponse> call, Response<AnticipoListadoResponse> response) {
@@ -89,13 +89,39 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                     }
                 }
             }
-
-
             @Override
             public void onFailure(Call<AnticipoListadoResponse> call, Throwable t) {
                 Log.e("Error listando anticipo", t.getMessage());
                 Log.e("error listado",""+call);
 
+            }
+        });
+    }
+
+    public void actualizarEstado(String estadoAnticipo, String idAnticipo){
+        Toast.makeText(getActivity(), ""+estadoAnticipo+" "+idAnticipo+" "+DatosSesion.sesion.getId(), Toast.LENGTH_SHORT).show();
+        apiService.getAnticipoEvaluar(estadoAnticipo,idAnticipo,String.valueOf(DatosSesion.sesion.getId()),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoRegistroResponse>() {
+            @Override
+            public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
+                //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
+                if (response.code() == 201){
+                    if (response.body().getStatus()){ //True
+                        Toast.makeText(getActivity(), "AAA", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    try {
+                        JSONObject jsonError = new JSONObject(response.errorBody().string());
+                        Log.e("Error", jsonError.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<AnticipoRegistroResponse> call, Throwable t) {
+                Log.e("Error cambiando anticipo", t.getMessage());
             }
         });
 
@@ -106,7 +132,10 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
         //Identificar la opción seleccionada en el menú contextual
         switch (item.getItemId()){
             case 1:
-                Toast.makeText(this.getActivity(), "Opcion Aceptar", Toast.LENGTH_SHORT).show();
+                //NO TOQUEN NADA DE ACAAAAAAAAAAAAAAAAAAA :C
+                String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                String estado = String.valueOf(3);
+                actualizarEstado(estado, posicionItem);
                 break;
             case 2:
                 Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();

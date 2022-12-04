@@ -31,6 +31,7 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
     public static ArrayList<Anticipo> listaAnticipo;
     public int posicionItemSeleccionadoRecyclerView;
 
+
     public AnticipoAdapter(Context context) {
         this.context = context;
         listaAnticipo = new ArrayList<>();
@@ -167,6 +168,7 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         public boolean onLongClick(View view) {
             //Permite obtener la posición del item seleccionado en el RecyclerView
             posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
+            int posicionlista = listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId();
             //Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
             return false;
         }

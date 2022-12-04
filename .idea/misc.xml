@@ -21,9 +21,14 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/ProyectoAnticipos/app/src/main/res/menu/menu_anticipo.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ProyectoAnticipos/app/src/main/res/menu/menu_comprobante.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ProyectoAnticipos/app/src/main/res/menu/menu_objeto.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/drawable-v24/ic_login_bk.xml" value="0.335" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/drawable-v24/login_shape_bk.xml" value="0.335" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/drawable/ic_baseline_school_24.xml" value="0.335" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/drawable/ic_launcher_background.xml" value="0.335" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/activity_agregar_comprobante.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/activity_login.xml" value="0.16770833333333332" />
-        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/anticipo_cardview.xml" value="0.4" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/activity_main.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/anticipo_cardview.xml" value="0.33" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/cardview.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/comprobante_rendicion_cardview.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_historial_informe.xml" value="0.24739583333333334" />
@@ -35,6 +40,9 @@
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/fragment_rendicion_gastos.xml" value="0.33" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/fragment_rendicion_listado.xml" value="0.33" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/fragment_solicitud_anticipo.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/l_login.xml" value="0.33" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/login.xml" value="0.33" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/new_login.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/rendicion_cardview.xml" value="0.5" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/menu_anticipo.xml" value="0.5" />

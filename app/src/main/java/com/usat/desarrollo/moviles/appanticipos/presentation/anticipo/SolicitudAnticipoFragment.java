@@ -306,8 +306,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         for (int i = 0; i < motivoAnticipoList.size() ; i++) {
                             motivosDescripcion[i] = motivoAnticipoList.get(i).getDescripcion();
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,motivosDescripcion);
-                        actvMotivoAnticipo.setAdapter(adapter);
+                        if (getContext() != null) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,motivosDescripcion);
+                            actvMotivoAnticipo.setAdapter(adapter);
+                        }
+
                     }
                 } else {
                     try {
@@ -344,8 +347,11 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         for (int i = 0; i < sedeList.size() ; i++) {
                             sedeDescripcion[i] = sedeList.get(i).getNombre();
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,sedeDescripcion);
-                        actvSedeDestino.setAdapter(adapter);
+
+                        if (getContext() != null) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,sedeDescripcion);
+                            actvSedeDestino.setAdapter(adapter);
+                        }
                     }
                 } else {
                     try {

@@ -18,6 +18,7 @@ import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
+import com.usat.desarrollo.moviles.appanticipos.utils.Tools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +40,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        //Hide title bar
+        this.getSupportActionBar().hide();
+        //Change color header
+        Tools.setSystemBarColor(this,R.color.white);
+        Tools.setSystemBarLight(this);
         txtEmail = findViewById(R.id.txt_login_email);
         txtPassword = findViewById(R.id.txt_login_password);
         btnLogin = findViewById(R.id.btnLogin);

@@ -42,7 +42,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-messaging-directboot:23.1.0'
 
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'

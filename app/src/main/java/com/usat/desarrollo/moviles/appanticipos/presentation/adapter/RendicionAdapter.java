@@ -18,6 +18,7 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.InformeGasto;
@@ -37,7 +38,9 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
     private Context context;
     public static ArrayList<InformeGasto> listadoInformes = new ArrayList<>();
     public int itemSeleccionado;
-    ApiService apiService;
+    ApiService apiService = ApiAdapter.getApiService();;
+    public InformeGasto informeGastoSeleccionado;
+
 
     public RendicionAdapter(Context context) {
         this.context = context;
@@ -47,7 +50,6 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rendicion_cardview, parent, false);
-        apiService = ApiAdapter.getApiService();
         return new ViewHolder(view);
     }
 
@@ -112,6 +114,8 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
         @Override
         public boolean onLongClick(View view) {
             itemSeleccionado = this.getAdapterPosition();
+            informeGastoSeleccionado = listadoInformes.get(itemSeleccionado);
+
             return false;
         }
 

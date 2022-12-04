@@ -138,7 +138,7 @@ public class Comprobante implements Serializable {
             jsonObject.put("descripcion", this.getDescripcion());
             jsonObject.put("tipo_comprobante_id", this.getTipoComprobanteId());
             jsonObject.put("rubro_id", this.getRubroId());
-            jsonObject.put("foto", "");
+            jsonObject.put("foto", this.getFoto());
             jsonObject.put("num_operacion", this.getNumOperacion());
         } catch (Exception e){
             e.printStackTrace();

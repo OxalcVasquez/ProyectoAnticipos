@@ -103,6 +103,7 @@
     <string name="descripcion">DESCRIPCION :</string>
     <string name="jefe_profesores">Jefe de profesores</string>
     <string name="administrativo">Personal administrativo</string>
+    <string name="verificar_seleccion_anticipo">Debes seleccionar un anticipo</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -197,7 +197,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         if (anticipoSeleccionado.getId()!=0) {
                 startActivityForResult(new Intent(this.getActivity(),AgregarComprobanteActivity.class), REQUEST_COMPROBANTES);// Activity is started with requestCode 2
         } else {
-            Helper.mensajeInformacion(getActivity(),"Informacion","Debes seleccionar un anticipo");
+            Helper.mensajeInformacion(getActivity(),"INFO",getString(R.string.verificar_seleccion_anticipo));
         }
 
     }

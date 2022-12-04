@@ -164,7 +164,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
         if (isDocente) {
             switch (item.getItemId()){
                 case 1: //Menu eliminar
-                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(),RendicionAdapter.listadoInformes.get(rendicionAdapter.itemSeleccionado).getAnticipoId(),"I",1).enqueue(new Callback<UltimaInstanciaResponse>() {
+                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(),rendicionAdapter.informeGastoSeleccionado.getAnticipoId(),"I",1).enqueue(new Callback<UltimaInstanciaResponse>() {
                         @Override
                         public void onResponse(Call<UltimaInstanciaResponse> call, Response<UltimaInstanciaResponse> response) {
                             if (response.code() == 200) {

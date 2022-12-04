@@ -104,6 +104,7 @@
     <string name="descripcion">DESCRIPTION :</string>
     <string name="jefe_profesores">Head teacher</string>
     <string name="administrativo">Administrative staff</string>
+    <string name="verificar_seleccion_anticipo">You must select an advance payment</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

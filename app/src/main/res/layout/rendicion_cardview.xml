@@ -61,7 +61,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
 
                 <TextView
                     android:id="@+id/txt_anticipo"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/secondaryDarkColor"
                     android:textSize="14sp"
@@ -85,7 +85,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,7 +99,7 @@
 
                 <TextView
                     android:id="@+id/txt_fecha_registro_listado"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="14sp"
@@ -108,7 +110,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -187,7 +191,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -199,7 +205,7 @@
 
                 <TextView
                     android:id="@+id/txt_total_rendido_listado"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="14sp"

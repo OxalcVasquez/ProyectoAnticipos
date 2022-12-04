@@ -95,6 +95,15 @@
     <string name="solicitud_anticipo">Solicitar anticipo</string>
     <string name="cerrar">Cerrar</string>
 
+    <string name="opcion">Opciones</string>
+    <string name="ver_instancia">Ver instancia</string>
+    <string name="instancia">INSTANCIA :</string>
+    <string name="estado">ESTADO :</string>
+    <string name="evaluador">EVALUADOR :</string>
+    <string name="descripcion">DESCRIPCION :</string>
+    <string name="jefe_profesores">Jefe de profesores</string>
+    <string name="administrativo">Personal administrativo</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
 

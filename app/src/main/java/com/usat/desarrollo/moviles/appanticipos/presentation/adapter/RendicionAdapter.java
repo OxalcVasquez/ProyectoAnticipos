@@ -137,10 +137,10 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle(context.getResources().getString(R.string.opcion));
             if (DatosSesion.sesion.getRol_id() == 1) {
-                contextMenu.setHeaderTitle("Opciones");
-                contextMenu.add(0,1,0,"Ver instancia");
-                if (txtEstado.getText().toString().equalsIgnoreCase("RECHAZADO")) {
+                contextMenu.add(0,1,0,context.getResources().getString(R.string.ver_instancia));
+                if (txtEstado.getText().toString().equalsIgnoreCase(context.getResources().getString(R.string.estado_rechazado))) {
                     contextMenu.add(0,2,0,"Subsanar");
                 }
             }

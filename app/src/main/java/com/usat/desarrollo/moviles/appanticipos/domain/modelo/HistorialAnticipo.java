@@ -1,11 +1,12 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class HistorialAnticipo {
 
-    public static List<HistorialAnticipo> listaHistorial;
+    public static List<HistorialAnticipo> listaHistorial = new ArrayList<>();
     private String descripcion;
     private String estado;
     private String evaluador;

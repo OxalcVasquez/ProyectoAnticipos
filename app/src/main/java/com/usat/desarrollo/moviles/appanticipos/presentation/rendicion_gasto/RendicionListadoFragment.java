@@ -169,6 +169,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                 HistorialAnticipoResponse historialAnticipoResponse = response.body();
                                 boolean status = historialAnticipoResponse.getStatus();
                                 if (status){
+                                    HistorialAnticipo.listaHistorial.clear();
                                     HistorialAnticipo.listaHistorial = historialAnticipoResponse.getData();
                                     final Dialog dialog = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
                                     dialog.setContentView(R.layout.dialog_historial_informe);
@@ -182,10 +183,66 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                     MaterialButton btnCerrar = dialog.findViewById(R.id.btn_cerrar_historial_informe);
 
                                     HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
-                                    txtInstanciaInforme.setText(historialAnticipo.getInstancia());
                                     txtEvaluador.setText(historialAnticipo.getEvaluador());
-                                    txtEstado.setText(historialAnticipo.getEstado());
                                     txtDescripcion.setText(historialAnticipo.getDescripcion());
+
+                                    if (historialAnticipo.getInstancia() != null){
+                                        if (historialAnticipo.getInstancia().equalsIgnoreCase("Jefe de profesores")){
+                                            txtInstanciaInforme.setText(getResources().getString(R.string.jefe_profesores));
+                                        } else {
+                                            txtInstanciaInforme.setText(getResources().getString(R.string.administrativo));
+                                        }
+                                    }
+
+
+
+
+                                    switch (historialAnticipo.getEstado()) {
+                                        case "REGISTRADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setText(getResources().getString(R.string.estado_registrado));
+                                            break;
+                                        case "APROBADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_aprobado));
+                                            break;
+                                        case "DESIGNADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_designado));
+                                            break;
+                                        case "RECHAZADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rechazado));
+                                            break;
+                                        case "RENDIDO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendido));
+                                            break;
+                                        case "OBSERVADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.warning));
+                                            txtEstado.setText(getResources().getString(R.string.estado_observado));
+                                            break;
+                                        case "PENDIENTE":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.secondaryDarkColor));
+                                            txtEstado.setText(getResources().getString(R.string.estado_pendiente));
+                                            break;
+                                        case "RENDICION R":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendicionr));
+                                            break;
+                                        case "RENDICION A":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendiciona));
+                                            break;
+                                        case "CERRADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.primaryTextColor));
+                                            txtEstado.setText(getResources().getString(R.string.estado_cerrado));
+                                            break;
+                                        case "SUBSANADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.ic_launcher_background));
+                                            txtEstado.setText(getResources().getString(R.string.estado_subsanado));
+                                            break;
+                                    }
 
                                     btnCerrar.setOnClickListener(new View.OnClickListener() {
                                         @Override

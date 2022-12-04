@@ -1,8 +1,10 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.anticipo;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,16 +15,21 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.AnticipoAdapter;
+import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.RendicionAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,9 +140,123 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
         switch (item.getItemId()){
             case 1:
                 //NO TOQUEN NADA DE ACAAAAAAAAAAAAAAAAAAA :C
-                String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
-                String estado = String.valueOf(3);
-                actualizarEstado(estado, posicionItem);
+                if(DatosSesion.sesion.getRol_id() == 1){
+                    apiService.getHistorial(DatosSesion.sesion.getToken(), AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(),"A").enqueue(new Callback<HistorialAnticipoResponse>() {
+                        @Override
+                        public void onResponse(Call<HistorialAnticipoResponse> call, Response<HistorialAnticipoResponse> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(getContext(), "ID " + AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
+                                HistorialAnticipoResponse historialAnticipoResponse = response.body();
+                                boolean status = historialAnticipoResponse.getStatus();
+                                if (status){
+                                    HistorialAnticipo.listaHistorial.clear();
+                                    HistorialAnticipo.listaHistorial = historialAnticipoResponse.getData();
+                                    final Dialog dialog = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+                                    dialog.setContentView(R.layout.dialog_historial_informe);
+                                    dialog.setCancelable(true);
+
+                                    //Configure controls
+                                    TextView txtInstanciaInforme = dialog.findViewById(R.id.txt_instancia_informe);
+                                    TextView txtEvaluador = dialog.findViewById(R.id.txt_dialog_evaluador);
+                                    TextView txtEstado = dialog.findViewById(R.id.txt_dialog_informe_estado);
+                                    TextView txtDescripcion = dialog.findViewById(R.id.txt_dialgo_descripcion);
+                                    MaterialButton btnCerrar = dialog.findViewById(R.id.btn_cerrar_historial_informe);
+
+                                    HistorialAnticipo historialAnticipo = HistorialAnticipo.listaHistorial.get(HistorialAnticipo.listaHistorial.size()-1);
+                                    txtDescripcion.setText(historialAnticipo.getDescripcion());
+                                    txtEvaluador.setText(historialAnticipo.getEvaluador());
+
+                                    if (historialAnticipo.getInstancia() != null){
+                                        if (historialAnticipo.getInstancia().equalsIgnoreCase("Jefe de profesores")){
+                                            txtInstanciaInforme.setText(getResources().getString(R.string.jefe_profesores));
+                                        } else {
+                                            txtInstanciaInforme.setText(getResources().getString(R.string.administrativo));
+                                        }
+                                    }
+
+                                    switch (historialAnticipo.getEstado()) {
+                                        case "REGISTRADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setText(getResources().getString(R.string.estado_registrado));
+                                            break;
+                                        case "APROBADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_aprobado));
+                                            break;
+                                        case "DESIGNADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_designado));
+                                            break;
+                                        case "RECHAZADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rechazado));
+                                            break;
+                                        case "RENDIDO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendido));
+                                            break;
+                                        case "OBSERVADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.warning));
+                                            txtEstado.setText(getResources().getString(R.string.estado_observado));
+                                            break;
+                                        case "PENDIENTE":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.secondaryDarkColor));
+                                            txtEstado.setText(getResources().getString(R.string.estado_pendiente));
+                                            break;
+                                        case "RENDICION R":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendicionr));
+                                            break;
+                                        case "RENDICION A":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setText(getResources().getString(R.string.estado_rendiciona));
+                                            break;
+                                        case "CERRADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.primaryTextColor));
+                                            txtEstado.setText(getResources().getString(R.string.estado_cerrado));
+                                            break;
+                                        case "SUBSANADO":
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.ic_launcher_background));
+                                            txtEstado.setText(getResources().getString(R.string.estado_subsanado));
+                                            break;
+                                    }
+
+
+                                    btnCerrar.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+
+
+                                    dialog.show();
+                                } else {
+                                    try {
+                                        JSONObject jsonError = new JSONObject(response.errorBody().toString());
+                                        String message =  jsonError.getString("message");
+                                        Log.e("ERROR",message);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HistorialAnticipoResponse> call, Throwable t) {
+                            Log.e("Error", t.getMessage());
+                        }
+                    });
+
+                } else {
+                    String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                    String estado = String.valueOf(3);
+                    actualizarEstado(estado, posicionItem);
+                }
+
                 break;
             case 2:
                 Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();

@@ -18,7 +18,7 @@
             android:textColor="@color/primaryColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="INSTANCIA : " />
+            android:text="@string/instancia" />
 
         <Space
             android:layout_width="10dp"
@@ -32,7 +32,7 @@
             android:textColor="@color/secondaryDarkColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="INSTANCIA" />
+             />
 
 
     </LinearLayout>
@@ -49,7 +49,7 @@
             android:textColor="@color/primaryColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="ESTADO : " />
+            android:text="@string/estado" />
 
         <Space
             android:layout_width="10dp"
@@ -63,7 +63,7 @@
             android:textColor="@color/secondaryDarkColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="INSTANCIA" />
+             />
 
 
     </LinearLayout>
@@ -79,7 +79,7 @@
             android:textColor="@color/primaryColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="EVALUADOR : " />
+            android:text="@string/evaluador" />
 
         <Space
             android:layout_width="10dp"
@@ -93,7 +93,7 @@
             android:textColor="@color/secondaryDarkColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="INSTANCIA" />
+            />
 
 
     </LinearLayout>
@@ -109,7 +109,7 @@
             android:textColor="@color/primaryColor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="DESCRIPCION : " />
+            android:text="@string/descripcion" />
 
         <Space
             android:layout_width="10dp"
@@ -122,7 +122,7 @@
             android:id="@+id/txt_dialgo_descripcion"
             android:textColor="@color/secondaryDarkColor"
             android:textSize="15sp"
-            android:text="INSTANCIA" />
+           />
 
 
     </LinearLayout>
@@ -142,7 +142,7 @@
             android:textColor="@color/secondaryTextColor"
             android:layout_weight="1"
             android:backgroundTint="@color/primaryColor"
-            android:text="CERRAR" />
+            android:text="@string/cerrar" />
 
 
 

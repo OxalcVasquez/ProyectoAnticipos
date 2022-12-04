@@ -356,16 +356,18 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle(context.getResources().getString(R.string.opcion));
+
             if(DatosSesion.sesion.getRol_id() == 1){
+                contextMenu.add(0,1,0,context.getResources().getString(R.string.ver_instancia));
+
             }else{
                 if(DatosSesion.sesion.getRol_id() == 2){
-                    contextMenu.setHeaderTitle("Opciones");
                     contextMenu.add(0, 1, 0, "Aprobar");
                     contextMenu.add(0, 2, 0, "Observar");
                     contextMenu.add(0, 3, 0, "Rechazar");
 
                 }else{
-                    contextMenu.setHeaderTitle("Opciones");
                     contextMenu.add(0, 1, 0, "Aprobar");
                     contextMenu.add(0, 2, 0, "Observar");
 

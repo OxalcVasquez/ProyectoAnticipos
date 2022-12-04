@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos.presentation.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -19,6 +20,7 @@ import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Anticipo;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoListadoFragment;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.SolicitudAnticipoFragment;
 
@@ -128,27 +130,44 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
 
             itemView.setOnCreateContextMenuListener(this);
             itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
-
+            if(DatosSesion.sesion.getRol_id()==1){
+                if(txtEstado.getText().toString().equalsIgnoreCase("OBSERVADO")){
+                    //METELE OX
+                }
+            }
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Opciones");
-            contextMenu.add(0, 1, 0, "Aceptar");
-            contextMenu.add(0, 2, 0, "Observar");
-            contextMenu.add(0, 3, 0, "Rechazar");
+            if(DatosSesion.sesion.getRol_id() == 1){
+            }else{
+                if(DatosSesion.sesion.getRol_id() == 2){
+                    contextMenu.setHeaderTitle("Opciones");
+                    contextMenu.add(0, 1, 0, "Aprobar");
+                    contextMenu.add(0, 2, 0, "Observar");
+                    contextMenu.add(0, 3, 0, "Rechazar");
+
+                }else{
+                    contextMenu.setHeaderTitle("Opciones");
+                    contextMenu.add(0, 1, 0, "Aprobar");
+                    contextMenu.add(0, 2, 0, "Observar");
+
+                }
+            }
+
         }
 
         @Override
         public boolean onLongClick(View view) {
             //Permite obtener la posición del item seleccionado en el RecyclerView
             posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
-            Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
             return false;
         }
     }

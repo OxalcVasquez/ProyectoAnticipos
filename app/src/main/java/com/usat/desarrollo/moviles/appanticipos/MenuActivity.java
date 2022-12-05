@@ -1,5 +1,6 @@
 package com.usat.desarrollo.moviles.appanticipos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,14 +15,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoFragment;
@@ -74,22 +79,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 .load(ApiAdapter.BASE_URL.toString() +DatosSesion.sesion.getImg())
                 .into(foto);
 
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    if (DatosSesion.sesion.getRol_id() == 1) {
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_DOCENTE);
-
-                    } else {
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_ADMIN);
-                    }
-                }
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(Config.REGISTRATION_COMPLETE));
-        //LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(Config.PUSH_NOTIFICATION));
+        if (DatosSesion.sesion.getRol_id() == 1) {
+            FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_DOCENTE);
+        } else {
+            FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_ADMIN);
+        }
     }
 
     @Override

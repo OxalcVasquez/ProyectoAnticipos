@@ -2,14 +2,14 @@ package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
 public class Usuario {
     private int id, rol_id;
-    private String email, nombres, apellidos, password, estado_usuario, token, estado_token,img;
+    private String email, nombres, apellidos, password, estado_usuario, token, estado_token,imagen,rol;
 
     public String getImg() {
-        return img;
+        return imagen;
     }
 
     public void setImg(String img) {
-        this.img = img;
+        this.imagen = img;
     }
 
     public int getId() {
@@ -82,5 +82,13 @@ public class Usuario {
 
     public void setEstado_token(String estado_token) {
         this.estado_token = estado_token;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

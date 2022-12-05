@@ -133,4 +133,9 @@
     <string name="otros">OTHERS</string>
     <string name="ponencia">PRESENTATION</string>
     <string name="reunion">MEETING</string>
+
+    <string name="docente">Teacher</string>
+    <string name="jefe">Head teacher</string>
+    <string name="administrativo_rol">Administrative</string>
+
 </resources>

@@ -19,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.presentation.anticipo.AnticipoFragment;
 import com.usat.desarrollo.moviles.appanticipos.presentation.rendicion_gasto.RendicionFragment;
@@ -31,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     CircleImageView foto;
-    TextView txtNombre, txtEmail;
+    TextView txtNombre, txtEmail,txtRol;
     BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -55,10 +57,22 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         foto = cabeceraMenu.findViewById(R.id.imagenUsuario);
         txtNombre = cabeceraMenu.findViewById(R.id.nombreUsuario);
         txtEmail = cabeceraMenu.findViewById(R.id.loginUsuario);
-
+        txtRol = cabeceraMenu.findViewById(R.id.rolUsuario);
         //Mostrar los datos del usuario: Nombre y su email
         txtNombre.setText(DatosSesion.sesion.getNombres() + " "+ DatosSesion.sesion.getApellidos());
         txtEmail.setText(DatosSesion.sesion.getEmail());
+        //Rol
+        if (DatosSesion.sesion.getRol().equalsIgnoreCase("Jefe de profesores")) {
+            txtRol.setText(getResources().getString(R.string.jefe_profesores));
+        } else if (DatosSesion.sesion.getRol().equalsIgnoreCase("Docente")){
+            txtRol.setText(getResources().getString(R.string.docente));
+        } else {
+            txtRol.setText(getResources().getString(R.string.administrativo_rol));
+        }
+        //Imag
+        Glide.with(this)
+                .load(ApiAdapter.BASE_URL.toString() +DatosSesion.sesion.getImg())
+                .into(foto);
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override

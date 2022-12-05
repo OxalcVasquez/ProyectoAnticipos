@@ -132,6 +132,11 @@
     <string name="ponencia">PONENCIA</string>
     <string name="reunion">REUNION</string>
 
+    <string name="docente">Docente</string>
+    <string name="jefe">Jefe de profesores</string>
+    <string name="administrativo_rol">Administrativo</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
 
 

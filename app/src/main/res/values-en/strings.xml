@@ -25,10 +25,11 @@
     <string name="restante_redencion">REMAINING RET:</string>
     <string name="devolucion_rendicion_registro">REMAINING DONE:</string>
     <string name="de_rendicion">OF</string>
-    <string name="movilidad_interna_rendicion">INTERNAL MOBILITY:</string>
-    <string name="pasajes_terrestres_rendicion">BUS TICKETS:</string>
-    <string name="alimentacion_rendicion">FEEDING:</string>
-    <string name="hotel_rendicion">HOTEL:</string>
+    <string name="movilidad_interna_rendicion">INTERNAL MOBILITY</string>
+    <string name="pasajes_terrestres_rendicion">BUS TICKETS</string>
+    <string name="alimentacion_rendicion">FEEDING</string>
+    <string name="devolucion">DEVOLUTION</string>
+    <string name="hotel_rendicion">HOTEL</string>
     <string name="factura_total_listado">INVOICE</string>
     <string name="comprobante_listado">Proof of payment:</string>
     <string name="fecha_emision_listado">Date of issue:</string>
@@ -105,6 +106,31 @@
     <string name="jefe_profesores">Head teacher</string>
     <string name="administrativo">Administrative staff</string>
     <string name="verificar_seleccion_anticipo">You must select an advance payment</string>
+    <string name="serie">Serial</string>
+    <string name="correlativo">Correlative</string>
+    <string name="emision">Issue</string>
+    <string name="monto_total">Total amount</string>
+    <string name="foto">Photo</string>
+    <string name="ruc_de_la_empresa_emisora">RUC of the issuing company</string>
+    <string name="num_operacion">Operation number</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="boleta">SALES RECEIPT</string>
+    <string name="factura">INVOICE</string>
+    <string name="voucher">RETURN VOUCHER</string>
+
+    <string name="validacion_rubro">Please select a category</string>
+    <string name="validacion_tipo">Please select a type of proof</string>
+    <string name="validacion_num_operacion">Please enter a transaction number</string>
+    <string name="validacion_ruc">Please enter RUC of the company</string>
+    <string name="validacion_serie">Please enter the proof series</string>
+    <string name="validacion_emision">Please enter the issue date</string>
+    <string name="validacion_correlativo">Please enter the correlative of proof</string>
+    <string name="validacion_monto">Please enter the amount of the voucher</string>
+    <string name="validacion_foto">Please enter the photo of the proof</string>
+
+    <string name="capacitacion">INSTRUCTION</string>
+    <string name="dictado">DICTATION OF CLASSES</string>
+    <string name="otros">OTHERS</string>
+    <string name="ponencia">PRESENTATION</string>
+    <string name="reunion">MEETING</string>
 </resources>

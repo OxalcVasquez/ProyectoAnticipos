@@ -267,7 +267,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     }
 
     private void calcularMontosPorRendir() {
-        Toast.makeText(getActivity(), "holaaa " + anticipoSeleccionado.getSede_id(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "ID : " + anticipoSeleccionado.getSede_id(), Toast.LENGTH_SHORT).show();
 
         txtMontoRendir.setText("S./" + anticipoSeleccionado.getMonto_total());
         txtRestante.setText("S./" + anticipoSeleccionado.getMonto_total());

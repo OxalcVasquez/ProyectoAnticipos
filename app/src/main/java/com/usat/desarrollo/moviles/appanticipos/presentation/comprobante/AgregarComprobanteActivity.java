@@ -50,7 +50,7 @@ import retrofit2.Response;
 
 public class AgregarComprobanteActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText txtFecha,txtRuc,txtDescripcion,txtSerie,txtCorrelativo,txtMontoComprobante;
+    EditText txtFecha,txtRuc,txtDescripcion,txtSerie,txtCorrelativo,txtMontoComprobante,txtNumeroOperacion;
     MaterialButton btnAgregar,btnAgregarFoto;
     AutoCompleteTextView actvRubro,actvComprobante;
     ImageView imgComprobante;
@@ -64,13 +64,14 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_comprobante);
-        this.setTitle("Agregar comprobante");
+        this.setTitle(getString(R.string.btn_agregar_comprobante));
         txtFecha = findViewById(R.id.txt_fecha_comprobante);
         txtRuc = findViewById(R.id.txt_ruc_comprobante);
         txtDescripcion = findViewById(R.id.txt_descripcion_comprobante);
         txtSerie = findViewById(R.id.txt_serie_comprobante);
         txtCorrelativo = findViewById(R.id.txt_correlativo_comprobante);
         btnAgregar = findViewById(R.id.btn_comprobante_agregar);
+        txtNumeroOperacion = findViewById(R.id.txt_num_operacion);
         txtMontoComprobante = findViewById(R.id.txt_monto_comprobante);
         actvComprobante = findViewById(R.id.actv_comprobante);
         actvRubro = findViewById(R.id.actv_comprobante_rubro);
@@ -94,6 +95,17 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 idTipoSeleccionado = TipoComprobante.listaComprobamte.get(i).getId();
                 tipo = adapterView.getItemAtPosition(i).toString();
+                if (idTipoSeleccionado == 3){
+                    txtNumeroOperacion.setVisibility(View.VISIBLE);
+                    txtRuc.setVisibility(View.GONE);
+                    txtSerie.setVisibility(View.GONE);
+                    txtCorrelativo.setVisibility(View.GONE);
+                } else {
+                    txtNumeroOperacion.setVisibility(View.GONE);
+                    txtRuc.setVisibility(View.VISIBLE);
+                    txtSerie.setVisibility(View.VISIBLE);
+                    txtCorrelativo.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -149,26 +161,28 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
     }
 
     private void agregarComprobante() {
-        Comprobante comprobante = new Comprobante();
-        String ruc = txtRuc.getText().toString();
-        String descripcion = txtDescripcion.getText().toString();
-        String serie = txtSerie.getText().toString();
-        String correlativo = txtCorrelativo.getText().toString();
-        String montoTotal = txtMontoComprobante.getText().toString();
-        String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
-        comprobante.setRuc(ruc);
-        comprobante.setDescripcion(descripcion);
-        comprobante.setSerie(serie);
-        comprobante.setCorrelativo(correlativo);
-        comprobante.setMontoTotal(Double.parseDouble(montoTotal));
-        comprobante.setFechaEmision(fecha);
-        comprobante.setRubro(rubro);
-        comprobante.setRubroId(idRubroSeleccionado);
-        comprobante.setTipoComprobante(tipo);
-        comprobante.setTipoComprobanteId(idTipoSeleccionado);
-        comprobante.setFoto(imageBASE64);
-        Comprobante.comprobanteListado.add(comprobante);
-        this.finish();
+        if (validar()){
+            Comprobante comprobante = new Comprobante();
+            String ruc = txtRuc.getText().toString();
+            String descripcion = txtDescripcion.getText().toString();
+            String serie = txtSerie.getText().toString();
+            String correlativo = txtCorrelativo.getText().toString();
+            String montoTotal = txtMontoComprobante.getText().toString();
+            String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
+            comprobante.setRuc(ruc);
+            comprobante.setDescripcion(descripcion);
+            comprobante.setSerie(serie);
+            comprobante.setCorrelativo(correlativo);
+            comprobante.setMontoTotal(Double.parseDouble(montoTotal));
+            comprobante.setFechaEmision(fecha);
+            comprobante.setRubro(rubro);
+            comprobante.setRubroId(idRubroSeleccionado);
+            comprobante.setTipoComprobante(tipo);
+            comprobante.setTipoComprobanteId(idTipoSeleccionado);
+            comprobante.setFoto(imageBASE64);
+            Comprobante.comprobanteListado.add(comprobante);
+            this.finish();
+        }
     }
 
     @Override
@@ -189,7 +203,17 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
                         Rubro.listaRubros = rubroList;
                         String nombreRubros[] = new String[rubroList.size()];
                         for (int i = 0; i < rubroList.size(); i++) {
-                            nombreRubros[i] = rubroList.get(i).getNombre();
+                            if (rubroList.get(i).getNombre().equalsIgnoreCase("ALIMENTACION")) {
+                                nombreRubros[i] = getResources().getString(R.string.alimentacion_rendicion);
+                            } else if (rubroList.get(i).getNombre().equalsIgnoreCase("HOTEL")){
+                                nombreRubros[i] = getResources().getString(R.string.hotel_rendicion);
+                            } else if (rubroList.get(i).getNombre().equalsIgnoreCase("MOVILIDAD INTERNA")){
+                                nombreRubros[i] = getResources().getString(R.string.movilidad_interna_rendicion);
+                            } else if (rubroList.get(i).getNombre().equalsIgnoreCase("PASAJES TERRESTRES")){
+                                nombreRubros[i] = getResources().getString(R.string.pasajes_terrestres_rendicion);
+                            } else {
+                                nombreRubros[i] = getResources().getString(R.string.devolucion);
+                            }
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarComprobanteActivity.this, android.R.layout.simple_dropdown_item_1line, nombreRubros);
                         actvRubro.setAdapter(adapter);
@@ -229,7 +253,15 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
                             TipoComprobante.listaComprobamte = tipoComprobanteList;
                             String tipos[] = new String[tipoComprobanteList.size()];
                             for (int i = 0; i < tipoComprobanteList.size(); i++) {
-                                tipos[i] = tipoComprobanteList.get(i).getNombre();
+                                if (tipoComprobanteList.get(i).getNombre().equalsIgnoreCase("BOLETA")) {
+                                    tipos[i] = getResources().getString(R.string.boleta);
+                                } else if (tipoComprobanteList.get(i).getNombre().equalsIgnoreCase("FACTURA")){
+                                    tipos[i] = getResources().getString(R.string.factura);
+
+                                } else {
+                                    tipos[i] = getResources().getString(R.string.voucher);
+
+                                }
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarComprobanteActivity.this, android.R.layout.simple_dropdown_item_1line, tipos);
                             actvComprobante.setAdapter(adapter);
@@ -256,5 +288,58 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
                 }
             });
 
+    }
+
+    private boolean validar(){
+        if (idRubroSeleccionado==0) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_rubro));
+            return false;
+        }
+        if (idTipoSeleccionado==0) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_tipo));
+            return false;
+        }
+        if (txtNumeroOperacion.getText().toString().equalsIgnoreCase("") && idTipoSeleccionado == 3){
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_num_operacion));
+            return false;
+        }
+
+        if (txtRuc.getText().toString().equalsIgnoreCase("") && idTipoSeleccionado != 3) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_ruc));
+            return false;
+        }
+
+        if (txtDescripcion.getText().toString().equalsIgnoreCase("")) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_descripcion));
+            return false;
+        }
+
+        if (txtSerie.getText().toString().equalsIgnoreCase("") && idTipoSeleccionado != 3) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_serie));
+            return false;
+        }
+
+        if (txtCorrelativo.getText().toString().equalsIgnoreCase("") && idTipoSeleccionado != 3) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_correlativo));
+            return false;
+        }
+
+        if (txtFecha.getText().toString().equalsIgnoreCase("")) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_emision));
+            return false;
+        }
+
+        if (txtMontoComprobante.getText().toString().equalsIgnoreCase("")) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_monto));
+            return false;
+        }
+
+        if (imageBASE64 == null) {
+            Helper.mensajeInformacion(this,"INFO",getResources().getString(R.string.validacion_foto));
+            return false;
+        }
+
+
+        return true;
     }
 }

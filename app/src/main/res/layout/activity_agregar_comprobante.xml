@@ -21,7 +21,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Rubro">
+                    android:hint="@string/rubro_listado">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/actv_comprobante_rubro"
@@ -39,7 +39,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Comprobante">
+                    android:hint="@string/comprobante_listado">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/actv_comprobante"
@@ -56,7 +56,27 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="RUC de la empresa emisora"
+                    android:hint="@string/num_operacion"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_discount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_num_operacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ruc_de_la_empresa_emisora"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_add_business">
 
@@ -74,7 +94,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Descripcion"
+                    android:hint="@string/descripci_n"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_text">
 
@@ -99,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:hint="Serie"
+                        android:hint="@string/serie"
                         app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -118,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:hint="Correlativo"
+                        android:hint="@string/correlativo"
                         app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -143,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         app:startIconDrawable="@drawable/ic_fecha"
-                        android:hint="Emision"
+                        android:hint="@string/emision"
                         app:endIconMode="clear_text">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/txt_fecha_comprobante"
@@ -164,7 +184,7 @@
                         android:layout_height="wrap_content"
                         app:startIconDrawable="@drawable/ic_money"
                         android:layout_weight=".5"
-                        android:hint="Monto total"
+                        android:hint="@string/monto_total"
                         app:endIconMode="clear_text">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/txt_monto_comprobante"
@@ -178,7 +198,7 @@
                     android:layout_height="5dp" />
                 <ImageView
                     android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/ic_photo"
                     android:id="@+id/img_comprobante"
                     />
@@ -186,7 +206,7 @@
                     android:id="@+id/btn_comprobante_foto"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Foto"
+                    android:text="@string/foto"
                     android:textColor="@android:color/white"
                     app:icon="@drawable/ic_add_photo" />
 
@@ -202,7 +222,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Agregar"
+                        android:text="@string/opcion_agregar"
                         app:icon="@drawable/ic_save"
                         android:textColor="@android:color/white"
                         android:id="@+id/btn_comprobante_agregar"

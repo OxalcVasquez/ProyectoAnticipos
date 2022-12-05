@@ -24,9 +24,9 @@
     <string name="restante_redencion">DEV. RESTANTE:</string>
     <string name="devolucion_rendicion_registro">DEVOLUCIÓN REALIZADA:</string>
     <string name="de_rendicion">DE</string>
-    <string name="movilidad_interna_rendicion">MOVILIDAD INTERNA:</string>
-    <string name="pasajes_terrestres_rendicion">PASAJES TERRESTRES:</string>
-    <string name="alimentacion_rendicion">ALIMENTACIÓN:</string>
+    <string name="movilidad_interna_rendicion">MOVILIDAD INTERNA</string>
+    <string name="pasajes_terrestres_rendicion">PASAJES TERRESTRES</string>
+    <string name="alimentacion_rendicion">ALIMENTACION</string>
     <string name="hotel_rendicion">HOTEL:</string>
     <string name="factura_total_listado">FACTURA</string>
     <string name="comprobante_listado">Comprobante:</string>
@@ -104,7 +104,33 @@
     <string name="jefe_profesores">Jefe de profesores</string>
     <string name="administrativo">Personal administrativo</string>
     <string name="verificar_seleccion_anticipo">Debes seleccionar un anticipo</string>
+    <string name="serie">Serie</string>
+    <string name="correlativo">Correlativo</string>
+    <string name="emision">Emision</string>
+    <string name="monto_total">Monto total</string>
+    <string name="foto">Foto</string>
+    <string name="ruc_de_la_empresa_emisora">RUC de la empresa emisora</string>
+    <string name="num_operacion">Número de operacion</string>
+    <string name="boleta">BOLETA</string>
+    <string name="factura">FACTURA</string>
+    <string name="voucher">VOUCHER DE DEVOLUCION</string>
+    <string name="devolucion">DEVOLUCION</string>
 
+    <string name="validacion_rubro">Por favor seleccione un rubro</string>
+    <string name="validacion_tipo">Por favor seleccione un tipo de comprobante</string>
+    <string name="validacion_num_operacion">Por favor ingrese un numero de operacion</string>
+    <string name="validacion_ruc">Por favor ingrese RUC de la empresa</string>
+    <string name="validacion_serie">Por favor ingrese la serie de comprobante</string>
+    <string name="validacion_emision">Por favor ingrese la fecha de emision</string>
+    <string name="validacion_correlativo">Por favor ingrese el correlaivo de comprobante</string>
+    <string name="validacion_monto">Por favor ingrese el monto del comprobante</string>
+    <string name="validacion_foto">Por favor ingrese la foto del comprobante</string>
+
+    <string name="capacitacion">CAPACITACION</string>
+    <string name="dictado">DICTADO DE CLASES</string>
+    <string name="otros">OTROS</string>
+    <string name="ponencia">PONENCIA</string>
+    <string name="reunion">REUNION</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

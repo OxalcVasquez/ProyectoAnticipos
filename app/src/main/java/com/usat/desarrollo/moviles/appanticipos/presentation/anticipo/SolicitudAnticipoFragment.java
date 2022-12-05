@@ -304,7 +304,21 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
                         MotivoAnticipo.listaMotivos = motivoAnticipoList;
                         String motivosDescripcion[] = new String[motivoAnticipoList.size()];
                         for (int i = 0; i < motivoAnticipoList.size() ; i++) {
-                            motivosDescripcion[i] = motivoAnticipoList.get(i).getDescripcion();
+                            if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("CAPACITACION")){
+                                motivosDescripcion[i] = getContext().getString(R.string.capacitacion);
+                            } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("DICTADO DE CLASES")) {
+                                motivosDescripcion[i] = getContext().getString(R.string.dictado);
+
+                            } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("OTROS")) {
+                                motivosDescripcion[i] = getContext().getString(R.string.otros);
+
+                            } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("PONENCIA")) {
+                                motivosDescripcion[i] = getContext().getString(R.string.ponencia);
+
+                            } else {
+                                motivosDescripcion[i] = getContext().getString(R.string.reunion);
+
+                            }
                         }
                         if (getContext() != null) {
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,motivosDescripcion);

@@ -31,6 +31,7 @@ import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.AnticipoAdapter;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.RendicionAdapter;
+import com.usat.desarrollo.moviles.appanticipos.utils.Helper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,9 +85,15 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipo = response.body();
-                    listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
-                    adapter.cargarDatos(listaAnticipo);
-                    adapter.notifyDataSetChanged();
+                    if(anticipo.getStatus()){
+                        listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
+                        adapter.cargarDatos(listaAnticipo);
+                        //adapter.notifyDataSetChanged();
+                    }else{
+                        listaAnticipo = new ArrayList<>();
+                        adapter.cargarDatos(listaAnticipo);
+                        //adapter.notifyDataSetChanged();
+                    }
                     srlAnticipo.setRefreshing(false);
                 }else{
                     try {
@@ -101,10 +108,6 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
             }
             @Override
             public void onFailure(Call<AnticipoListadoResponse> call, Throwable t) {
-                listaAnticipo = new ArrayList<>();
-                srlAnticipo.setRefreshing(false);
-                adapter.cargarDatos(listaAnticipo);
-                adapter.notifyDataSetChanged();
                 Log.e("Error listando anticipo", t.getMessage());
                 Log.e("error listado",""+call);
 
@@ -129,6 +132,7 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 actualizarEstado(estado,desc,posicion);
                 adapter.notifyDataSetChanged();
                 dialogObservar.dismiss();
+                Helper.mensajeInformacion(getContext(),"INFO","Observación del anticipo exitoso");
             }
         });
 
@@ -288,25 +292,38 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                     });
 
                 } else {
-                    String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
-                    String estado = String.valueOf(3);
-                    actualizarEstado(estado,"Aprobado por el jefe de profesores", posicionItem);
+                    if (DatosSesion.sesion.getRol_id() == 2){
+                        String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                        String estado = String.valueOf(3);
+                        actualizarEstado(estado,"Aprobado por el jefe de profesores", posicionItem);
+                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación del anticipo exitoso");
+                        listar();
+                    } else{
+                        Toast.makeText(getContext(), "APROBAR", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 break;
             case 2:
-                if (DatosSesion.sesion.getRol_id() != 1){
+                if (DatosSesion.sesion.getRol_id() == 2){
                     String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                     String estado = String.valueOf(6);
                     observarAnticipo(estado, posicionItem);
-                    Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();
-                    break;
+                    listar();
                 }
-            case 3:
-                String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
-                String estado = String.valueOf(4);
-                actualizarEstado(estado,"Rechazado por el jefe de profesores", posicionItem);
+                if (DatosSesion.sesion.getRol_id() == 3){
+                    Toast.makeText(getContext(), "OJO OBSERVADO", Toast.LENGTH_SHORT).show();
+                }
                 break;
-
+            case 3:
+                if (DatosSesion.sesion.getRol_id()==2) {
+                    String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                    String estado = String.valueOf(4);
+                    actualizarEstado(estado, "Rechazado por el jefe de profesores", posicionItem);
+                    Helper.mensajeInformacion(getContext(), "INFO", "Rechazo del anticipo exitoso");
+                    listar();
+                }
+                break;
         }
 
         return super.onContextItemSelected(item);

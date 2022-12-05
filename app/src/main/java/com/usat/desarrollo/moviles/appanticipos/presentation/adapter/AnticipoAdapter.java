@@ -362,9 +362,16 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
 
             }else{
                 if(DatosSesion.sesion.getRol_id() == 2){
-                    contextMenu.add(0, 1, 0, "Aprobar");
-                    contextMenu.add(0, 2, 0, "Observar");
-                    contextMenu.add(0, 3, 0, "Rechazar");
+                    Anticipo ant = anticipoSeleccionado;
+                    if (!ant.getEstado().equalsIgnoreCase("SUBSANADO")){
+                        contextMenu.add(0, 1, 0, "Aprobar");
+                        contextMenu.add(0, 2, 0, "Observar");
+                        contextMenu.add(0, 3, 0, "Rechazar");
+                    }else {
+                        contextMenu.add(0, 1, 0, "Aprobar");
+                        //contextMenu.add(0, 2, 0, "Observar");
+                        contextMenu.add(0, 3, 0, "Rechazar");
+                    }
 
                 }else{
                     contextMenu.add(0, 1, 0, "Aprobar");
@@ -390,7 +397,6 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
             Toast.makeText(context, "DIAS DIFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
             if (diasAnticipo<=0){
                 Toast.makeText(context, context.getResources().getString(R.string.validacion_fechas), Toast.LENGTH_SHORT).show();
-
             }
             resumenTarifas();
 

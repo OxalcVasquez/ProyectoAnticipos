@@ -88,6 +88,7 @@ public interface ApiService {
     @POST("anticipo/evaluar")
     Call<AnticipoRegistroResponse> getAnticipoEvaluar(
             @Field("estado_anticipo_id") String estado_anticipo_id,
+            @Field("descripcion") String descripcion,
             @Field("id") String id,
             @Field("usuario_evaluador_id") String usuario_evaluador_id,
             @Field("token") String token

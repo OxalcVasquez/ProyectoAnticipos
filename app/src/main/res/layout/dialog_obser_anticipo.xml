@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/descripci_n"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/ic_descriipcion">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtDialogObDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="3"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_observar_cerrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cerrar"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    style="@style/Widget.MaterialComponents.Button"/>
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_observar_aceptar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/opcion_agregar"
+                    android:textColor="@android:color/white"
+                    style="@style/Widget.MaterialComponents.Button"/>
+
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

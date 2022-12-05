@@ -50,6 +50,8 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
     ArrayList<Anticipo> listaAnticipo;
     ApiService apiService;
     SwipeRefreshLayout srlAnticipo;
+    TextView txtDialogObDescripcion;
+    MaterialButton btn_observar_cerrar,btn_observar_aceptar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,10 +84,13 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipo = response.body();
-                    listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
-                    adapter.cargarDatos(listaAnticipo);
-                    srlAnticipo.setRefreshing(false);
-
+                        listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
+                        //adapter.cargarDatos(listaAnticipo);
+                        if (!listaAnticipo.isEmpty()){
+                            adapter.cargarDatos(listaAnticipo);
+                        }
+                        adapter.notifyDataSetChanged();
+                        srlAnticipo.setRefreshing(false);
                 }else{
                     try {
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
@@ -106,9 +111,39 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
         });
     }
 
-    public void actualizarEstado(String estadoAnticipo, String idAnticipo){
+    public void observarAnticipo(String estado, String posicion){
+        final Dialog dialogObservar = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+        dialogObservar.setContentView(R.layout.dialog_obser_anticipo);
+        dialogObservar.setCancelable(true);
+
+        //Configurar controles
+        txtDialogObDescripcion = dialogObservar.findViewById(R.id.txtDialogObDescripcion);
+        btn_observar_cerrar = dialogObservar.findViewById(R.id.btn_observar_cerrar);
+        btn_observar_aceptar = dialogObservar.findViewById(R.id.btn_observar_aceptar);
+
+        btn_observar_aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String desc = txtDialogObDescripcion.getText().toString();
+                actualizarEstado(estado,desc,posicion);
+                adapter.notifyDataSetChanged();
+                dialogObservar.dismiss();
+            }
+        });
+
+        btn_observar_cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogObservar.dismiss();
+            }
+        });
+
+        dialogObservar.show();
+    }
+
+    public void actualizarEstado(String estadoAnticipo,String descripcion, String idAnticipo){
         Toast.makeText(getActivity(), ""+estadoAnticipo+" "+idAnticipo+" "+DatosSesion.sesion.getId(), Toast.LENGTH_SHORT).show();
-        apiService.getAnticipoEvaluar(estadoAnticipo,idAnticipo,String.valueOf(DatosSesion.sesion.getId()),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoRegistroResponse>() {
+        apiService.getAnticipoEvaluar(estadoAnticipo,descripcion, idAnticipo,String.valueOf(DatosSesion.sesion.getId()),DatosSesion.sesion.getToken()).enqueue(new Callback<AnticipoRegistroResponse>() {
             @Override
             public void onResponse(Call<AnticipoRegistroResponse> call, Response<AnticipoRegistroResponse> response) {
                 //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
@@ -254,15 +289,21 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 } else {
                     String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                     String estado = String.valueOf(3);
-                    actualizarEstado(estado, posicionItem);
+                    actualizarEstado(estado,"Aprobado por el jefe de profesores", posicionItem);
                 }
-
                 break;
             case 2:
-                Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();
-                break;
+                if (DatosSesion.sesion.getRol_id() != 1){
+                    String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                    String estado = String.valueOf(6);
+                    observarAnticipo(estado, posicionItem);
+                    Toast.makeText(this.getActivity(), "Opcion Observar", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             case 3:
-                Toast.makeText(this.getActivity(), "Opcion Rechazar", Toast.LENGTH_SHORT).show();
+                String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                String estado = String.valueOf(4);
+                actualizarEstado(estado,"Rechazado por el jefe de profesores", posicionItem);
                 break;
 
         }

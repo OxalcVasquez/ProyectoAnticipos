@@ -145,10 +145,10 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
             if (DatosSesion.sesion.getRol_id() == 1) {
                 contextMenu.add(0,1,0,context.getResources().getString(R.string.ver_instancia));
                 if (txtEstado.getText().toString().equalsIgnoreCase(context.getResources().getString(R.string.estado_rechazado))) {
-                    contextMenu.add(0,2,0,"Subsanar");
+                    contextMenu.add(0,2,0,context.getResources().getString(R.string.subsanar));
                 }
             } else {
-                contextMenu.add(0,3,0, "Ver comprobantes");
+                contextMenu.add(0,3,0, context.getResources().getString(R.string.ver_comprobantes));
             }
         }
     }

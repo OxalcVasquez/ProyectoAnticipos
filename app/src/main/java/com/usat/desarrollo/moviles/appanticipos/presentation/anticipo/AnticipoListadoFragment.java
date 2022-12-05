@@ -84,13 +84,10 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 //Toast.makeText(getActivity(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipo = response.body();
-                        listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
-                        //adapter.cargarDatos(listaAnticipo);
-                        if (!listaAnticipo.isEmpty()){
-                            adapter.cargarDatos(listaAnticipo);
-                        }
-                        adapter.notifyDataSetChanged();
-                        srlAnticipo.setRefreshing(false);
+                    listaAnticipo = new ArrayList<>(Arrays.asList(anticipo.getData()));
+                    adapter.cargarDatos(listaAnticipo);
+                    adapter.notifyDataSetChanged();
+                    srlAnticipo.setRefreshing(false);
                 }else{
                     try {
                         JSONObject jsonError = new JSONObject(response.errorBody().string());
@@ -104,6 +101,10 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
             }
             @Override
             public void onFailure(Call<AnticipoListadoResponse> call, Throwable t) {
+                listaAnticipo = new ArrayList<>();
+                srlAnticipo.setRefreshing(false);
+                adapter.cargarDatos(listaAnticipo);
+                adapter.notifyDataSetChanged();
                 Log.e("Error listando anticipo", t.getMessage());
                 Log.e("error listado",""+call);
 

@@ -366,10 +366,46 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
             int pos = viewHolder.getAdapterPosition();
             switch (direction) {
                 case ItemTouchHelper.LEFT:
+                    apiService.getValidacionInforme(
+                            DatosSesion.sesion.getToken(),
+                            8,
+                            DatosSesion.sesion.getId(),
+                            listaInformesGasto.get(pos).getId()
+                    ).enqueue(new Callback<ValidacionResponse>() {
+                        @Override
+                        public void onResponse(Call<ValidacionResponse> call, Response<ValidacionResponse> response) {
+                            Log.d("prueba", "Code: " + String.valueOf(response.code()));
+                            Log.d("prueba", "Message: " + String.valueOf(response.message()));
+                        }
+
+                        @Override
+                        public void onFailure(Call<ValidacionResponse> call, Throwable t) {
+                            Log.d("prueba", "Error: " + t.getMessage());
+                            t.printStackTrace();
+                        }
+                    });
                     rendicionAdapter.notifyDataSetChanged();
                     Toast.makeText(getContext(), "Se rechazó", Toast.LENGTH_SHORT).show();
                     break;
                 case ItemTouchHelper.RIGHT:
+                    apiService.getValidacionInforme(
+                            DatosSesion.sesion.getToken(),
+                            9,
+                            DatosSesion.sesion.getId(),
+                            listaInformesGasto.get(pos).getId()
+                    ).enqueue(new Callback<ValidacionResponse>() {
+                        @Override
+                        public void onResponse(Call<ValidacionResponse> call, Response<ValidacionResponse> response) {
+                            Log.d("prueba", "Code: " + String.valueOf(response.code()));
+                            Log.d("prueba", "Message: " + String.valueOf(response.message()));
+                        }
+
+                        @Override
+                        public void onFailure(Call<ValidacionResponse> call, Throwable t) {
+                            Log.d("prueba", "Error: " + t.getMessage());
+                            t.printStackTrace();
+                        }
+                    });
                     rendicionAdapter.notifyDataSetChanged();
                     Toast.makeText(getContext(), "Se aprobó", Toast.LENGTH_SHORT).show();
                     break;

@@ -147,6 +147,8 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
                 if (txtEstado.getText().toString().equalsIgnoreCase(context.getResources().getString(R.string.estado_rechazado))) {
                     contextMenu.add(0,2,0,"Subsanar");
                 }
+            } else {
+                contextMenu.add(0,3,0, "Ver comprobantes");
             }
         }
     }

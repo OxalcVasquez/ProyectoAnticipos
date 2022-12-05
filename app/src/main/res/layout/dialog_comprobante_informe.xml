@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBarComprobantes"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/sv_comprobantes_informe"
+        android:layout_height="200dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_comprobantes_informe"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:paddingVertical="8dp"
+            tools:listitem="@layout/comprobante_rendicion_cardview"
+            />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cerrar_comprobante_informe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryTextColor"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primaryColor"
+            android:text="@string/cerrar" />
+
+    </LinearLayout>
+
+</LinearLayout>

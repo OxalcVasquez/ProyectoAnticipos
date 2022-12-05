@@ -2,6 +2,7 @@ package com.usat.desarrollo.moviles.appanticipos.data.remote.api;
 
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.AnticipoRegistroResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ComprobanteInformeListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoResponse;
@@ -168,5 +169,12 @@ public interface ApiService {
             @Field("descripcion") String descripcion,
             @Field("usuario_evaluador_id") int usuario_evaluador_id,
             @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("comprobante/listado")
+    Call<ComprobanteInformeListadoResponse> getComprobantesInformeListado(
+            @Field("token") String token,
+            @Field("informe_id") int estado_id
     );
 }

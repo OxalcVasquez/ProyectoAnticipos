@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +30,16 @@ import com.google.android.material.snackbar.Snackbar;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ComprobanteInformeListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.UltimaInstanciaResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ValidacionResponse;
+import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.DatosSesion;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.HistorialAnticipo;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.AnticipoAdapter;
+import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.ComprobanteAdapter;
 import com.usat.desarrollo.moviles.appanticipos.presentation.adapter.RendicionAdapter;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.InformeGasto;
 import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.AgregarComprobanteActivity;
@@ -56,7 +62,10 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
     ArrayList<InformeGasto> listaInformesGasto;
     ApiService apiService;
     Boolean isDocente;
-
+    RecyclerView recyclerComprobante;
+    ComprobanteAdapter comprobanteAdapter;
+    ProgressBar progressBar;
+    ScrollView sv_comprobantes_informe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +84,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
 
         srlRendicioListado = view.findViewById(R.id.srl_rendicion_listado);
         srlRendicioListado.setOnRefreshListener(this);
-        srlRendicioListado.setColorSchemeResources(R.color.primaryColor,R.color.primaryDarkColor, R.color.primaryLightColor);
+        srlRendicioListado.setColorSchemeResources(R.color.primaryColor, R.color.primaryDarkColor, R.color.primaryLightColor);
 
 
         rvInformeGasto = view.findViewById(R.id.recycler_rendicion_gastos);
@@ -97,18 +106,18 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
             apiService.getInformeListado(DatosSesion.sesion.getToken(), DatosSesion.sesion.getId()).enqueue(new Callback<InformeGastoListadoResponse>() {
                 @Override
                 public void onResponse(Call<InformeGastoListadoResponse> call, Response<InformeGastoListadoResponse> response) {
-                    if (response.code() == 200){
+                    if (response.code() == 200) {
                         InformeGastoListadoResponse informeGastoListadoResponse = response.body();
                         boolean status = informeGastoListadoResponse.getStatus();
-                        if (status){
+                        if (status) {
                             listaInformesGasto = (ArrayList<InformeGasto>) informeGastoListadoResponse.getData();
                             rendicionAdapter.cargarDatosRendicion(listaInformesGasto);
                             srlRendicioListado.setRefreshing(false);
                         } else {
                             try {
                                 JSONObject jsonError = new JSONObject(response.errorBody().toString());
-                                String message =  jsonError.getString("message");
-                                Log.e("ERROR",message);
+                                String message = jsonError.getString("message");
+                                Log.e("ERROR", message);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -126,18 +135,18 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
             apiService.getInformeAdminListado(DatosSesion.sesion.getToken()).enqueue(new Callback<InformeGastoListadoResponse>() {
                 @Override
                 public void onResponse(Call<InformeGastoListadoResponse> call, Response<InformeGastoListadoResponse> response) {
-                    if (response.code() == 200){
+                    if (response.code() == 200) {
                         InformeGastoListadoResponse informeGastoListadoResponse = response.body();
                         boolean status = informeGastoListadoResponse.getStatus();
-                        if (status){
+                        if (status) {
                             listaInformesGasto = (ArrayList<InformeGasto>) informeGastoListadoResponse.getData();
                             rendicionAdapter.cargarDatosRendicion(listaInformesGasto);
                             srlRendicioListado.setRefreshing(false);
                         } else {
                             try {
                                 JSONObject jsonError = new JSONObject(response.errorBody().toString());
-                                String message =  jsonError.getString("message");
-                                Log.e("ERROR",message);
+                                String message = jsonError.getString("message");
+                                Log.e("ERROR", message);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -162,17 +171,17 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (isDocente) {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case 1: //Menu eliminar
-                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(),rendicionAdapter.informeGastoSeleccionado.getAnticipoId(),"I",1).enqueue(new Callback<UltimaInstanciaResponse>() {
+                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(), rendicionAdapter.informeGastoSeleccionado.getAnticipoId(), "I", 1).enqueue(new Callback<UltimaInstanciaResponse>() {
                         @Override
                         public void onResponse(Call<UltimaInstanciaResponse> call, Response<UltimaInstanciaResponse> response) {
                             if (response.code() == 200) {
                                 UltimaInstanciaResponse ultimaInstanciaResponse = response.body();
                                 boolean status = ultimaInstanciaResponse.getStatus();
-                                if (status){
+                                if (status) {
                                     Toast.makeText(getContext(), "ID " + RendicionAdapter.listadoInformes.get(rendicionAdapter.itemSeleccionado).getAnticipoId(), Toast.LENGTH_SHORT).show();
-                                    HistorialAnticipo historialAnticipo =  ultimaInstanciaResponse.getData();
+                                    HistorialAnticipo historialAnticipo = ultimaInstanciaResponse.getData();
                                     final Dialog dialogHistorialInforme = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
                                     dialogHistorialInforme.setContentView(R.layout.dialog_historial_informe);
                                     dialogHistorialInforme.setCancelable(true);
@@ -187,8 +196,8 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                     txtEvaluador.setText(historialAnticipo.getEvaluador());
                                     txtDescripcion.setText(historialAnticipo.getDescripcion());
 
-                                    if (historialAnticipo.getInstancia() != null){
-                                        if (historialAnticipo.getInstancia().equalsIgnoreCase("Jefe de profesores")){
+                                    if (historialAnticipo.getInstancia() != null) {
+                                        if (historialAnticipo.getInstancia().equalsIgnoreCase("Jefe de profesores")) {
                                             txtInstanciaInforme.setText(getResources().getString(R.string.jefe_profesores));
                                         } else {
                                             txtInstanciaInforme.setText(getResources().getString(R.string.administrativo));
@@ -196,51 +205,49 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                     }
 
 
-
-
                                     switch (historialAnticipo.getEstado()) {
                                         case "REGISTRADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.register));
                                             txtEstado.setText(getResources().getString(R.string.estado_registrado));
                                             break;
                                         case "APROBADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.approved));
                                             txtEstado.setText(getResources().getString(R.string.estado_aprobado));
                                             break;
                                         case "DESIGNADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.approved));
                                             txtEstado.setText(getResources().getString(R.string.estado_designado));
                                             break;
                                         case "RECHAZADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.unapproved));
                                             txtEstado.setText(getResources().getString(R.string.estado_rechazado));
                                             break;
                                         case "RENDIDO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.register));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.register));
                                             txtEstado.setText(getResources().getString(R.string.estado_rendido));
                                             break;
                                         case "OBSERVADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.warning));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.warning));
                                             txtEstado.setText(getResources().getString(R.string.estado_observado));
                                             break;
                                         case "PENDIENTE":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.secondaryDarkColor));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
                                             txtEstado.setText(getResources().getString(R.string.estado_pendiente));
                                             break;
                                         case "RENDICION R":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.unapproved));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.unapproved));
                                             txtEstado.setText(getResources().getString(R.string.estado_rendicionr));
                                             break;
                                         case "RENDICION A":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.approved));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.approved));
                                             txtEstado.setText(getResources().getString(R.string.estado_rendiciona));
                                             break;
                                         case "CERRADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.primaryTextColor));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryTextColor));
                                             txtEstado.setText(getResources().getString(R.string.estado_cerrado));
                                             break;
                                         case "SUBSANADO":
-                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(),R.color.ic_launcher_background));
+                                            txtEstado.setTextColor(ContextCompat.getColor(getContext(), R.color.ic_launcher_background));
                                             txtEstado.setText(getResources().getString(R.string.estado_subsanado));
                                             break;
                                     }
@@ -253,13 +260,12 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                                     });
 
 
-
                                     dialogHistorialInforme.show();
                                 } else {
                                     try {
                                         JSONObject jsonError = new JSONObject(response.errorBody().toString());
-                                        String message =  jsonError.getString("message");
-                                        Log.e("ERROR",message);
+                                        String message = jsonError.getString("message");
+                                        Log.e("ERROR", message);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -285,6 +291,65 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                     fragmentTransaction.commit();
                     break;
             }
+        } else if (item.getItemId() == 3) {
+            final Dialog dialogComprobanteInforme = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+            dialogComprobanteInforme.setContentView(R.layout.dialog_comprobante_informe);
+            dialogComprobanteInforme.setCancelable(true);
+
+            progressBar = dialogComprobanteInforme.findViewById(R.id.progressBarComprobantes);
+            sv_comprobantes_informe = dialogComprobanteInforme.findViewById(R.id.sv_comprobantes_informe);
+            recyclerComprobante = dialogComprobanteInforme.findViewById(R.id.recycler_comprobantes_informe);
+            recyclerComprobante.setHasFixedSize(true);
+            recyclerComprobante.setLayoutManager(new LinearLayoutManager(dialogComprobanteInforme.getContext()));
+            MaterialButton btnCerrar = dialogComprobanteInforme.findViewById(R.id.btn_cerrar_comprobante_informe);
+
+            comprobanteAdapter = new ComprobanteAdapter(dialogComprobanteInforme.getContext());
+            recyclerComprobante.setAdapter(comprobanteAdapter);
+
+            btnCerrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogComprobanteInforme.dismiss();
+                }
+            });
+
+            dialogComprobanteInforme.show();
+
+            apiService.getComprobantesInformeListado(
+                    DatosSesion.sesion.getToken(),
+                    rendicionAdapter.informeGastoSeleccionado.getId()
+            ).enqueue(new Callback<ComprobanteInformeListadoResponse>() {
+                @Override
+                public void onResponse(Call<ComprobanteInformeListadoResponse> call, Response<ComprobanteInformeListadoResponse> response) {
+                    if (response.code() == 200) {
+                        progressBar.setVisibility(View.GONE);
+                        sv_comprobantes_informe.setVisibility(View.VISIBLE);
+                        ComprobanteInformeListadoResponse comprobanteInformeListadoResponse = response.body();
+                        boolean status = comprobanteInformeListadoResponse.getStatus();
+                        if (status) {
+                            Comprobante.comprobanteListado.clear();
+                            Comprobante.comprobanteListado.addAll(comprobanteInformeListadoResponse.getData());
+
+                            comprobanteAdapter.cargarDatosComprobante(Comprobante.comprobanteListado);
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            try {
+                                JSONObject jsonError = new JSONObject(response.errorBody().toString());
+                                String message = jsonError.getString("message");
+                                Log.e("ERROR", message);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ComprobanteInformeListadoResponse> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.e("prueba", t.getMessage());
+                }
+            });
         }
         return true;
 
@@ -302,11 +367,11 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
             switch (direction) {
                 case ItemTouchHelper.LEFT:
                     rendicionAdapter.notifyDataSetChanged();
-                    Toast.makeText(getContext(),"Se rechazó", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Se rechazó", Toast.LENGTH_SHORT).show();
                     break;
                 case ItemTouchHelper.RIGHT:
                     rendicionAdapter.notifyDataSetChanged();
-                    Toast.makeText(getContext(),"Se aprobó", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Se aprobó", Toast.LENGTH_SHORT).show();
                     break;
             }
         }

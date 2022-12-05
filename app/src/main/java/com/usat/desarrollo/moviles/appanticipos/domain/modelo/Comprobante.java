@@ -1,5 +1,7 @@
 package com.usat.desarrollo.moviles.appanticipos.domain.modelo;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -7,9 +9,22 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Comprobante implements Serializable {
-    private int idCom, tipoComprobanteId, rubroId, numOperacion, informeGastoId;
-    private String serie, correlativo, ruc, descripcion, foto, rubro,tipoComprobante;
+    @SerializedName("comprobante")
+    private String idCom;
+    private int tipoComprobanteId;
+    private int rubroId;
+    private int numOperacion;
+    private int informeGastoId;
+    private String serie;
+    private String correlativo;
+    private String ruc;
+    private String descripcion;
+    private String foto;
+    private String rubro;
+    private String tipoComprobante;
+    @SerializedName("monto_total")
     private Double montoTotal;
+    @SerializedName("fecha_emision")
     private String fechaEmision;
 
     public String getRubro() {
@@ -31,11 +46,11 @@ public class Comprobante implements Serializable {
     public static ArrayList<Comprobante> comprobanteListado = new ArrayList<>();
 
 
-    public int getIdCom() {
+    public String getIdCom() {
         return idCom;
     }
 
-    public void setIdCom(int idCom) {
+    public void setIdCom(String idCom) {
         this.idCom = idCom;
     }
 
@@ -144,5 +159,25 @@ public class Comprobante implements Serializable {
             e.printStackTrace();
         }
         return  jsonObject;
+    }
+
+    @Override
+    public String toString() {
+        return "Comprobante{" +
+                "idCom=" + idCom +
+                ", tipoComprobanteId=" + tipoComprobanteId +
+                ", rubroId=" + rubroId +
+                ", numOperacion=" + numOperacion +
+                ", informeGastoId=" + informeGastoId +
+                ", serie='" + serie + '\'' +
+                ", correlativo='" + correlativo + '\'' +
+                ", ruc='" + ruc + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", foto='" + foto + '\'' +
+                ", rubro='" + rubro + '\'' +
+                ", tipoComprobante='" + tipoComprobante + '\'' +
+                ", montoTotal=" + montoTotal +
+                ", fechaEmision='" + fechaEmision + '\'' +
+                '}';
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class InformeGasto {
 
+    @SerializedName("id_informe")
     private int id;
     @SerializedName("anticipo_id")
     private int anticipoId;

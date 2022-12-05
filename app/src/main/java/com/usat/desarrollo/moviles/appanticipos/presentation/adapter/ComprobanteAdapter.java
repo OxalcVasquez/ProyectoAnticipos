@@ -20,6 +20,7 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
     private Context context;
 
     public ComprobanteAdapter(Context context) {
+        this.context = context;
         this.comprobanteList = new ArrayList<>();
     }
 
@@ -37,7 +38,11 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
         holder.txtFechaEmision.setText(comprobante.getFechaEmision());
         holder.txtTipo.setText(comprobante.getTipoComprobante());
         holder.txtTotal.setText("S/. "+comprobante.getMontoTotal());
-        holder.txtComprobante.setText(comprobante.getSerie() + "-" +comprobante.getCorrelativo());
+        if (comprobante.getIdCom() != null) {
+            holder.txtComprobante.setText(comprobante.getIdCom());
+        } else {
+            holder.txtComprobante.setText(comprobante.getSerie() + "-" +comprobante.getCorrelativo());
+        }
 
     }
 

@@ -13,7 +13,7 @@ public class Comprobante implements Serializable {
     private String idCom;
     private int tipoComprobanteId;
     private int rubroId;
-    private int numOperacion;
+    private String numOperacion;
     private int informeGastoId;
     private String serie;
     private String correlativo;
@@ -70,11 +70,11 @@ public class Comprobante implements Serializable {
         this.rubroId = rubroId;
     }
 
-    public int getNumOperacion() {
+    public String getNumOperacion() {
         return numOperacion;
     }
 
-    public void setNumOperacion(int numOperacion) {
+    public void setNumOperacion(String numOperacion) {
         this.numOperacion = numOperacion;
     }
 

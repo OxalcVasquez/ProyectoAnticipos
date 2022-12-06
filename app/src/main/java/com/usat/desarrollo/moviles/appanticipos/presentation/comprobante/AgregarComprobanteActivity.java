@@ -168,6 +168,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             String serie = txtSerie.getText().toString();
             String correlativo = txtCorrelativo.getText().toString();
             String montoTotal = txtMontoComprobante.getText().toString();
+            String numOperacion = txtNumeroOperacion.getText().toString();
             String fecha = Helper.formatearDMA_to_AMD(txtFecha.getText().toString());
             comprobante.setRuc(ruc);
             comprobante.setDescripcion(descripcion);
@@ -180,6 +181,7 @@ public class AgregarComprobanteActivity extends AppCompatActivity implements Vie
             comprobante.setTipoComprobante(tipo);
             comprobante.setTipoComprobanteId(idTipoSeleccionado);
             comprobante.setFoto(imageBASE64);
+            comprobante.setNumOperacion(numOperacion);
             Comprobante.comprobanteListado.add(comprobante);
             this.finish();
         }

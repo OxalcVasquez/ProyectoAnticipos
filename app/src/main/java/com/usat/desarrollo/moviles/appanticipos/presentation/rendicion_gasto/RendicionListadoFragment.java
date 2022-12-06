@@ -174,7 +174,6 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (isDocente) {
-            if(item.getGroupId()==1) {
                 switch (item.getItemId()) {
                     case 1: //Menu eliminar
                         apiService.getUltimaInstancia(DatosSesion.sesion.getToken(), listaInformesGasto.get(rendicionAdapter.itemSeleccionado).getAnticipoId(), "I", 1).enqueue(new Callback<UltimaInstanciaResponse>() {
@@ -296,7 +295,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                         break;
                 }
 
-            }
+
         } else if (item.getItemId() == 3) {
             final Dialog dialogComprobanteInforme = new Dialog(getContext(), androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
             dialogComprobanteInforme.setContentView(R.layout.dialog_comprobante_informe);

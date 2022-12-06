@@ -70,10 +70,12 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_aprobado));
 
+        } else if (informeGasto.getEstado().equalsIgnoreCase("PENDIENTE")){
+            holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.warning));
+            holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_pendiente));
         } else {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.unapproved));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rechazado));
-
         }
         holder.txtTotalRendido.setText("S/." + informeGasto.getTotalRendido());
 

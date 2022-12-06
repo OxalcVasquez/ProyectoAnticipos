@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     ScrollView svComprobantes;
     RecyclerView recyclerComprobante;
     ComprobanteAdapter comprobanteAdapter;
+    ProgressBar progressBar;
     float restante;
     public static final int REQUEST_COMPROBANTES = 2;
 
@@ -92,6 +94,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         btnAgregarComprobante = view.findViewById(R.id.btn_comprobante_agregar_rendicion);
         btnRegistrarRedencion = view.findViewById(R.id.btn_registrar_rendicion);
         svComprobantes = view.findViewById(R.id.sv_comprobantes);
+        progressBar = view.findViewById(R.id.progress_bar_rendicion);
 
         txtDocente.setText(DatosSesion.sesion.getNombres() + " "+DatosSesion.sesion.getApellidos());
         txtDocente.setTextColor(ContextCompat.getColor(getActivity(),R.color.primaryColor));
@@ -112,6 +115,7 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 anticipoSeleccionado = Anticipo.listaAnticipos.get(i);
+                Toast.makeText(getActivity(),  " ID : " + anticipoSeleccionado.getId(), Toast.LENGTH_SHORT).show();
                 cargarComprobantes();
             }
         });
@@ -147,9 +151,11 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                 Log.e("ERROR", detalleComprobantes);
                 if (!validarComprobantes()){
                     if (restante == 0){
+                        progressBar.setVisibility(View.VISIBLE);
                         apiService.getInformeRegistrado(DatosSesion.sesion.getToken(), anticipoId,detalleComprobantes).enqueue(new Callback<InformeGastoResponse>() {
                             @Override
                             public void onResponse(Call<InformeGastoResponse> call, Response<InformeGastoResponse> response) {
+                                progressBar.setVisibility(View.GONE);
                                 if (response.code() == 201){
                                     if (response.body().getStatus()){
                                         String numInforme = response.body().getData().getNumInforme();
@@ -157,10 +163,12 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                                                 getResources().getString(R.string.informe_redencion) + " : " + numInforme + "\n"+
                                                 getResources().getString(R.string.devolucion_rendicion_registro) + txtDevolucion.getText() + "\n";
                                         Helper.mensajeInformacion(getActivity(),getResources().getString(R.string.informe_redencion),informeGrabado);
+                                        limpiar();
                                     }
 
                                 } else if (response.code() == 500) {
                                     try {
+                                        limpiar();
                                         JSONObject error = new JSONObject(response.errorBody().string());
                                         Helper.mensajeInformacion(getActivity(),"ERROR",error.getString("message"));
 
@@ -268,7 +276,6 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
     }
 
     private void calcularMontosPorRendir() {
-        Toast.makeText(getActivity(), "ID : " + anticipoSeleccionado.getSede_id(), Toast.LENGTH_SHORT).show();
 
         txtMontoRendir.setText("S./" + anticipoSeleccionado.getMonto_total());
         txtRestante.setText("S./" + anticipoSeleccionado.getMonto_total());
@@ -333,11 +340,12 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
                 if (response.code() == 200){
                     AnticipoListadoResponse anticipoListadoResponse = response.body();
                     if (anticipoListadoResponse.getStatus()){
-                        Anticipo.listaAnticipos = new ArrayList<>(Arrays.asList(anticipoListadoResponse.getData()));
                         List<String> listaAnticipo = new ArrayList<String>();
+                        Anticipo.listaAnticipos = new ArrayList<>();
                         for (int i = 0; i <anticipoListadoResponse.getData().length ; i++) {
-                            if (anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("RENDICION R") || anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("PENDIENTE")){
+                            if (anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("PENDIENTE") || anticipoListadoResponse.getData()[i].getEstado().equalsIgnoreCase("RENDICION R")){
                                 listaAnticipo.add(anticipoListadoResponse.getData()[i].getDescripcion());
+                                Anticipo.listaAnticipos.add(anticipoListadoResponse.getData()[i]);
                             }
                         }
                         if (getActivity()!=null){
@@ -374,6 +382,15 @@ public class RendicionGastosFragment extends Fragment implements View.OnClickLis
         public void run() {
             registrarRendicion();
         }
+    }
+
+    private void limpiar(){
+        cargarAnticiposPendientesARendicion();
+        actvAnticipos.setText("");
+        Comprobante.comprobanteListado.clear();
+        comprobanteAdapter.cargarDatosComprobante(Comprobante.comprobanteListado);
+        recyclerComprobante.setVisibility(View.GONE);
+        svComprobantes.setVisibility(View.GONE);
     }
 
 }

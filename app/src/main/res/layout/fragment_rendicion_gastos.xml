@@ -402,6 +402,13 @@
                     android:text="@string/btn_registro_rendicion"
                     android:textColor="@color/secondaryTextColor" />
 
+                <ProgressBar
+                    android:id="@+id/progress_bar_rendicion"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginBottom="40dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </ScrollView>

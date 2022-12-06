@@ -41,7 +41,11 @@ public class ComprobanteAdapter extends RecyclerView.Adapter<ComprobanteAdapter.
         if (comprobante.getIdCom() != null) {
             holder.txtComprobante.setText(comprobante.getIdCom());
         } else {
-            holder.txtComprobante.setText(comprobante.getSerie() + "-" +comprobante.getCorrelativo());
+            if (comprobante.getRubroId() != 5){
+                holder.txtComprobante.setText(comprobante.getSerie() + "-" +comprobante.getCorrelativo());
+            } else {
+                holder.txtComprobante.setText(comprobante.getNumOperacion());
+            }
         }
 
     }

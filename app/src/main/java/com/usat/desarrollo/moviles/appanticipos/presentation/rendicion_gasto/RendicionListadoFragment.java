@@ -371,7 +371,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                 case ItemTouchHelper.LEFT:
                     apiService.getValidacionInforme(
                             DatosSesion.sesion.getToken(),
-                            8,
+                            4,
                             DatosSesion.sesion.getId(),
                             listaInformesGasto.get(pos).getId()
                     ).enqueue(new Callback<ValidacionResponse>() {
@@ -413,7 +413,7 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                 case ItemTouchHelper.RIGHT:
                     apiService.getValidacionInforme(
                             DatosSesion.sesion.getToken(),
-                            9,
+                            2,
                             DatosSesion.sesion.getId(),
                             listaInformesGasto.get(pos).getId()
                     ).enqueue(new Callback<ValidacionResponse>() {

@@ -175,6 +175,7 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
+            posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
             if(DatosSesion.sesion.getRol_id()==1){
                 anticipoSeleccionado = listaAnticipo.get(posicionItemSeleccionadoRecyclerView);
                 if(txtEstado.getText().toString().equalsIgnoreCase(context.getResources().getString(R.string.estado_observado))){
@@ -392,8 +393,8 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
         public boolean onLongClick(View view) {
             //Permite obtener la posición del item seleccionado en el RecyclerView
             posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
-            //int posicionlista = listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId();
-//            anticipoSeleccionado = listaAnticipo.get(posicionItemSeleccionadoRecyclerView);
+//            int posicionlista = listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId();
+            anticipoSeleccionado = listaAnticipo.get(posicionItemSeleccionadoRecyclerView);
             //Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -421,7 +422,21 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                             MotivoAnticipo.listaMotivos = motivoAnticipoList;
                             String motivosDescripcion[] = new String[motivoAnticipoList.size()];
                             for (int i = 0; i < motivoAnticipoList.size() ; i++) {
-                                motivosDescripcion[i] = motivoAnticipoList.get(i).getDescripcion();
+                                if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("CAPACITACION")){
+                                    motivosDescripcion[i] = context.getString(R.string.capacitacion);
+                                } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("DICTADO DE CLASES")) {
+                                    motivosDescripcion[i] = context.getString(R.string.dictado);
+
+                                } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("OTROS")) {
+                                    motivosDescripcion[i] = context.getString(R.string.otros);
+
+                                } else if (motivoAnticipoList.get(i).getDescripcion().equalsIgnoreCase("PONENCIA")) {
+                                    motivosDescripcion[i] = context.getString(R.string.ponencia);
+
+                                } else {
+                                    motivosDescripcion[i] = context.getString(R.string.reunion);
+
+                                }
                             }
                             if (context != null) {
                                 ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,motivosDescripcion);

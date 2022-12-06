@@ -66,14 +66,18 @@ public class RendicionAdapter extends RecyclerView.Adapter<RendicionAdapter.View
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.register));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_registrado));
 
-        } else if (informeGasto.getEstado().equalsIgnoreCase("RENDICION A")) {
+        } else if (informeGasto.getEstado().equalsIgnoreCase( "APROBADO")) {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.approved));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_aprobado));
 
         } else if (informeGasto.getEstado().equalsIgnoreCase("PENDIENTE")){
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.warning));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_pendiente));
-        } else {
+        } else if   (informeGasto.getEstado().equalsIgnoreCase("CERRADO")) {
+            holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.primaryTextColor));
+            holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_cerrado));
+        }
+        else {
             holder.txtEstado.setTextColor(ContextCompat.getColor(this.context,R.color.unapproved));
             holder.txtEstado.setText(this.context.getResources().getString(R.string.estado_rechazado));
         }

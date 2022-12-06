@@ -296,10 +296,14 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                         String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                         String estado = String.valueOf(3);
                         actualizarEstado(estado,"Aprobado por el jefe de profesores", posicionItem);
-                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación del anticipo exitoso");
+                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación exitosa - Jefe de docentes");
                         listar();
                     } else{
-                        Toast.makeText(getContext(), "APROBAR", Toast.LENGTH_SHORT).show();
+                        String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                        String estado = String.valueOf(2);
+                        actualizarEstado(estado,"Aprobado por el administrativo",posicionItem);
+                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación exitosa - Admin");
+                        listar();
                     }
 
                 }
@@ -312,7 +316,10 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                     listar();
                 }
                 if (DatosSesion.sesion.getRol_id() == 3){
-                    Toast.makeText(getContext(), "OJO OBSERVADO", Toast.LENGTH_SHORT).show();
+                    String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
+                    String estado = String.valueOf(6);
+                    observarAnticipo(estado, posicionItem);
+                    listar();
                 }
                 break;
             case 3:

@@ -374,8 +374,14 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                     }
 
                 }else{
-                    contextMenu.add(0, 1, 0, "Aprobar");
-                    contextMenu.add(0, 2, 0, "Observar");
+                    Anticipo ant = anticipoSeleccionado;
+                    if (!ant.getEstado().equalsIgnoreCase("SUBSANADO")){
+                        contextMenu.add(0, 1, 0, "Aprobar");
+                        contextMenu.add(0, 2, 0, "Observar");
+                    }else {
+                        contextMenu.add(0, 1, 0, "Aprobar");
+                    }
+
 
                 }
             }

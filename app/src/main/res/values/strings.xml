@@ -137,6 +137,8 @@
     <string name="administrativo_rol">Administrativo</string>
 
     <string name="ver_comprobantes">Ver comprobantes</string>
+    <string name="approve_validation_informe">Se aprobó</string>
+    <string name="reject_validation_informe">Se rechazó</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -27,12 +27,14 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.usat.desarrollo.moviles.appanticipos.LoginActivity;
 import com.usat.desarrollo.moviles.appanticipos.R;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiAdapter;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.api.ApiService;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ComprobanteInformeListadoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.HistorialAnticipoResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.InformeGastoListadoResponse;
+import com.usat.desarrollo.moviles.appanticipos.data.remote.response.LoginResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.UltimaInstanciaResponse;
 import com.usat.desarrollo.moviles.appanticipos.data.remote.response.ValidacionResponse;
 import com.usat.desarrollo.moviles.appanticipos.domain.modelo.Comprobante;
@@ -47,6 +49,7 @@ import com.usat.desarrollo.moviles.appanticipos.presentation.comprobante.Agregar
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -374,18 +377,38 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                     ).enqueue(new Callback<ValidacionResponse>() {
                         @Override
                         public void onResponse(Call<ValidacionResponse> call, Response<ValidacionResponse> response) {
-                            Log.d("prueba", "Code: " + String.valueOf(response.code()));
-                            Log.d("prueba", "Message: " + String.valueOf(response.message()));
+                            if (response.code() == 200) {
+                                ValidacionResponse validacionResponse = response.body();
+                                boolean status = validacionResponse.getStatus();
+                                if (status) {
+                                    Snackbar
+                                            .make(getActivity().findViewById(R.id.srl_rendicion_listado), R.string.reject_validation_informe, Snackbar.LENGTH_LONG)
+                                            .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.primaryDarkColor))
+                                            .show();
+                                }
+                            } else {
+                                try {
+                                    JSONObject jsonError = new JSONObject(response.errorBody().string());
+                                    String message =  jsonError.getString("message");
+                                    Snackbar
+                                            .make(getActivity().findViewById(R.id.srl_rendicion_listado), message, Snackbar.LENGTH_LONG)
+                                            .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.error))
+                                            .show();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<ValidacionResponse> call, Throwable t) {
-                            Log.d("prueba", "Error: " + t.getMessage());
                             t.printStackTrace();
                         }
                     });
                     rendicionAdapter.notifyDataSetChanged();
-                    Toast.makeText(getContext(), "Se rechazó", Toast.LENGTH_SHORT).show();
                     break;
                 case ItemTouchHelper.RIGHT:
                     apiService.getValidacionInforme(
@@ -396,18 +419,38 @@ public class RendicionListadoFragment extends Fragment implements SwipeRefreshLa
                     ).enqueue(new Callback<ValidacionResponse>() {
                         @Override
                         public void onResponse(Call<ValidacionResponse> call, Response<ValidacionResponse> response) {
-                            Log.d("prueba", "Code: " + String.valueOf(response.code()));
-                            Log.d("prueba", "Message: " + String.valueOf(response.message()));
+                            if (response.code() == 200) {
+                                ValidacionResponse validacionResponse = response.body();
+                                boolean status = validacionResponse.getStatus();
+                                if (status) {
+                                    Snackbar
+                                            .make(getActivity().findViewById(R.id.srl_rendicion_listado), R.string.approve_validation_informe, Snackbar.LENGTH_LONG)
+                                            .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.primaryDarkColor))
+                                            .show();
+                                }
+                            } else {
+                                try {
+                                    JSONObject jsonError = new JSONObject(response.errorBody().string());
+                                    String message =  jsonError.getString("message");
+                                    Snackbar
+                                            .make(getActivity().findViewById(R.id.srl_rendicion_listado), message, Snackbar.LENGTH_LONG)
+                                            .setBackgroundTint(ContextCompat.getColor(getContext(), R.color.error))
+                                            .show();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<ValidacionResponse> call, Throwable t) {
-                            Log.d("prueba", "Error: " + t.getMessage());
                             t.printStackTrace();
                         }
                     });
                     rendicionAdapter.notifyDataSetChanged();
-                    Toast.makeText(getContext(), "Se aprobó", Toast.LENGTH_SHORT).show();
                     break;
             }
         }

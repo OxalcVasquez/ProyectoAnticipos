@@ -139,5 +139,7 @@
     <string name="administrativo_rol">Administrative</string>
 
     <string name="ver_comprobantes">View proof of payment</string>
+    <string name="reject_validation_informe">It was rejected</string>
+    <string name="approve_validation_informe">It was approved</string>
 
 </resources>

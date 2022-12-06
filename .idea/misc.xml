@@ -43,7 +43,10 @@
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/cardview.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/comprobante_rendicion_cardview.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_anticipo.xml" value="0.33" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_comprobante_informe.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_historial_anticipo.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_historial_informe.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_obser_anticipo.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/dialog_venta_ingresar_cantidad.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/fragment_agregar.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/fragment_agregar_comprobante.xml" value="0.24739583333333334" />
@@ -58,6 +61,7 @@
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/new_login.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/layout/rendicion_cardview.xml" value="0.5" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/main.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/menu_anticipo.xml" value="0.5" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/menu_comprobante.xml" value="0.16770833333333332" />
         <entry key="..\:/Users/usuario/AndroidStudioProjects/AppProyectoAnticipos/app/src/main/res/menu/menu_objeto.xml" value="0.2760416666666667" />

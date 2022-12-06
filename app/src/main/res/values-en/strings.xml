@@ -147,4 +147,8 @@
     <string name="reject_validation_informe">It was rejected</string>
     <string name="approve_validation_informe">It was approved</string>
 
+    <string name="dias_diferencia">DIFFERENCE DAYS</string>
+
+
+
 </resources>

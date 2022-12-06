@@ -393,14 +393,14 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
             //Permite obtener la posición del item seleccionado en el RecyclerView
             posicionItemSeleccionadoRecyclerView = this.getAdapterPosition();
             //int posicionlista = listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId();
-            anticipoSeleccionado = listaAnticipo.get(posicionItemSeleccionadoRecyclerView);
+//            anticipoSeleccionado = listaAnticipo.get(posicionItemSeleccionadoRecyclerView);
             //Toast.makeText(context, ""+listaAnticipo.get(posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         private void actualizarCalendario(){
             diasAnticipo = Helper.diasEntreDosFechas(txtFechaInicioDialog.getText().toString(),txtFechaFinDialog.getText().toString());
-            Toast.makeText(context, "DIAS DIFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.dias_diferencia) + diasAnticipo, Toast.LENGTH_SHORT).show();
             if (diasAnticipo<=0){
                 Toast.makeText(context, context.getResources().getString(R.string.validacion_fechas), Toast.LENGTH_SHORT).show();
             }

@@ -67,12 +67,12 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
 
         rvAnticipo=view.findViewById(R.id.rvAnticipo);
         rvAnticipo.setHasFixedSize(true);
-        rvAnticipo.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        rvAnticipo.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         apiService = ApiAdapter.getApiService();
         srlAnticipo = view.findViewById(R.id.srlAnticipo);
         srlAnticipo.setOnRefreshListener(this);
-        adapter = new AnticipoAdapter(this.getActivity());
+        adapter = new AnticipoAdapter(this.getContext());
         rvAnticipo.setAdapter(adapter);
         listar();
         return view;
@@ -182,11 +182,11 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
             case 1:
                 //NO TOQUEN NADA DE ACAAAAAAAAAAAAAAAAAAA :C
                 if(DatosSesion.sesion.getRol_id() == 1){
-                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(), adapter.anticipoSeleccionado.getId(),"A",1).enqueue(new Callback<UltimaInstanciaResponse>() {
+                    apiService.getUltimaInstancia(DatosSesion.sesion.getToken(), listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(),"A",1).enqueue(new Callback<UltimaInstanciaResponse>() {
                         @Override
                         public void onResponse(Call<UltimaInstanciaResponse> call, Response<UltimaInstanciaResponse> response) {
                             if (response.code() == 200) {
-                                Toast.makeText(getContext(), "ID " + adapter.anticipoSeleccionado.getId(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "ID " + listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId(), Toast.LENGTH_SHORT).show();
                                 UltimaInstanciaResponse ultimaInstanciaResponse = response.body();
                                 boolean status = ultimaInstanciaResponse.getStatus();
                                 if (status){
@@ -333,7 +333,7 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                 break;
         }
 
-        return super.onContextItemSelected(item);
+        return true;
     }
 
     @Override

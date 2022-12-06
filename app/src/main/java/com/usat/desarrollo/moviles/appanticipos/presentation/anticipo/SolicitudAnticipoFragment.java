@@ -203,7 +203,7 @@ public class SolicitudAnticipoFragment extends Fragment implements View.OnClickL
     //luego agregar el validar fecha inicio y fin
     private void actualizarCalendario(){
         diasAnticipo = Helper.diasEntreDosFechas(txtFechaInicio.getText().toString(),txtFechaFin.getText().toString());
-        Toast.makeText(getActivity(), "DIAS DIFERENCIA " + diasAnticipo, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getResources().getString(R.string.dias_diferencia) + diasAnticipo, Toast.LENGTH_SHORT).show();
         if (diasAnticipo<=0){
             Snackbar
                     .make(getActivity().findViewById(R.id.layout_solitcitud_anticipo), getContext().getResources().getString(R.string.validacion_fechas), Snackbar.LENGTH_LONG)

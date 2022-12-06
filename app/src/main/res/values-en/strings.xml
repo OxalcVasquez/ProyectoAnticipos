@@ -70,6 +70,11 @@
     <string name="estado_registrado">REGISTERED</string>
     <string name="estado_rechazado">REJECTED</string>
     <string name="estado_designado">DESIGNATED</string>
+    <string name="op_aprobar">Approve</string>
+    <string name="op_observar">Observe</string>
+    <string name="op_rechazar">Decline</string>
+    <string name="H_aprob">Successful retainer approval</string>
+    <string name="H_rechazo">Successful down retainer</string>
 
     <string name="estado_rendido">SURRENDERED</string>
     <string name="estado_observado">OBSERVED</string>

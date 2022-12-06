@@ -296,13 +296,13 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                         String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                         String estado = String.valueOf(3);
                         actualizarEstado(estado,"Aprobado por el jefe de profesores", posicionItem);
-                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación exitosa - Jefe de docentes");
+                        Helper.mensajeInformacion(getContext(),"INFO",getResources().getString(R.string.H_aprob));
                         listar();
                     } else{
                         String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                         String estado = String.valueOf(2);
                         actualizarEstado(estado,"Aprobado por el administrativo",posicionItem);
-                        Helper.mensajeInformacion(getContext(),"INFO","Aprobación exitosa - Admin");
+                        Helper.mensajeInformacion(getContext(),"INFO",getResources().getString(R.string.H_aprob));
                         listar();
                     }
 
@@ -327,7 +327,7 @@ public class AnticipoListadoFragment extends Fragment implements SwipeRefreshLay
                     String posicionItem = String.valueOf(AnticipoAdapter.listaAnticipo.get(adapter.posicionItemSeleccionadoRecyclerView).getId());
                     String estado = String.valueOf(4);
                     actualizarEstado(estado, "Rechazado por el jefe de profesores", posicionItem);
-                    Helper.mensajeInformacion(getContext(), "INFO", "Rechazo del anticipo exitoso");
+                    Helper.mensajeInformacion(getContext(), "INFO", getResources().getString(R.string.H_rechazo));
                     listar();
                 }
                 break;

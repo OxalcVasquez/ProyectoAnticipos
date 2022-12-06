@@ -96,6 +96,11 @@
     <string name="cerrar">Cerrar</string>
 
     <string name="opcion">Opciones</string>
+    <string name="op_aprobar">Aprobar</string>
+    <string name="op_observar">Observar</string>
+    <string name="op_rechazar">Rechazar</string>
+    <string name="H_aprob">Aprobación de anticipo exitosa</string>
+    <string name="H_rechazo">Rechazo del anticipo exitoso</string>
     <string name="ver_instancia">Ver instancia</string>
     <string name="instancia">INSTANCIA :</string>
     <string name="estado">ESTADO :</string>

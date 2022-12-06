@@ -364,22 +364,22 @@ public class AnticipoAdapter extends RecyclerView.Adapter<AnticipoAdapter.ViewHo
                 if(DatosSesion.sesion.getRol_id() == 2){
                     Anticipo ant = anticipoSeleccionado;
                     if (!ant.getEstado().equalsIgnoreCase("SUBSANADO")){
-                        contextMenu.add(0, 1, 0, "Aprobar");
-                        contextMenu.add(0, 2, 0, "Observar");
-                        contextMenu.add(0, 3, 0, "Rechazar");
+                        contextMenu.add(0, 1, 0, context.getResources().getString(R.string.op_aprobar));
+                        contextMenu.add(0, 2, 0, context.getResources().getString(R.string.op_observar));
+                        contextMenu.add(0, 3, 0, context.getResources().getString(R.string.op_rechazar));
                     }else {
-                        contextMenu.add(0, 1, 0, "Aprobar");
+                        contextMenu.add(0, 1, 0, context.getResources().getString(R.string.op_aprobar));
                         //contextMenu.add(0, 2, 0, "Observar");
-                        contextMenu.add(0, 3, 0, "Rechazar");
+                        contextMenu.add(0, 3, 0, context.getResources().getString(R.string.op_rechazar));
                     }
 
                 }else{
                     Anticipo ant = anticipoSeleccionado;
                     if (!ant.getEstado().equalsIgnoreCase("SUBSANADO")){
-                        contextMenu.add(0, 1, 0, "Aprobar");
-                        contextMenu.add(0, 2, 0, "Observar");
+                        contextMenu.add(0, 1, 0, context.getResources().getString(R.string.op_aprobar));
+                        contextMenu.add(0, 2, 0, context.getResources().getString(R.string.op_observar));
                     }else {
-                        contextMenu.add(0, 1, 0, "Aprobar");
+                        contextMenu.add(0, 1, 0, context.getResources().getString(R.string.op_aprobar));
                     }
 
 
